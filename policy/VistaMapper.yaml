@@ -1,0 +1,21 @@
+needCalibRegistry: true
+camera: ../camera
+defaultLevel: Ccd 
+
+# The default policy file is contained within the obs_base/policy directory of the stack. However, specific entried can be overridden by including them in here (and, indeed, some are mandatory as they don't have equivalents in the default files).
+# Even if it were possible and you **only** used the defaults in the obs_base/policy files you still need to include exposures, calibrations, and datasets so that it knows to refer to the defaults in obs_base.
+exposures: 
+  raw:
+    python: lsst.afw.image.DecoratedImageF
+    persistable: DecoratedImageF
+    template: 'raw/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s-%(ccd)02d.fts'
+
+calibrations:
+  add_bias_etc_here:
+    template: 'this.txt'
+
+datasets:
+  processCcd_metadata:
+    template: 'processCcd_md/%(dateObs)s/processCcd_md-%(visit)04d-%(filter)s-%(ccd)02d.boost'
+  icSrc:
+    template: 'sci-results/icSrc/%(dateObs)s/icSrc-%(visit)04d-%(filter)s-%(ccd)02d.fits'
