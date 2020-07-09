@@ -11,11 +11,11 @@ As a first pass we have simply replaced Necam with VISTA throughout.
 
 Folders:
 
-- [camera](camera)
-- [config](config)
-- [policy](policy)
+- [camera](camera) Files containing information that describe the properties of your camera, such as its dimensions, gain etc.
+- [config](config) Configuration files that tell the various stack process that access your data how to behave.
+- [policy](policy) Files describing the file structure and type of input and output data (e.g., image, table etc).
 - [python/lsst](python/lsst) This is where all the scripts go that manipulate VISTA data
-- [ups](ups) 
+- [ups](ups) A file telling the [eups](https://developer.lsst.io/stack/eups-tutorial.html) system what other packages need to be set up to use this obs_package.
 
 ## The Camera
 
