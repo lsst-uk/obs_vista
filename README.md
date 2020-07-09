@@ -11,7 +11,7 @@ As a first pass we have simply replaced Necam with VISTA throughout.
 
 Folders:
 
-- [camera](camera) Files containing information that describe the properties of your camera, such as its dimensions, gain etc.
+- [camera](camera) Files containing information that describe the properties of VIRCAM (dimensions, gain etc).
 - [config](config) Configuration files that tell the various stack process that access your data how to behave.
 - [policy](policy) Files describing the file structure and type of input and output data (e.g., image, table etc).
 - [python/lsst](python/lsst) This is where all the scripts go that manipulate VISTA data
