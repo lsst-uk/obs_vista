@@ -9,6 +9,14 @@ The documenttation for this is at https://lsstcamdocs.readthedocs.io/en/latest/i
 
 As a first pass we have simply replaced Necam with VISTA throughout.
 
+Folders:
+
+- [camera]()
+- [config]()
+- [policy]()
+- [python/lsst]()
+- [ups]()
+
 ## TODO
 
 1. Specify file naming scheme used in the raw VISTA databases.
