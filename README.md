@@ -11,11 +11,11 @@ As a first pass we have simply replaced Necam with VISTA throughout.
 
 Folders:
 
-- [camera]()
-- [config]()
-- [policy]()
-- [python/lsst]()
-- [ups]()
+- [camera](camera)
+- [config](config)
+- [policy](policy)
+- [python/lsst](python/lsst) This is where all the scripts go that manipulate VISTA data
+- [ups](ups) 
 
 ## TODO
 
