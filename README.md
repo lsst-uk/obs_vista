@@ -1,5 +1,5 @@
 # obs_vista
-VISTA-specific (VIRCam) configuration and tasks for the LSST Data Management Stack
+VISTA (VIRCAM) specific configuration and tasks for the LSST Data Management Stack. It describes the camera and data products, allowing the LSST stack to import and manipulate the data.
 
 ## Overview
 
@@ -16,6 +16,11 @@ Folders:
 - [policy](policy)
 - [python/lsst](python/lsst) This is where all the scripts go that manipulate VISTA data
 - [ups](ups) 
+
+## The Camera
+
+The package is designed to work with all VISTA data products. The calibration of the
+VIRCAM instrument on the ESO VISTA telescope is described in González-Fernández et al. 2018 https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.5459G/abstract
 
 ## TODO
 
