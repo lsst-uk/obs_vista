@@ -34,13 +34,36 @@ mv obs_vista 20.0.0-1   #Stack version 20.0.0 used for development and obs versi
 This will now be a git submodule so any git commands run inside this directory will interact with the obs_vista git repo and not the lsstsw repo. You now need to declare the package to EUPS.
 
 ```Shell
-eups declare obs_vista v1 -r $stack/obs_vista/20.0.0-1
+eups declare -t current obs_vista 20.0.0-1   # run once
+setup obs_vista 20.0.0-1                     # run in every shell
 ```
+
+Now running 
+
+```Shell
+eups list
+```
+
+Should show the 20.0.0-1 version of obs_vista as current and setup. Check the setup has worked by running
+
+```Shell
+processCcd.py
+```
+
+If that returns "bash: processCcd.py: command not found" then you should start again. If it returns options the setup has worked.
 
 ## The Camera
 
 The package is designed to work with all VISTA data products. The calibration of the
 VIRCAM instrument on the ESO VISTA telescope is described in González-Fernández et al. 2018 https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.5459G/abstract
+
+The key numbers specified in [camera/camera.py](camera/camera.py) are:
+
+| parameter | value | unit |
+----------------------------
+| pixel scale ||
+| dimensions ||
+| name ||
 
 ## TODO
 
