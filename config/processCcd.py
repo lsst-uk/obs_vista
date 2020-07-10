@@ -11,7 +11,7 @@ Subsequently, there are a **huge** number of config parameters that one can adju
 '''
 
 #Grab the path to this config directory:
-configDir = os.path.join(getPackageDir("obs_necam"), "config")
+configDir = os.path.join(getPackageDir("obs_vista"), "config")
 
 #Load ISR configurations:
 config.isr.load(os.path.join(configDir, "isr.py"))
