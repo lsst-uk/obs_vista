@@ -5,7 +5,7 @@ config.doWrite = False
 '''
 config.doWrite = False
 config.doOverscan = False
-config.doAddDistortionModel = False
+# config.doAddDistortionModel = False # Broke tests in 20.0.0
 config.doDefect = False
 config.doAssembleIsrExposures = False
 config.doBias = False

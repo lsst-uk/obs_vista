@@ -1,11 +1,11 @@
-from lsst.afw.geom import degrees
+#from lsst.afw.geom import degrees  # Failed in 20.0.0
 from lsst.afw.coord import Observatory
 from lsst.obs.base import MakeRawVisitInfo
 
-__all__ = ["MakeNecamRawVisitInfo"]
+__all__ = ["MakeVistaRawVisitInfo"]
 
-class MakeNecamRawVisitInfo(MakeRawVisitInfo):
-    """Make a VisitInfo from the FITS header of an Necam image
+class MakeVistaRawVisitInfo(MakeRawVisitInfo):
+    """Make a VisitInfo from the FITS header of a VISTA image
     """
     #observatory = Observatory(-17.882*degrees, 28.761*degrees, 2332)  # long, lat, elev
 
