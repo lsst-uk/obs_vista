@@ -3,13 +3,13 @@ There is a default parse task included with the LSST stack, however it may not
 be suited to translate the data in your image headers. Often you'll need to
 write your own translator that suited to the data formats in your image header and load it into the stack.
 
-Necam's translators are  saved in:
-obs_necam/python/lsst/obs/necam/ingest.py
+Vista's translators are  saved in:
+obs_necam/python/lsst/obs/vista/ingest.py
 
 To load them into the stack, we first import them, then retarget them. 
 '''
-from lsst.obs.necam.ingest import NecamParseTask
-config.parse.retarget(NecamParseTask)
+from lsst.obs.vista.ingest import VistaParseTask
+config.parse.retarget(VistaParseTask)
 
 #The following grabs data from the image headers that don't need parsing (i.e., translating). Header keywords are on the right, stack keywords on the left:
 config.parse.translation = {'dataType':'IMGTYPE',

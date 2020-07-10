@@ -17,7 +17,8 @@ class VistaMapper(CameraMapper):
     def __init__(self, inputPolicy=None, **kwargs):
 
         #Declare the policy file...
-        policyFile = Policy.defaultPolicyFile(self.packageName, "VistaMapper.yaml", "policy")
+        policyFile = Policy.defaultPolicyFile(
+            self.packageName, "VistaMapper.yaml", "policy")
         policy = Policy(policyFile)
         #...and add it to the mapper:
         super(VistaMapper, self).__init__(policy, os.path.dirname(policyFile), **kwargs)
