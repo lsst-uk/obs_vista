@@ -6,21 +6,21 @@ from lsst.daf.persistence import Policy
 from lsst.obs.base import CameraMapper
 import lsst.afw.image.utils as afwImageUtils
 import lsst.afw.image as afwImage
-from .makeNecamRawVisitInfo import MakeNecamRawVisitInfo
+from .makeVistaRawVisitInfo import MakeVistaRawVisitInfo
 
-class NecamMapper(CameraMapper):
-    packageName = 'obs_necam'
+class VistaMapper(CameraMapper):
+    packageName = 'obs_vista'
     
     # A rawVisitInfoClass is required by processCcd.py
-    MakeRawVisitInfoClass = MakeNecamRawVisitInfo
+    MakeRawVisitInfoClass = MakeVistaRawVisitInfo
 
     def __init__(self, inputPolicy=None, **kwargs):
 
         #Declare the policy file...
-        policyFile = Policy.defaultPolicyFile(self.packageName, "NecamMapper.yaml", "policy")
+        policyFile = Policy.defaultPolicyFile(self.packageName, "VistaMapper.yaml", "policy")
         policy = Policy(policyFile)
         #...and add it to the mapper:
-        super(NecamMapper, self).__init__(policy, os.path.dirname(policyFile), **kwargs)
+        super(VistaMapper, self).__init__(policy, os.path.dirname(policyFile), **kwargs)
 
         ###Defining your filter set###
         #Create a python dict of filters:
