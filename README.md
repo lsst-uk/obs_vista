@@ -52,6 +52,12 @@ processCcd.py
 
 If that returns "bash: processCcd.py: command not found" then you should start again. If it returns options the setup has worked.
 
+You will also need to create a _mapper file in the data directory. To do this on the Cambridge HPC for instance:
+
+```Shell
+echo "lsst.obs.vista.VistaMapper" > /home/ir-shir1/rds/rds-iris-ip005/data/_mapper
+```
+
 ## The Camera
 
 The package is designed to work with all VISTA data products. The calibration of the

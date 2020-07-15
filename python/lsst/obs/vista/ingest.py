@@ -1,7 +1,7 @@
 from lsst.pipe.tasks.ingest import ParseTask
 from astropy.time import Time
     
-class NecamParseTask(ParseTask):
+class VistaParseTask(ParseTask):
 
     '''
     [From https://github.com/lsst/obs_lsst/blob/f0c4ae506e8e0a85789aebdd970d7e704c9c6e24/

@@ -13,7 +13,7 @@ config.parse.retarget(VistaParseTask)
 
 #The following grabs data from the image headers that don't need parsing (i.e., translating). Header keywords are on the right, stack keywords on the left:
 config.parse.translation = {'dataType':'IMGTYPE',
-                            'filter':'FILTER'
+                            'filter': 'HIERARCH ESO INS FILT1 NAME' # 'FILTER'
                            }
 
 #These are the data that need to be parsed (translated)
