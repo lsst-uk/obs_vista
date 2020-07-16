@@ -65,11 +65,13 @@ VIRCAM instrument on the ESO VISTA telescope is described in González-Fernánde
 
 The key numbers specified in [camera/camera.py](camera/camera.py) are:
 
-| parameter | value | unit |
-----------------------------
-| pixel scale ||
-| dimensions ||
-| name ||
+| parameter   | value | unit |
+|-------------|-------|------|
+| pixel scale |       |      |
+| dimensions  |       |      |
+| name        |       |      |
+
+The script [camera/buildDetectors.py](camera/buildDetectors.py) will be used to make a fits file describing each of the 16 CCDs. This is currently not running due to conflicts with the latest version of the stack.
 
 ## TODO
 
