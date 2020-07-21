@@ -2,7 +2,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from lsst.daf.persistence import Policy
+from lsst.daf.persistence import ButlerLocation, Policy
 from lsst.obs.base import CameraMapper
 import lsst.afw.image.utils as afwImageUtils
 import lsst.afw.image as afwImage
@@ -71,3 +71,26 @@ class VistaMapper(CameraMapper):
         processCcd.py will fail with a NotImplementedError() without this.
         ''' 
         return int("%(ccd)d" % dataId)
+        
+    #def map_linearizer(self, dataId, write=False):
+    #    """Map a linearizer.
+    #    
+    #    This was copied from obs_subaru to fix an error requiring it
+    #    What does it do?
+    #    
+    #    Linearization is part of the instrument signature removal.
+    #    
+    #    It can be disabled. Should we be doing it for VISTA?
+    #    https://community.lsst.org/t/correcting-non-linearity/816
+    #    """
+    #    actualId = self._transformId(dataId)
+    #    return ButlerLocation(
+    #        pythonType="lsst.ip.isr.LinearizeSquared",
+    #        cppType="Config",
+    #        storageName="PickleStorage",
+    #        locationList="ignored",
+    #        dataId=actualId,
+    #        mapper=self,
+    #        storage=self.rootStorage)
+   
+   

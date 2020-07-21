@@ -12,15 +12,15 @@ from lsst.obs.vista.ingest import VistaParseTask
 config.parse.retarget(VistaParseTask)
 
 #The following grabs data from the image headers that don't need parsing (i.e., translating). Header keywords are on the right, stack keywords on the left:
-config.parse.translation = {'dataType':'IMGTYPE',
-                            'filter': 'HIERARCH ESO INS FILT1 NAME' # 'FILTER'
+config.parse.translation = { 'expTime': "EXPTIME",       #Nothing can go direct
+                            'visit':    "ESO DET EXP NO",#Is exposure number visit number?
+                            'dataType': "XTENSION"
                            }
 
 #These are the data that need to be parsed (translated)
-config.parse.translators = {'dateObs':'translateDate',
+config.parse.translators = {'filter': 'translateFilter', # 'FILTER'
+                            'dateObs':'translateDate',
                             'taiObs':'translateDate',
-                            'expTime':'translateExpTime',
-                            'visit':'translateVisit',
                             'ccd':'translateCcd'}
                             
 config.register.visit = ['visit', 'ccd', 'filter','dateObs','taiObs']

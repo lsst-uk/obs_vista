@@ -8,6 +8,9 @@ ProcessCcd runs a lot of processes, but they are split into three broad sections
 - Imaga Calibration (astrometric and photometric calibration).
 
 Subsequently, there are a **huge** number of config parameters that one can adjust for processCcd. To keep things a little tidier, I like to split the processCcd's config parameters into three other config files corresponding to each of the above three sections. 
+
+
+At this stage we are skipping these steps so we just want the code to directly give the premade stacks.
 '''
 
 #Grab the path to this config directory:

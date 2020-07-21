@@ -19,7 +19,7 @@ Folders:
 
 ## Installation
 
-You must perform a development "lsstsw" installation of the LSST stack. This is significantly slower and takes up more HDD, around 45Gb as opposed to 5Gb than the newinstall.sh method. After installing the LSST stack the obs_vista package must go in the folder which contains all the obs packages:
+The following instructions are for an "lsstsw" installation of the LSST stack. I will include installation instructions for the standard and Docker image when I have tested it. The lsstsw method is significantly slower and takes up more HDD, around 45Gb as opposed to 5Gb than the newinstall.sh method. After installing the LSST stack the obs_vista package must go in the folder which contains all the obs packages:
 
 
 ```Shell

@@ -6,11 +6,16 @@ import numpy as np
 readout = [[20.]]
 gain_all = [[0.5]]
 
+#As a first pass hack I am just taking an HSC example fits file and modifying pixel numbers. I do this in a notebook in docs
+#TODO: specify all the detector definitions here.
+
+
+
 def addAmp(ampCatalog,i,rN,gain_s):
     record = ampCatalog.addNew()
 
-    width = 6144
-    height = 4096
+    width = 2048
+    height = 2048
 
     os = 0 #pixels of overscan
     
@@ -60,7 +65,7 @@ def makeCcd(ccdId):
     ccdName = ccdId+1
     for i in range(1):
         addAmp(ampCatalog, i,readout[ccdId-1][i],gain_all[ccdId-1][i])
-    return ampCatalog.writeFits('n%s_necam.fits' %ccdName)
+    return ampCatalog.writeFits('n%s_vista.fits' %ccdName)
 
 def main():
     for i in range(1):
