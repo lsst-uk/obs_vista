@@ -4,7 +4,7 @@ be suited to translate the data in your image headers. Often you'll need to
 write your own translator that suited to the data formats in your image header and load it into the stack.
 
 Vista's translators are  saved in:
-obs_necam/python/lsst/obs/vista/ingest.py
+obs_vista/python/lsst/obs/vista/ingest.py
 
 To load them into the stack, we first import them, then retarget them. 
 '''
@@ -21,15 +21,21 @@ config.parse.translation = { 'expTime': "EXPTIME",       #Nothing can go direct
 config.parse.translators = {'filter': 'translateFilter', # 'FILTER'
                             'dateObs':'translateDate',
                             'taiObs':'translateDate',
-                            'ccd':'translateCcd'}
+                            'mjd':'translateJd',
+                            'ccd':'translateCcd', 
+                            'ccdnum':'translateCcd',
+                            }
                             
-config.register.visit = ['visit', 'ccd', 'filter','dateObs','taiObs']
-config.register.unique = ['visit', 'ccd', 'filter']
+config.register.visit = ['visit', 'filter','dateObs','taiObs']
+config.register.unique = ['visit', 'ccd', 'filter'] #removed ,'ccd'
 config.register.columns = {'visit':'int',
                            'ccd':'int',
+                           'ccdnum':'int',
+                           'hdu':'int',#copying from obs_decam
                            'filter':'text',
                            'dataType':'text',
                            'expTime':'double',
                            'dateObs':'text',
-                           'taiObs':'text'
+                           'taiObs':'text',
+                           'mjd':'int'
                            }

@@ -5,19 +5,43 @@ defaultLevel: Ccd
 # The default policy file is contained within the obs_base/policy directory of the stack. However, specific entries can be overridden by including them in here (and, indeed, some are mandatory as they don't have equivalents in the default files).
 # Even if it were possible and you **only** used the defaults in the obs_base/policy files you still need to include exposures, calibrations, and datasets so that it knows to refer to the defaults in obs_base.
 exposures: 
-  raw:
-    python: lsst.afw.image.DecoratedImageF
-    persistable: DecoratedImageF
-    #Should we parse each ccd into a new file or do that in a later step?
-    template: 'raw/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s-%(ccd)02d.fts'
+    raw:
+        python: lsst.afw.image.DecoratedImageF
+        persistable: DecoratedImageF
+        #Should we parse each ccd into a new file or do that in a later step?
+        #Removed -%(ccd)02d from end because one file for all ccds
+        template: 'raw/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s.fts[%(hdu)d]'
+    
+    stacks:
+        python: lsst.afw.image.DecoratedImageF
+        persistable: DecoratedImageF
+        #The CASU pointing stacks
+        template: 'stacks/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s.fts[%(hdu)d]'
+    
+    tiles:
+        python: lsst.afw.image.DecoratedImageF
+        persistable: DecoratedImageF
+        #The CASU tiles
+        template: 'tiles/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s.fts'
+    
+    # We want to produce a minimal calexp file for coadding
+    calexp:
+        template: sci-results/%(dateObs)s/%(filter)s/calexp/calexp-%(ccd)s.fits
+        recipe: lossyBasic
+    deepCoadd_directWarp:
+        template: deepCoadd/%(filter)s/%(tract)d/%(patch)s/warp-%(filter)s-%(tract)d-%(patch)s.fits
+        recipe: lossyBasic
+#    deepCoadd_psfMatchedWarp:
+#        template: deepCoadd/%(filter)s/%(tract)d/%(patch)s/psfMatchedWarp-%(filter)s-%(tract)d-%(patch)s-%(run)s.fits
+#         recipe: lossyBasic
 
-#We are currently not including calibrations.
+# We are currently not performing calibrations.
 calibrations:
-  add_bias_etc_here:
-    template: 'this.txt'
+    add_bias_etc_here:
+        template: 'this.txt'
 
 datasets:
-  processCcd_metadata:
-    template: 'processCcd_md/%(dateObs)s/processCcd_md-%(visit)04d-%(filter)s-%(ccd)02d.boost'
-  icSrc:
-    template: 'sci-results/icSrc/%(dateObs)s/icSrc-%(visit)04d-%(filter)s-%(ccd)02d.fits'
+    processCcd_metadata:
+        template: 'processCcd_md/%(dateObs)s/processCcd_md-%(visit)04d-%(filter)s-%(ccd)02d.boost'
+    icSrc:
+        template: 'sci-results/icSrc/%(dateObs)s/icSrc-%(visit)04d-%(filter)s-%(ccd)02d.fits'

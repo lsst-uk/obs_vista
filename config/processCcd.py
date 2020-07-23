@@ -1,3 +1,6 @@
+"""
+VISTA specific overirdes for ProcessCcdTask
+"""
 import os.path
 from lsst.utils import getPackageDir
 
@@ -23,5 +26,22 @@ config.isr.load(os.path.join(configDir, "isr.py"))
 config.isr.load(os.path.join(configDir, "characterise.py"))
 
 #Load Calibrate configurations
-config.doCalibrate = False
+config.doCalibrate = True
 config.calibrate.load(os.path.join(configDir, "calibrate.py"))
+
+
+# Following added to use panstarrs reference catalogue
+# see https://community.lsst.org/t/pan-starrs-reference-catalog-in-lsst-format/1572
+# We will need a different photometric reference catalogue for the JHKs bands - 2MASS?
+#from lsst.meas.algorithms import LoadIndexedReferenceObjectsTask
+#config.calibrate.astromRefObjLoader.retarget(LoadIndexedReferenceObjectsTask)
+#config.calibrate.astromRefObjLoader.ref_dataset_name = "ps1_pv3_3pi_20170110"
+#config.calibrate.photoRefObjLoader.retarget(LoadIndexedReferenceObjectsTask)
+#config.calibrate.photoRefObjLoader.ref_dataset_name = "ps1_pv3_3pi_20170110"
+#config.calibrate.photoCal.photoCatName = "ps1_pv3_3pi_20170110"
+
+#Tried this from goto:
+#from lsst.meas.extensions.astrometryNet import ANetAstrometryTask
+#config.astrometry.retarget(ANetAstrometryTask)
+#from lsst.meas.extensions.astrometryNet import LoadAstrometryNetObjectsTask
+#config.astromRefObjLoader.retarget(LoadAstrometryNetObjectsTask)

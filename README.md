@@ -19,7 +19,7 @@ Folders:
 
 ## Installation
 
-The following instructions are for an "lsstsw" installation of the LSST stack. I will include installation instructions for the standard and Docker image when I have tested it. The lsstsw method is significantly slower and takes up more HDD, around 45Gb as opposed to 5Gb than the newinstall.sh method. After installing the LSST stack the obs_vista package must go in the folder which contains all the obs packages:
+The following instructions are for an "lsstsw" installation of the LSST stack. These instructions should be identical for either the standard newinstall.sh installation or a Docker image. The lsstsw method is significantly slower and takes up more HDD, around 45Gb as opposed to 5Gb than the newinstall.sh method. After installing the LSST stack the obs_vista package must go in the folder which contains all the obs packages:
 
 
 ```Shell
@@ -63,6 +63,8 @@ echo "lsst.obs.vista.VistaMapper" > /home/ir-shir1/rds/rds-iris-ip005/data/_mapp
 The package is designed to work with all VISTA data products. The calibration of the
 VIRCAM instrument on the ESO VISTA telescope is described in González-Fernández et al. 2018 https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.5459G/abstract
 
+There is also further information on the VISTA technical specifications on the CASU website http://casu.ast.cam.ac.uk/surveys-projects/vista/technical
+
 The key numbers specified in [camera/camera.py](camera/camera.py) are:
 
 | parameter   | value | unit |
@@ -75,6 +77,6 @@ The script [camera/buildDetectors.py](camera/buildDetectors.py) will be used to 
 
 ## TODO
 
-1. Specify file naming scheme used in the raw VISTA databases.
+1. Run on every CCD extension not just the first.
 
 2. Define VISTA filters.
