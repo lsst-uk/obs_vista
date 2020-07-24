@@ -31,7 +31,7 @@ config.register.unique = ['visit', 'ccd', 'filter'] #removed ,'ccd'
 config.register.columns = {'visit':'int',
                            'ccd':'int',
                            'ccdnum':'int',
-                           'hdu':'int',#copying from obs_decam
+                           #'hdu':'int',#copying from obs_decam
                            'filter':'text',
                            'dataType':'text',
                            'expTime':'double',

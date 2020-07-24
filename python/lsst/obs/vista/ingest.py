@@ -1,7 +1,9 @@
 from lsst.pipe.tasks.ingest import ParseTask, IngestTask, IngestArgumentParser
-from astropy.time import Time
-import lsst.obs.base    
+import lsst.obs.base   
+from lsst.obs.base.ingest import RawFileData
+
     
+from astropy.time import Time
     
 __all__ = [
     "VistaRawIngestTask", 
