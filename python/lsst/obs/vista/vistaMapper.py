@@ -74,6 +74,38 @@ class VistaMapper(CameraMapper):
         processCcd.py will fail with an AttributeError without this.
         '''
         return 24+6
+        
+        
+    def _computeCoaddExposureId(self, dataId):
+        '''
+        Here I'm saying: 
+           - we've got up to 1024 (2**10) tracts;
+           - we've got up to 64 (2**6) patches in each dimension
+        Currently, I'm not incorporating filter information.
+        The remaining 64-22 = 42 bits are left for source numbers
+        '''
+        nbit_tract = 10
+        nbit_patch = 6
+        tract = int(dataId['tract'])
+
+        patchX, patchY = [int(patch) for patch in dataId['patch'].split(',')]
+        oid = (((tract << nbit_patch) + patchX) << nbit_patch) + patchY
+        
+        return oid
+
+    def bypass_deepCoaddId_bits(self, *args, **kwargs):
+        #Up to 1024 (2**10) tracts each containing up to 64x64 (2**6x2**6) patches
+        return 10+6+6 
+
+    def bypass_deepCoaddId(self, datasetType, pythonType, location, dataId):
+        return self._computeCoaddExposureId(dataId)
+
+    def bypass_deepMergedCoaddId_bits(self, *args, **kwargs):
+         return 10+6+6
+
+    def bypass_deepMergedCoaddId(self, datasetType, pythonType, location, dataId):
+        return self._computeCoaddExposureId(dataId)
+        
 
     def _extractDetectorName(self, dataId):
         '''
