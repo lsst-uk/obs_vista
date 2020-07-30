@@ -1,7 +1,15 @@
 from lsst.pipe.tasks.ingest import ParseTask, IngestTask, IngestArgumentParser
 import lsst.obs.base   
 from lsst.obs.base.ingest import RawFileData
+from lsst.afw.fits import readMetadata
 
+from ._instrument import VISTA
+
+#We need to write a VISTA translator for the gen3 butler
+from astro_metadata_translator import fix_header
+
+import os
+import re
     
 from astropy.time import Time
     
@@ -17,7 +25,12 @@ class VistaRawIngestTask(lsst.obs.base.RawIngestTask):
     
     Function copied from obs_decam DecamRawIngestTask which also has fits files
     with multiple extensions.
+    
+    We need to write an astro_metadata_translator for VISTA to use this with the gen3
+    butler
     """
+    
+    
     def extractMetadata(self, filename: str) -> RawFileData:
         datasets = []
         fitsData = lsst.afw.fits.Fits(filename, 'r')
@@ -25,15 +38,16 @@ class VistaRawIngestTask(lsst.obs.base.RawIngestTask):
         for i in range(1, fitsData.countHdus()):
             fitsData.setHdu(i)
             header = fitsData.readMetadata()
+          
             if header['ESO DET CHIP NO'] > 16:  # ignore the guide CCDs#VISTA has these?
                 continue
-            fix_header(header)
+            fix_header(header) #needs astro_metadata_translator for VISTA
             datasets.append(self._calculate_dataset_info(header, filename))
 
         # The data model currently assumes that whilst multiple datasets
         # can be associated with a single file, they must all share the
         # same formatter.
-        instrument = VIRCAM()
+        instrument = VISTA()
         FormatterClass = instrument.getRawFormatter(datasets[0].dataId)
 
         self.log.debug(f"Found images for {len(datasets)} detectors in {filename}")
@@ -50,13 +64,17 @@ class VistaIngestArgumentParser(IngestArgumentParser):
         super(VistaIngestArgumentParser, self).__init__(*args, **kwargs)
         #We might eventually want to be able to go straight from the raw exposures or 
         # the CASU calibrated ones, or the pointing stacks, or the full tiles
-        self.add_argument("--filetype", default="stack", choices=["stack", "raw"],
-                          help="Data processing level of the files to be ingested")
+        self.add_argument(
+            "--filetype", default="raw", 
+            choices=[ "raw", "instcal", "stack", "tile"],
+            help="Data processing level of the files to be ingested")
     
 class VistaIngestTask(IngestTask):
     """Gen2 VISTA file ingest task.
     """
     ArgumentParser = VistaIngestArgumentParser
+    
+   
 
     def __init__(self, *args, **kwargs):
         super(VistaIngestTask, self).__init__(*args, **kwargs)
@@ -64,21 +82,21 @@ class VistaIngestTask(IngestTask):
     def run(self, args):
         """Ingest all specified files and add them to the registry
         """
-        if args.filetype == "stack":
+        if args.filetype == "instcal":
             root = args.input
             with self.register.openRegistry(
                 root, create=args.create, dryrun=args.dryrun
             ) as registry:
                 for infile in args.files:
+                    print("DEBUG",infile, args.filetype)
                     fileInfo, hduInfoList = self.parse.getInfo(infile, args.filetype)
                     if len(hduInfoList) > 0:
-                        outfileSt = os.path.join(
+                        outfileStack = os.path.join(
                             root, 
                             self.parse.getDestination(
                                 args.butler,
                                 hduInfoList[0],
-                                infile, 
-                                "stack"
+                                infile ,"instcal"
                             )
                         )
                         #outfileConf = os.path.join(
@@ -91,8 +109,9 @@ class VistaIngestTask(IngestTask):
                         #    )
                         #)
 
-
-                        ingestedStack = self.ingest(fileInfo["stack"], outfileStack,
+                     
+                        
+                        ingestedStack = self.ingest(fileInfo["instcal"], outfileStack,
                                                       mode=args.mode, dryrun=args.dryrun)
                         #ingestedConf = self.ingest(fileInfo["conf"], outfileConf,
                         #                             mode=args.mode, dryrun=args.dryrun)
@@ -105,6 +124,7 @@ class VistaIngestTask(IngestTask):
                             continue
 
                     for info in hduInfoList:
+                     
                         self.register.addRow(
                             registry, 
                             info, 
@@ -113,7 +133,42 @@ class VistaIngestTask(IngestTask):
                         )
 
         elif args.filetype == "raw":
+            print("Ingesting")
             IngestTask.run(self, args)
+            
+            #root = args.input
+            #with self.register.openRegistry(
+            #    root, create=args.create, dryrun=args.dryrun
+            #) as registry:
+            #    for infile in args.files:
+            #        fileInfo, hduInfoList = self.parse.getInfo(infile, args.filetype)
+            #        #print("debug hdu",fileInfo, hduInfoList)
+            #        if len(hduInfoList) > 0:
+            #            outfileRaw = os.path.join(
+            #                root, 
+            #                self.parse.getDestination(
+            #                    args.butler,
+            #                    hduInfoList[0],
+            #                    infile ,"raw"
+            #                )
+            #            )
+            #            #print("DEBUG outfile", outfileRaw)
+            #            ingestedRaw = self.ingest(infile, outfileRaw,
+            #                                          mode=args.mode, dryrun=args.dryrun)
+
+
+
+            #            if not (ingestedRaw):
+            #                continue
+
+            #        for info in hduInfoList:
+                        #print('debug info', info)
+            #            self.register.addRow(
+            #                registry, 
+            #                info, 
+            #                dryrun=args.dryrun, 
+            #                create=args.create
+            #           )
             
     
 class VistaParseTask(ParseTask):
@@ -129,6 +184,20 @@ class VistaParseTask(ParseTask):
     standard required by the LSST stack. It will work with the header keys defined in 
     config/ingest.py
     '''
+    def __init__(self, *args, **kwargs):
+        super(ParseTask, self).__init__(*args, **kwargs)
+
+        self.expnumMapper = None
+
+        # Note that these should be syncronized with the fields in
+        # root.register.columns defined in config/ingest.py
+        self.instcalPrefix = "instcal"
+        self.confPrefix = "conf"
+        self.catPrefix = "cat"
+     
+    
+    
+    
     def translateDataType(self, md):
         '''Convert dtype header
         
@@ -142,7 +211,7 @@ class VistaParseTask(ParseTask):
         '''
         #Find a better way to get the filter - access to top level header?
         #e.g. turn 'Done with sky_20180911_266_Y.fit[1]' to 'Y'
-        return 'VISTA-'+md.get("SKYSUB")[-8:-7]
+        return 'VISTA-'+md.get("SKYSUB").split('.')[0][-1]
 
     def translateDate(self, md):
         '''
@@ -177,5 +246,115 @@ class VistaParseTask(ParseTask):
         #ccd = int(md.get("EXTNAME")[9:]) - 1
         ccd = md.get('ESO DET CHIP NO') -1
         return ccd
+        
+        
+
+
+        
+        
+    def getInfo(self, filename, filetype="instcal"):
+        """Get metadata header info from multi-extension FITS decam image file.
+
+        The science pixels, mask, and weight (inverse variance) are
+        stored in separate files each with a unique name but with a
+        common unique identifier EXPNUM in the FITS header.  We have
+        to aggregate the 3 filenames for a given EXPNUM and return
+        this information along with that returned by the base class.
+
+        Parameters
+        ----------
+        filename : `str`
+            Image file to retrieve info from.
+        filetype : `str`
+            One of "raw" or "instcal".
+
+        Returns
+        -------
+        phuInfo : `dict`
+            Primary header unit info.
+        infoList : `list` of `dict`
+            Info for the other HDUs.
+
+        Notes
+        -----
+        For filetype="instcal", we expect a directory structure that looks
+        like the following:
+
+        .. code-block:: none
+
+            dqmask/
+            instcal/
+            wtmap/
+
+        The user creates the registry by running:
+
+        .. code-block:: none
+
+            ingestImagesDecam.py outputRepository --filetype=instcal --mode=link instcal/*fits
+        """
+        if filetype == "instcal":
+            #if self.expnumMapper is None:
+            #    self.buildExpnumMapper(os.path.dirname(os.path.abspath(filename)))
+
+            # Note that phuInfo will have
+            #   'side': 'X', 'ccd': 0
+            phuInfo, infoList = super(VistaParseTask, self).getInfo(filename)
+            expnum = phuInfo["visit"]
+            phuInfo[self.instcalPrefix] = ""#self.expnumMapper[expnum][self.instcalPrefix]
+            phuInfo[self.confPrefix] = ""# self.expnumMapper[expnum][self.confPrefix]
+            phuInfo[self.catPrefix] = ""# self.expnumMapper[expnum][self.catPrefix]
+            for info in infoList:
+                #print("DEBUG", info)
+                expnum = info["visit"]
+                info[self.instcalPrefix] = ""#self.expnumMapper[expnum][self.instcalPrefix]
+                info[self.confPrefix] = ""#self.expnumMapper[expnum][self.confPrefix]
+                info[self.catPrefix] = ""#self.expnumMapper[expnum][self.catPrefix]
+    
+
+        elif filetype == "raw":
+            phuInfo, infoList = super(VistaParseTask, self).getInfo(filename)
+            for info in infoList:
+                #print("DEBUG raw loop" , info)
+                info[self.instcalPrefix] = ""
+                info[self.confPrefix] = ""
+                info[self.catPrefix] = ""
+
+
+        # Some data IDs can not be extracted from the zeroth extension
+        # of the MEF. Add them so Butler does not try to find them
+        # in the registry which may still yet to be created.
+        for key in ("ccdnum", "hdu", "ccd"):
+            if key not in phuInfo:
+                phuInfo[key] = 0
+
+        return phuInfo, infoList
+        
+    @staticmethod
+    def getExtensionName(md):
+        return md.getScalar('EXTNAME')
+        
+    def getDestination(self, butler, info, filename, filetype="raw"):
+        """Get destination for the file
+
+        Parameters
+        ----------
+        butler : `lsst.daf.persistence.Butler`
+            Data butler.
+        info : data ID
+            File properties, used as dataId for the butler.
+        filename : `str`
+            Input filename.
+
+        Returns
+        -------
+        raw : `str`
+            Destination filename.
+        """
+        raw = butler.get("%s_filename"%(filetype), info)[0]
+        # Ensure filename is devoid of cfitsio directions about HDUs
+        c = raw.find("[")
+        if c > 0:
+            raw = raw[:c]
+        return raw
 
                 

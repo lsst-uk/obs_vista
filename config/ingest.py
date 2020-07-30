@@ -11,6 +11,7 @@ To load them into the stack, we first import them, then retarget them.
 from lsst.obs.vista.ingest import VistaParseTask
 config.parse.retarget(VistaParseTask)
 
+
 #The following grabs data from the image headers that don't need parsing (i.e., translating). Header keywords are on the right, stack keywords on the left:
 config.parse.translation = { 'expTime': "EXPTIME",       #Nothing can go direct
                             'visit':    "ESO DET EXP NO",#Is exposure number visit number?
@@ -24,14 +25,34 @@ config.parse.translators = {'filter': 'translateFilter', # 'FILTER'
                             'mjd':'translateJd',
                             'ccd':'translateCcd', 
                             'ccdnum':'translateCcd',
+                            #'hdu':'translateCcd', 
                             }
                             
+config.parse.extnames = [
+    'DET1.CHIP1',
+    'DET1.CHIP2',
+    'DET1.CHIP3',
+    'DET1.CHIP4',
+    'DET1.CHIP5',
+    'DET1.CHIP6',
+    'DET1.CHIP7',
+    'DET1.CHIP8',
+    'DET1.CHIP9',
+    'DET1.CHIP10',
+    'DET1.CHIP11',
+    'DET1.CHIP12',
+    'DET1.CHIP13',
+    'DET1.CHIP14',
+    'DET1.CHIP15',
+    'DET1.CHIP16']
+                            
 config.register.visit = ['visit', 'filter','dateObs','taiObs']
-config.register.unique = ['visit', 'ccd', 'filter'] #removed ,'ccd'
+config.register.unique = ['visit', 'ccdnum' ]#removed ,'ccd'
 config.register.columns = {'visit':'int',
                            'ccd':'int',
                            'ccdnum':'int',
-                           #'hdu':'int',#copying from obs_decam
+                           'hdu':'int',#copying from obs_decam
+                           #'instcal': 'text',
                            'filter':'text',
                            'dataType':'text',
                            'expTime':'double',

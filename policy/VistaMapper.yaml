@@ -2,6 +2,21 @@ needCalibRegistry: true
 camera: ../camera
 defaultLevel: Ccd 
 
+
+levels:
+  # Keys that are NOT relevant for a particular level
+  skyTile:
+  - visit
+  - ccdnum
+  - hdu
+  - ccd
+  tract: patch
+  visit:
+  - ccdnum
+  - hdu
+  - ccd
+  sensor: none
+
 # The default policy file is contained within the obs_base/policy directory of the stack. However, specific entries can be overridden by including them in here (and, indeed, some are mandatory as they don't have equivalents in the default files).
 # Even if it were possible and you **only** used the defaults in the obs_base/policy files you still need to include exposures, calibrations, and datasets so that it knows to refer to the defaults in obs_base.
 exposures: 
@@ -11,29 +26,25 @@ exposures:
         #Should we parse each ccd into a new file or do that in a later step?
         #Removed -%(ccd)02d from end because one file for all ccds
         #'raw/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s.fts[%(hdu)d]'
-        template: 'raw/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s-%(ccd)02d.fts'
-    
-    #stacks:
-    #    python: lsst.afw.image.DecoratedImageF
-    #    persistable: DecoratedImageF
-    #    #The CASU pointing stacks
-    #    template: 'stacks/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s.fts[%(hdu)d]'
-    
-    #tiles:
-    #    python: lsst.afw.image.DecoratedImageF
-    #    persistable: DecoratedImageF
-    #    #The CASU tiles
-    #    template: 'tiles/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s.fts'
-    
-    # We want to produce a minimal calexp file for coadding
+        #raw/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s-%(ccd)02d.fit
+        template: 'raw/%(dateObs)s/%(visit)04d-%(filter)s.fit'
+    postISRCCD:
+        template: '%(visit)07d/postISR/postISR-%(visit)07d_%(ccdnum)02d.fits'
+    instcal:
+        level: ccd
+        persistable: DecoratedImageF
+        python: lsst.afw.image.DecoratedImageF
+        storage: FitsStorage
+        tables: raw
+        template: 'instcal/%(dateObs)s/%(visit)04d-%(filter)s-%(ccd)02d.fit[%(hdu)d]'
     calexp:
-        template: calexp/%(dateObs)s/calexp-%(visit)04d-%(filter)s-%(ccd)02d.fits
+        template: 'calexp/%(dateObs)s/calexp-%(visit)04d-%(filter)s-%(ccd)02d.fits'
         recipe: lossyBasic
     deepCoadd_directWarp:
-        template: deepCoadd/%(filter)s/%(tract)d/%(patch)s/warp-%(filter)s-%(tract)d-%(patch)s.fits
+        template: 'deepCoadd/%(filter)s/%(tract)d/%(patch)s/warp-%(filter)s-%(tract)d-%(patch)s.fits'
         recipe: lossyBasic
     deepCoadd_psfMatchedWarp:
-        template: deepCoadd/%(filter)s/%(tract)d/%(patch)s/psfMatchedWarp-%(filter)s-%(tract)d-%(patch)s-%(run)s.fits
+        template: 'deepCoadd/%(filter)s/%(tract)d/%(patch)s/psfMatchedWarp-%(filter)s-%(tract)d-%(patch)s-%(run)s.fits'
         recipe: lossyBasic
 
 # We are currently not performing calibrations.
@@ -51,6 +62,6 @@ datasets:
     calexpBackground:
         template: 'corr/%(dateObs)s/src-%(visit)04d-%(filter)s-%(ccd)02d.fits'
     deepCoadd_measMatch:
-        template: deepCoadd-results/%(filter)s/%(tract)d/%(patch)s/srcMatch-%(filter)s-%(tract)d-%(patch)s.fits
+        template: 'deepCoadd-results/%(filter)s/%(tract)d/%(patch)s/srcMatch-%(filter)s-%(tract)d-%(patch)s.fits'
     forced_src:
         template: 'forcedPhot/%(dateObs)s/%(filter)s/src/src-%(ccd)s-%(run)s.fits'

@@ -13,6 +13,24 @@ class VistaMapper(CameraMapper):
     
     # A rawVisitInfoClass is required by processCcd.py
     MakeRawVisitInfoClass = MakeVistaRawVisitInfo
+    
+    detectorNames = {
+    'DET1.CHIP1':0,
+    'DET1.CHIP2':1,
+    'DET1.CHIP3':2,
+    'DET1.CHIP4':3,
+    'DET1.CHIP5':4,
+    'DET1.CHIP6':5,
+    'DET1.CHIP7':6,
+    'DET1.CHIP8':7,
+    'DET1.CHIP9':8,
+    'DET1.CHIP10':9,
+    'DET1.CHIP11':10,
+    'DET1.CHIP12':11,
+    'DET1.CHIP13':12,
+    'DET1.CHIP14':13,
+    'DET1.CHIP15':14,
+    'DET1.CHIP16':15}
 
     def __init__(self, inputPolicy=None, **kwargs):
 
@@ -47,6 +65,12 @@ class VistaMapper(CameraMapper):
         #...and set your default filter.
         self.defaultFilterName = 'Clear'
         ##############################
+    
+    def _transformId(self, dataId):
+        copyId = CameraMapper._transformId(self, dataId)
+        if "ccd" in copyId:
+            copyId.setdefault("ccdnum", copyId["ccd"])
+        return copyId
 
     def _computeCcdExposureId(self, dataId):
         '''
@@ -57,7 +81,7 @@ class VistaMapper(CameraMapper):
         ''' 
         pathId = self._transformId(dataId)
         visit = pathId['visit']
-        ccd = pathId['ccd']
+        ccd = 1#pathId['ccd']
         visit = int(visit)
         ccd = int(ccd)
 
@@ -113,7 +137,28 @@ class VistaMapper(CameraMapper):
         Here, I simply use the ccd ID number extracted from the header and recorded via the ingest process.
         processCcd.py will fail with a NotImplementedError() without this.
         ''' 
-        return int("%(ccd)d" % dataId)
+        return 1#int("%(ccd)d" % dataId)
+        
+        
+    def std_raw(self, item, dataId):
+        """Standardize a raw dataset by converting it to an Exposure.
+
+        Raw images are MEF files with one HDU for each detector.
+
+        Parameters
+        ----------
+        item : `lsst.afw.image.DecoratedImage`
+            The image read by the butler.
+        dataId : data ID
+            Data identifier.
+
+        Returns
+        -------
+        result : `lsst.afw.image.Exposure`
+            The standardized Exposure.
+        """
+        return self._standardizeExposure(self.exposures['raw'], item, dataId,
+                                         trimmed=False)
         
     #def map_linearizer(self, dataId, write=False):
     #    """Map a linearizer.

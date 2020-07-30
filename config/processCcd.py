@@ -19,15 +19,22 @@ At this stage we are skipping these steps so we just want the code to directly g
 #Grab the path to this config directory:
 configDir = os.path.join(getPackageDir("obs_vista"), "config")
 
+
+
+#from lsst.obs.vista.vistaNullIsr import VistaNullIsrTask
+#config.isr.retarget(VistaNullIsrTask)
 #Load ISR configurations:
 config.isr.load(os.path.join(configDir, "isr.py"))
-
 #Characterise:
 config.isr.load(os.path.join(configDir, "characterise.py"))
 
 #Load Calibrate configurations
 config.doCalibrate = True
 config.calibrate.load(os.path.join(configDir, "calibrate.py"))
+
+
+#I think we need to tell it to open the appropriate hdu here.
+
 
 
 # Following added to use panstarrs reference catalogue
