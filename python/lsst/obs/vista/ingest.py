@@ -110,7 +110,7 @@ class VistaIngestTask(IngestTask):
                         #)
 
                      
-                        
+                     
                         ingestedStack = self.ingest(fileInfo["instcal"], outfileStack,
                                                       mode=args.mode, dryrun=args.dryrun)
                         #ingestedConf = self.ingest(fileInfo["conf"], outfileConf,
@@ -124,7 +124,7 @@ class VistaIngestTask(IngestTask):
                             continue
 
                     for info in hduInfoList:
-                     
+                        print("DEBUG9:",info)
                         self.register.addRow(
                             registry, 
                             info, 
@@ -136,40 +136,40 @@ class VistaIngestTask(IngestTask):
             print("Ingesting")
             IngestTask.run(self, args)
             
-            #root = args.input
-            #with self.register.openRegistry(
-            #    root, create=args.create, dryrun=args.dryrun
-            #) as registry:
-            #    for infile in args.files:
-            #        fileInfo, hduInfoList = self.parse.getInfo(infile, args.filetype)
-            #        #print("debug hdu",fileInfo, hduInfoList)
-            #        if len(hduInfoList) > 0:
-            #            outfileRaw = os.path.join(
-            #                root, 
-            #                self.parse.getDestination(
-            #                    args.butler,
-            #                    hduInfoList[0],
-            #                    infile ,"raw"
-            #                )
-            #            )
-            #            #print("DEBUG outfile", outfileRaw)
-            #            ingestedRaw = self.ingest(infile, outfileRaw,
-            #                                          mode=args.mode, dryrun=args.dryrun)
-
-
-
-            #            if not (ingestedRaw):
-            #                continue
-
-            #        for info in hduInfoList:
-                        #print('debug info', info)
-            #            self.register.addRow(
-            #                registry, 
-            #                info, 
-            #                dryrun=args.dryrun, 
-            #                create=args.create
-            #           )
-            
+#             root = args.input
+#             with self.register.openRegistry(
+#                 root, create=args.create, dryrun=args.dryrun
+#             ) as registry:
+#                 for infile in args.files:
+#                     fileInfo, hduInfoList = self.parse.getInfo(infile, args.filetype)
+#                     #print("debug hdu",fileInfo, hduInfoList)
+#                     if len(hduInfoList) > 0:
+#                         outfileRaw = os.path.join(
+#                             root, 
+#                             self.parse.getDestination(
+#                                 args.butler,
+#                                 hduInfoList[0],
+#                                 infile ,"raw"
+#                             )
+#                         )
+#                         print("DEBUG outfile", outfileRaw)
+#                         ingestedRaw = self.ingest(infile, outfileRaw,
+#                                                       mode=args.mode, dryrun=args.dryrun)
+# 
+# 
+# 
+#                         if not (ingestedRaw):
+#                             continue
+# 
+#                     for info in hduInfoList:
+#                         #print('debug info', info)
+#                         self.register.addRow(
+#                             registry, 
+#                             info, 
+#                             dryrun=args.dryrun, 
+#                             create=args.create
+#                        )
+#             
     
 class VistaParseTask(ParseTask):
 
@@ -211,7 +211,13 @@ class VistaParseTask(ParseTask):
         '''
         #Find a better way to get the filter - access to top level header?
         #e.g. turn 'Done with sky_20180911_266_Y.fit[1]' to 'Y'
-        return 'VISTA-'+md.get("SKYSUB").split('.')[0][-1]
+        #stack files
+        try:
+            filter =  'VISTA-'+md.get("SKYSUB").split('.')[0][-1]
+        #single exposures
+        except:
+            filter =  'VISTA-Y'#+md.get("ESO INS FILT1 NAME")
+        return filter
 
     def translateDate(self, md):
         '''
@@ -353,8 +359,10 @@ class VistaParseTask(ParseTask):
         raw = butler.get("%s_filename"%(filetype), info)[0]
         # Ensure filename is devoid of cfitsio directions about HDUs
         c = raw.find("[")
+    
         if c > 0:
             raw = raw[:c]
+       
         return raw
 
                 

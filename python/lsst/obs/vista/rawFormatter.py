@@ -9,14 +9,30 @@ import lsst.afw.image
 import lsst.log
 from lsst.obs.base import FitsRawFormatterBase
 
-from ._instrument import Vista
+from ._instrument import VISTA
 
 __all__ = ("VistaRawFormatter")
 
 
 # The mapping of detector id to HDU in raw files for "most" DECam data.
 # We try this first before scaning the HDUs manually.
-detector_to_hdu = {1:0} #Do we need this?
+detector_to_hdu = {
+    0:1,
+    1:2,
+    2:3,
+    3:4,
+    4:5,
+    5:6,
+    6:7,
+    7:8,
+    8:9,
+    9:10,
+    10:11,
+    11:12,
+    12:13,
+    13:14,
+    14:15,
+    15:16}
 
 
 class VistaRawFormatter(FitsRawFormatterBase):
@@ -24,7 +40,7 @@ class VistaRawFormatter(FitsRawFormatterBase):
     filterDefinitions = Vista.filterDefinitions
 
     def getDetector(self, id):
-        return Vista().getCamera()[id]
+        return VISTA().getCamera()[id]
 
     def _scanHdus(self, filename, detectorId):
         """Scan through a file for the HDU containing data from one detector.
@@ -48,7 +64,7 @@ class VistaRawFormatter(FitsRawFormatterBase):
         log = lsst.log.Log.getLogger("VistaRawFormatter")
         log.debug("Did not find detector=%s at expected HDU=%s in %s: scanning through all HDUs.",
                   detectorId, 
-                  detectorId, #detector_to_hdu[detectorId], 
+                  detectorId, detector_to_hdu[detectorId], 
                   filename)
 
         fitsData = lsst.afw.fits.Fits(filename, 'r')
@@ -95,7 +111,7 @@ class VistaRawFormatter(FitsRawFormatterBase):
 
     def readMetadata(self):
         index, metadata = self._determineHDU(self.dataId['detector'])
-        astro_metadata_translator.fix_header(metadata)
+        #astro_metadata_translator.fix_header(metadata)
         return metadata
 
     def readImage(self):

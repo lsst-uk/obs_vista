@@ -22,6 +22,7 @@ class MakeVistaRawVisitInfo(MakeRawVisitInfo):
         #Uncommented these
         argDict["exposureTime"] = self.popFloat(md, 'EXPTIME')
         argDict["observatory"] = self.observatory
+        #argDict["ccd"] = self.popFloat(md, 'CCDNUM')
 
-        pass
+      
         

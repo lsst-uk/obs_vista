@@ -50,7 +50,8 @@ class VistaNullIsrTask(pipeBase.Task):
 
         """
         self.log.info("Loading VISTA community pipeline file %s" % (sensorRef.dataId))
-        print("Loading VISTA community pipeline file %s" % (sensorRef.dataId))
+     
+        
         exposure = sensorRef.get("raw", immediate=True)
         if self.config.doWrite:
             sensorRef.put(exposure, "postISRCCD")

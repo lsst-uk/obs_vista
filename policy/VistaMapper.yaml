@@ -27,7 +27,8 @@ exposures:
         #Removed -%(ccd)02d from end because one file for all ccds
         #'raw/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s.fts[%(hdu)d]'
         #raw/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s-%(ccd)02d.fit
-        template: 'raw/%(dateObs)s/%(visit)04d-%(filter)s.fit'
+        #%(date)s/%(filter)s/decam%(visit)07d.fits.fz[%(hdu)d]
+        template: 'raw/%(dateObs)s/%(visit)04d-%(filter)s.fits[%(hdu)d]' #[%(hdu)d]
     postISRCCD:
         template: '%(visit)07d/postISR/postISR-%(visit)07d_%(ccdnum)02d.fits'
     instcal:
@@ -36,7 +37,7 @@ exposures:
         python: lsst.afw.image.DecoratedImageF
         storage: FitsStorage
         tables: raw
-        template: 'instcal/%(dateObs)s/%(visit)04d-%(filter)s-%(ccd)02d.fit[%(hdu)d]'
+        template: 'instcal/%(dateObs)s/%(visit)04d-%(filter)s.fits[%(hdu)d]'
     calexp:
         template: 'calexp/%(dateObs)s/calexp-%(visit)04d-%(filter)s-%(ccd)02d.fits'
         recipe: lossyBasic

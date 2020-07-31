@@ -7,30 +7,32 @@ from lsst.obs.base import CameraMapper
 import lsst.afw.image.utils as afwImageUtils
 import lsst.afw.image as afwImage
 from .makeVistaRawVisitInfo import MakeVistaRawVisitInfo
+from ._instrument import VISTA
 
 class VistaMapper(CameraMapper):
     packageName = 'obs_vista'
+    _gen3instrument = VISTA
     
     # A rawVisitInfoClass is required by processCcd.py
     MakeRawVisitInfoClass = MakeVistaRawVisitInfo
     
     detectorNames = {
-    'DET1.CHIP1':0,
-    'DET1.CHIP2':1,
-    'DET1.CHIP3':2,
-    'DET1.CHIP4':3,
-    'DET1.CHIP5':4,
-    'DET1.CHIP6':5,
-    'DET1.CHIP7':6,
-    'DET1.CHIP8':7,
-    'DET1.CHIP9':8,
-    'DET1.CHIP10':9,
-    'DET1.CHIP11':10,
-    'DET1.CHIP12':11,
-    'DET1.CHIP13':12,
-    'DET1.CHIP14':13,
-    'DET1.CHIP15':14,
-    'DET1.CHIP16':15}
+    0:'DET1.CHIP1',
+    1:'DET1.CHIP2',
+    2:'DET1.CHIP3',
+    3:'DET1.CHIP4',
+    4:'DET1.CHIP5',
+    5:'DET1.CHIP6',
+    6:'DET1.CHIP7',
+    7:'DET1.CHIP8',
+    8:'DET1.CHIP9',
+    9:'DET1.CHIP10',
+    10:'DET1.CHIP11',
+    11:'DET1.CHIP12',
+    12:'DET1.CHIP13',
+    13:'DET1.CHIP14',
+    14:'DET1.CHIP15',
+    15:'DET1.CHIP16'}
 
     def __init__(self, inputPolicy=None, **kwargs):
 
@@ -65,6 +67,19 @@ class VistaMapper(CameraMapper):
         #...and set your default filter.
         self.defaultFilterName = 'Clear'
         ##############################
+        
+        
+        
+        for datasetType in ("raw", "instcal"): #, "stack", "tile"):
+            self.mappings[datasetType].keyDict.update({'ccdnum': int})
+            self.mappings[datasetType].keyDict.update({'ccd': int})
+        
+    def _extractDetectorName(self, dataId):
+        copyId = self._transformId(dataId)
+        try:
+            return VistaMapper.detectorNames[copyId['ccdnum']]
+        except KeyError:
+            raise RuntimeError("No name found for dataId: %s"%(dataId))
     
     def _transformId(self, dataId):
         copyId = CameraMapper._transformId(self, dataId)
@@ -79,11 +94,13 @@ class VistaMapper(CameraMapper):
         64 to accomodate that we may have up to 64 CCDs exposed for every visit.
         processCcd.py will fail with a NotImplementedError() without this.
         ''' 
+        
         pathId = self._transformId(dataId)
+        print("DEBUG data id", pathId, dataId)
         visit = pathId['visit']
-        ccd = 1#pathId['ccd']
+        ccd = int(pathId['hdu']) - 1
         visit = int(visit)
-        ccd = int(ccd)
+       
 
         return visit*64 + ccd
 
@@ -137,7 +154,7 @@ class VistaMapper(CameraMapper):
         Here, I simply use the ccd ID number extracted from the header and recorded via the ingest process.
         processCcd.py will fail with a NotImplementedError() without this.
         ''' 
-        return 1#int("%(ccd)d" % dataId)
+        return int("%(hdu)d" % dataId) - 1
         
         
     def std_raw(self, item, dataId):
