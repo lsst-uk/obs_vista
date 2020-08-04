@@ -96,7 +96,7 @@ class VistaMapper(CameraMapper):
         ''' 
         
         pathId = self._transformId(dataId)
-        print("DEBUG data id", pathId, dataId)
+        #print("DEBUG data id", pathId, dataId)
         visit = pathId['visit']
         ccd = int(pathId['hdu']) - 1
         visit = int(visit)
