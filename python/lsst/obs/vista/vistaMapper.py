@@ -73,6 +73,15 @@ class VistaMapper(CameraMapper):
         for datasetType in ("raw", "instcal"): #, "stack", "tile"):
             self.mappings[datasetType].keyDict.update({'ccdnum': int})
             self.mappings[datasetType].keyDict.update({'ccd': int})
+            
+        # The number of bits allocated for fields in object IDs
+        # TODO: Understand how these were set by obs_decam
+        VistaMapper._nbit_tract = 10
+        VistaMapper._nbit_patch = 10
+        VistaMapper._nbit_filter = 4
+        VistaMapper._nbit_id = 64 - (VistaMapper._nbit_tract
+                                     + 2*VistaMapper._nbit_patch
+                                     + VistaMapper._nbit_filter)
         
     def _extractDetectorName(self, dataId):
         copyId = self._transformId(dataId)
@@ -114,7 +123,7 @@ class VistaMapper(CameraMapper):
         '''You need to tell the stack how many bits to use for the ExposureId. Here I'm say that the ccd ID takes up to 6 bits (2**6=64), and I can have up to 16,777,216 (=2**24) visits in my survey.
         processCcd.py will fail with an AttributeError without this.
         '''
-        return 24+6
+        return 64 #Set large to avoid 'Exposure ID '34910216' is too large.
         
         
     def _computeCoaddExposureId(self, dataId):
@@ -136,13 +145,13 @@ class VistaMapper(CameraMapper):
 
     def bypass_deepCoaddId_bits(self, *args, **kwargs):
         #Up to 1024 (2**10) tracts each containing up to 64x64 (2**6x2**6) patches
-        return 10+6+6 
+        return 64 - VistaMapper._nbit_id#10+6+6 #Set large to avoid 'Exposure ID '34910216' is too large.
 
     def bypass_deepCoaddId(self, datasetType, pythonType, location, dataId):
         return self._computeCoaddExposureId(dataId)
 
     def bypass_deepMergedCoaddId_bits(self, *args, **kwargs):
-         return 10+6+6
+         return 64 - VistaMapper._nbit_id#10+6+6 #Set large to avoid 'Exposure ID '34910216' is too large.
 
     def bypass_deepMergedCoaddId(self, datasetType, pythonType, location, dataId):
         return self._computeCoaddExposureId(dataId)

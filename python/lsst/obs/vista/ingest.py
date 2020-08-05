@@ -214,9 +214,11 @@ class VistaParseTask(ParseTask):
         #stack files
         try:
             filter =  'VISTA-'+md.get("SKYSUB").split('.')[0][-1]
+            if filter == 'VISTA-s':
+                filter = 'VISTA-Ks'
         #single exposures
         except:
-            filter =  'VISTA-Y'#+md.get("ESO INS FILT1 NAME")
+            filter =  'Clear'#+md.get("ESO INS FILT1 NAME")
         return filter
 
     def translateDate(self, md):
