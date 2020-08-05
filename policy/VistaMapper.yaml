@@ -64,7 +64,9 @@ datasets:
         template: 'sci-results/src/%(dateObs)s/src-%(visit)04d-%(filter)s-%(ccd)02d.fits'
     calexpBackground:
         template: 'corr/%(dateObs)s/src-%(visit)04d-%(filter)s-%(ccd)02d.fits'
-    deepCoadd_measMatch:
-        template: 'deepCoadd-results/%(filter)s/%(tract)d/%(patch)s/srcMatch-%(filter)s-%(tract)d-%(patch)s.fits'
     forced_src:
         template: 'forcedPhot/%(dateObs)s/%(filter)s/src/src-%(ccd)s-%(run)s.fits'
+    deepCoadd_measMatch:
+        template: 'deepCoadd-results/%(filter)s/%(tract)d/%(patch)s/srcMatch-%(filter)s-%(tract)d-%(patch)s.fits'
+    deepCoadd_forced_src:
+        template: 'deepCoadd-results/%(filter)s/%(tract)d/%(patch)s/forcedSrc-%(filter)s-%(tract)d-%(patch)s.fits'
