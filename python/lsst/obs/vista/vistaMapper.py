@@ -100,7 +100,7 @@ class VistaMapper(CameraMapper):
         '''
         Every exposure needs a unique ID.
         Here, I construct a unique ID by multiplying the visit number by
-        64 to accomodate that we may have up to 64 CCDs exposed for every visit.
+        64 to accomodate that we may have up to 16 CCDs exposed for every visit.
         processCcd.py will fail with a NotImplementedError() without this.
         ''' 
         
@@ -111,7 +111,7 @@ class VistaMapper(CameraMapper):
         visit = int(visit)
        
 
-        return visit*64 + ccd
+        return visit*64 + ccd #update to 16 at next rerun
 
     def bypass_ccdExposureId(self, datasetType, pythonType, location, dataId):
         '''You need to tell the stack that it needs to refer to the above _computeCcdExposureId function.
