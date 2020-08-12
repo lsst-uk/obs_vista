@@ -19,12 +19,11 @@ Folders:
 
 ## Installation
 
-The following instructions are for an "lsstsw" installation of the LSST stack. These instructions should be identical for either the standard newinstall.sh installation or a Docker image. The lsstsw method is significantly slower and takes up more HDD, around 45Gb as opposed to 5Gb than the newinstall.sh method. After installing the LSST stack the obs_vista package must go in the folder which contains all the obs packages:
+After [installing the LSST stack]https://pipelines.lsst.io/install/newinstall.html() the obs_vista package must go in the folder which contains all the obs packages:
 
 
 ```Shell
-cd /Users/rs548/GitHub/lsstsw/stack/1a1d771/DarwinX86   # example stack directory
-export stack=`pwd`
+cd $STACKPATH/stack/current/DarwinX86/   # example stack directory
 mkdir obs_vista
 cd obs_vista
 git clone https://github.com/raphaelshirley/obs_vista.git
@@ -35,10 +34,10 @@ This will now be a git submodule so any git commands run inside this directory w
 
 ```Shell
 eups declare -t current obs_vista 20.0.0-1   # run once
-setup obs_vista 20.0.0-1                     # run in every shell
+setup obs_vista                              # run in every shell
 ```
 
-Now running 
+Running 
 
 ```Shell
 eups list
@@ -50,13 +49,13 @@ Should show the 20.0.0-1 version of obs_vista as current and setup. Check the se
 processCcd.py
 ```
 
-If that returns "bash: processCcd.py: command not found" then you should start again. If it returns options the setup has worked.
-
-You will also need to create a _mapper file in the data directory. To do this on the Cambridge HPC for instance:
+You will also need to create a _mapper file in the Butler data directory:
 
 ```Shell
-echo "lsst.obs.vista.VistaMapper" > /home/ir-shir1/rds/rds-iris-ip005/data/_mapper
+echo "lsst.obs.vista.VistaMapper" > ./data/_mapper
 ```
+
+After which the gen2 command line tasks should accept that data folder as a Butler repo to interact with. The gen3 obs_vista is under development.
 
 ## The Camera
 
@@ -75,8 +74,4 @@ The key numbers specified in [camera/camera.py](camera/camera.py) are:
 
 The script [camera/buildDetectors.py](camera/buildDetectors.py) will be used to make a fits file describing each of the 16 CCDs. This is currently not running due to conflicts with the latest version of the stack.
 
-## TODO
 
-1. Run on every CCD extension not just the first.
-
-2. Define VISTA filters.

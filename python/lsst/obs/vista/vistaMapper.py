@@ -76,8 +76,8 @@ class VistaMapper(CameraMapper):
             
         # The number of bits allocated for fields in object IDs
         # TODO: Understand how these were set by obs_decam
-        VistaMapper._nbit_tract = 10
-        VistaMapper._nbit_patch = 10
+        VistaMapper._nbit_tract = 16
+        VistaMapper._nbit_patch = 5
         VistaMapper._nbit_filter = 4
         VistaMapper._nbit_id = 64 - (VistaMapper._nbit_tract
                                      + 2*VistaMapper._nbit_patch
@@ -111,7 +111,7 @@ class VistaMapper(CameraMapper):
         visit = int(visit)
        
 
-        return visit*64 + ccd #update to 16 at next rerun
+        return visit*16 + ccd #update to 16 at next rerun
 
     def bypass_ccdExposureId(self, datasetType, pythonType, location, dataId):
         '''You need to tell the stack that it needs to refer to the above _computeCcdExposureId function.
@@ -123,7 +123,7 @@ class VistaMapper(CameraMapper):
         '''You need to tell the stack how many bits to use for the ExposureId. Here I'm say that the ccd ID takes up to 6 bits (2**6=64), and I can have up to 16,777,216 (=2**24) visits in my survey.
         processCcd.py will fail with an AttributeError without this.
         '''
-        return 64 #Set large to avoid 'Exposure ID '34910216' is too large.
+        return 32 #Set large to avoid 'Exposure ID '34910216' is too large.
         
         
     def _computeCoaddExposureId(self, dataId):
@@ -134,12 +134,15 @@ class VistaMapper(CameraMapper):
         Currently, I'm not incorporating filter information.
         The remaining 64-22 = 42 bits are left for source numbers
         '''
-        nbit_tract = 10
-        nbit_patch = 6
+        #nbit_tract = 10
+        #nbit_patch = 6
         tract = int(dataId['tract'])
 
         patchX, patchY = [int(patch) for patch in dataId['patch'].split(',')]
-        oid = (((tract << nbit_patch) + patchX) << nbit_patch) + patchY
+        oid = (
+            ((tract << VistaMapper._nbit_patch) + patchX) 
+            << VistaMapper._nbit_patch
+        ) + patchY
         
         return oid
 
