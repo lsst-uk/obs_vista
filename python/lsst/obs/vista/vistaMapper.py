@@ -111,7 +111,7 @@ class VistaMapper(CameraMapper):
         visit = int(visit)
        
 
-        return visit*16 + ccd #update to 16 at next rerun
+        return visit*16 + ccd 
 
     def bypass_ccdExposureId(self, datasetType, pythonType, location, dataId):
         '''You need to tell the stack that it needs to refer to the above _computeCcdExposureId function.
