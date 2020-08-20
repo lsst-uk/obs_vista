@@ -48,7 +48,7 @@ class VistaMapper(CameraMapper):
         self.filters = {}
  
         #Define your set of filters; you can have as many filters as you like...  
-        afwImageUtils.defineFilter(name='Clear',  lambdaEff=535.5, alias=['Clear'])
+        afwImageUtils.defineFilter(name='Clear',  lambdaEff=0., alias=['Clear'])
         afwImageUtils.defineFilter(name="VISTA-z",lambdaEff=8762.4, alias=['VISTA-z'])
         afwImageUtils.defineFilter(name="VISTA-Y",lambdaEff=10184.2, alias=['VISTA-Y'])
         afwImageUtils.defineFilter(name="VISTA-J",lambdaEff=12464.4, alias=['VISTA-J'])

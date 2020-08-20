@@ -66,7 +66,7 @@ class VistaIngestArgumentParser(IngestArgumentParser):
         # the CASU calibrated ones, or the pointing stacks, or the full tiles
         self.add_argument(
             "--filetype", default="raw", 
-            choices=[ "raw", "instcal", "stack", "tile"],
+            choices=[ "raw", "instcal", "stack", "tile", "hsc_calexp"],
             help="Data processing level of the files to be ingested")
     
 class VistaIngestTask(IngestTask):
@@ -82,13 +82,17 @@ class VistaIngestTask(IngestTask):
     def run(self, args):
         """Ingest all specified files and add them to the registry
         """
-        if args.filetype == "instcal":
+        
+        if args.filetype == "raw":
+            IngestTask.run(self, args)
+            
+        elif args.filetype == "instcal":
             root = args.input
             with self.register.openRegistry(
                 root, create=args.create, dryrun=args.dryrun
             ) as registry:
                 for infile in args.files:
-                    print("DEBUG",infile, args.filetype)
+          
                     fileInfo, hduInfoList = self.parse.getInfo(infile, args.filetype)
                     if len(hduInfoList) > 0:
                         outfileStack = os.path.join(
@@ -99,77 +103,19 @@ class VistaIngestTask(IngestTask):
                                 infile ,"instcal"
                             )
                         )
-                        #outfileConf = os.path.join(
-                        #    root, 
-                        #    self.parse.getDestination(
-                        #        args.butler,
-                        #        hduInfoList[0], 
-                        #        infile,
-                        #        "conf"
-                        #    )
-                        #)
-
-                     
-                     
-                        ingestedStack = self.ingest(fileInfo["instcal"], outfileStack,
-                                                      mode=args.mode, dryrun=args.dryrun)
-                        #ingestedConf = self.ingest(fileInfo["conf"], outfileConf,
-                        #                             mode=args.mode, dryrun=args.dryrun)
+                        ingestedStack = self.ingest(
+                            fileInfo["instcal"], outfileStack, 
+                            mode=args.mode, dryrun=args.dryrun
+                        )
 
 
-                        if not (
-                            ingestedStack 
-                            #or ingestedDqmask 
-                        ):
+                        if not ingestedStack:
                             continue
 
                     for info in hduInfoList:
-                        print("DEBUG9:",info)
                         self.register.addRow(
-                            registry, 
-                            info, 
-                            dryrun=args.dryrun, 
-                            create=args.create
-                        )
-
-        elif args.filetype == "raw":
-            print("Ingesting")
-            IngestTask.run(self, args)
-            
-#             root = args.input
-#             with self.register.openRegistry(
-#                 root, create=args.create, dryrun=args.dryrun
-#             ) as registry:
-#                 for infile in args.files:
-#                     fileInfo, hduInfoList = self.parse.getInfo(infile, args.filetype)
-#                     #print("debug hdu",fileInfo, hduInfoList)
-#                     if len(hduInfoList) > 0:
-#                         outfileRaw = os.path.join(
-#                             root, 
-#                             self.parse.getDestination(
-#                                 args.butler,
-#                                 hduInfoList[0],
-#                                 infile ,"raw"
-#                             )
-#                         )
-#                         print("DEBUG outfile", outfileRaw)
-#                         ingestedRaw = self.ingest(infile, outfileRaw,
-#                                                       mode=args.mode, dryrun=args.dryrun)
-# 
-# 
-# 
-#                         if not (ingestedRaw):
-#                             continue
-# 
-#                     for info in hduInfoList:
-#                         #print('debug info', info)
-#                         self.register.addRow(
-#                             registry, 
-#                             info, 
-#                             dryrun=args.dryrun, 
-#                             create=args.create
-#                        )
-#             
+                            registry, info, dryrun=args.dryrun, create=args.create
+                        )      
     
 class VistaParseTask(ParseTask):
 
@@ -260,7 +206,7 @@ class VistaParseTask(ParseTask):
 
         
         
-    def getInfo(self, filename, filetype="instcal"):
+    def getInfo(self, filename, filetype="raw"):
         """Get metadata header info from multi-extension FITS decam image file.
 
         The science pixels, mask, and weight (inverse variance) are
@@ -300,7 +246,15 @@ class VistaParseTask(ParseTask):
 
             ingestImagesDecam.py outputRepository --filetype=instcal --mode=link instcal/*fits
         """
-        if filetype == "instcal":
+        if filetype == "raw":
+            phuInfo, infoList = super(VistaParseTask, self).getInfo(filename)
+            for info in infoList:
+                #print("DEBUG raw loop" , info)
+                info[self.instcalPrefix] = ""
+                info[self.confPrefix] = ""
+                info[self.catPrefix] = ""
+        
+        elif filetype == "instcal":
             #if self.expnumMapper is None:
             #    self.buildExpnumMapper(os.path.dirname(os.path.abspath(filename)))
 
@@ -318,15 +272,6 @@ class VistaParseTask(ParseTask):
                 info[self.confPrefix] = ""#self.expnumMapper[expnum][self.confPrefix]
                 info[self.catPrefix] = ""#self.expnumMapper[expnum][self.catPrefix]
     
-
-        elif filetype == "raw":
-            phuInfo, infoList = super(VistaParseTask, self).getInfo(filename)
-            for info in infoList:
-                #print("DEBUG raw loop" , info)
-                info[self.instcalPrefix] = ""
-                info[self.confPrefix] = ""
-                info[self.catPrefix] = ""
-
 
         # Some data IDs can not be extracted from the zeroth extension
         # of the MEF. Add them so Butler does not try to find them

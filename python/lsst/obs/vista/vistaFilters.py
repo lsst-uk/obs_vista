@@ -4,6 +4,9 @@ from lsst.obs.base import FilterDefinition, FilterDefinitionCollection
 # from HELP/SVO:
 #https://github.com/H-E-L-P/herschelhelp_python/blob/master/database_builder/filters/
 VISTA_FILTER_DEFINITIONS = FilterDefinitionCollection(
+    FilterDefinition(abstract_filter="Clear", physical_filter="NONE", lambdaEff=0,
+                     alias=["Clear","NONE", "None", "Unrecognised", "UNRECOGNISED",
+                            "Unrecognized", "UNRECOGNIZED", "NOTSET"]),
     FilterDefinition(physical_filter="VISTA-z",
                      abstract_filter="z",
                      lambdaEff=8762.4437058376, 
@@ -29,5 +32,20 @@ VISTA_FILTER_DEFINITIONS = FilterDefinitionCollection(
                      lambdaEff=21336.637909756, 
                      lambdaMin=19332.653810836, 
                      lambdaMax=23674.330024814),
-
+    #Copy pasted from obs_suabru. Can I replace with an import?
+    FilterDefinition(physical_filter="HSC-G",
+                     abstract_filter="g",
+                     lambdaEff=477, alias={'W-S-G+'}),
+    FilterDefinition(physical_filter="HSC-R",
+                     abstract_filter="r",
+                     lambdaEff=623, alias={'W-S-R+'}),
+    FilterDefinition(physical_filter="HSC-I",
+                     abstract_filter="i",
+                     lambdaEff=775, alias={'W-S-I+'}),
+    FilterDefinition(physical_filter="HSC-Z",
+                     abstract_filter="z",
+                     lambdaEff=925, alias={'W-S-Z+'}),
+    FilterDefinition(physical_filter="HSC-Y",
+                     abstract_filter="y",
+                     lambdaEff=990, alias={'W-S-ZR'}),
 )

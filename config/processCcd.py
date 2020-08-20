@@ -19,7 +19,9 @@ At this stage we are skipping these steps so we just want the code to directly g
 #Grab the path to this config directory:
 configDir = os.path.join(getPackageDir("obs_vista"), "config")
 
-
+#Fix error thrown on exposures by upping this from 10000
+#Why is it so high?
+config.charImage.repair.cosmicray.nCrPixelMax=1000000
 
 #from lsst.obs.vista.vistaNullIsr import VistaNullIsrTask
 #config.isr.retarget(VistaNullIsrTask)
@@ -32,8 +34,6 @@ config.isr.load(os.path.join(configDir, "characterise.py"))
 config.doCalibrate = True
 config.calibrate.load(os.path.join(configDir, "calibrate.py"))
 
-
-#I think we need to tell it to open the appropriate hdu here.
 
 
 
