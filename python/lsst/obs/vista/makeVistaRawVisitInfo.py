@@ -23,6 +23,18 @@ class MakeVistaRawVisitInfo(MakeRawVisitInfo):
         argDict["exposureTime"] = self.popFloat(md, 'EXPTIME')
         argDict["observatory"] = self.observatory
         #argDict["ccd"] = self.popFloat(md, 'CCDNUM')
+        startDate = self.popIsoDate(md, "DATE-OBS")
+        argDict["date"] = self.offsetDate(startDate, 0.5*argDict["exposureTime"])
+    
+    def getDateAvg(self, md, exposureTime):
+        """Return date at the middle of the exposure
+        @param[in,out] md  FITS metadata; changed in place
+        @param[in] exposureTime  exposure time in sec
+        """
+        dateObs = self.popIsoDate(md, "DATE-OBS")
+        return self.offsetDate(dateObs, 0.5*exposureTime)
+
+
 
       
         

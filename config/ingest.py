@@ -15,13 +15,15 @@ config.parse.retarget(VistaParseTask)
 #The following grabs data from the image headers that don't need parsing (i.e., translating). Header keywords are on the right, stack keywords on the left:
 config.parse.translation = { 'expTime': "EXPTIME",       #Nothing can go direct
                             'visit':    "ESO DET EXP NO",#Is exposure number visit number?
-                            'dataType': "XTENSION"
+                            'dataType': "XTENSION",
+                            #'dateObs':'DATE-OBS',
+                            #'taiObs':'DATE-OBS',
                            }
 
 #These are the data that need to be parsed (translated)
 config.parse.translators = {'filter': 'translateFilter', # 'FILTER'
                             'dateObs':'translateDate',
-                            'taiObs':'translateDate',
+                            'taiObs':'translateTai',
                             'mjd':'translateJd',
                             'ccd':'translateCcd', 
                             'ccdnum':'translateCcd',

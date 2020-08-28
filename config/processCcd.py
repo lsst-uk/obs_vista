@@ -12,16 +12,32 @@ ProcessCcd runs a lot of processes, but they are split into three broad sections
 
 Subsequently, there are a **huge** number of config parameters that one can adjust for processCcd. To keep things a little tidier, I like to split the processCcd's config parameters into three other config files corresponding to each of the above three sections. 
 
-
-At this stage we are skipping these steps so we just want the code to directly give the premade stacks.
+I have arranged config overides by the errors they were introduced to fix
 '''
 
 #Grab the path to this config directory:
 configDir = os.path.join(getPackageDir("obs_vista"), "config")
 
-#Fix error thrown on exposures by upping this from 10000
-#Why is it so high?
+#Too many CR pixels error
+#Fix by upping this from 10000
+#Why is it so high? 2k * 2k = 4 m total pixels. 100*100 bad pixels in a ccd?
 config.charImage.repair.cosmicray.nCrPixelMax=1000000
+
+#measureApCorr error?
+# example failure: dataId={'dateObs': '2012-11-22', 'visit': 658653, 'filter': 'VISTA-Ks', 'hdu': 9, 'ccdnum': 8, 'ccd': 8}
+#RuntimeError: Unable to measure aperture correction for required algorithm 'base_GaussianFlux': only 1 sources, but require at least 2.
+#config.calibrate.measurement.undeblended['base_GaussianFlux'].doMeasure=True
+config.charImage.measureApCorr.allowFailure=['base_GaussianFlux', 'base_PsfFlux'] #??
+
+#PSF candidates error 
+# example failure: visit= ccd=
+#IndexError("No viable PSF candidates survive")
+#https://github.com/lsst/meas_algorithms/blob/master/python/lsst/meas/algorithms/pcaPsfDeterminer.py
+#config.charImage.measureApCorr.allowFailure=['base_GaussianFlux']
+
+#Negative determinant error
+# example failure: visit= ccd=
+#lsst::pex::exceptions::InvalidParameterError: 'Quadrupole matrix cannot have negative determinant.'
 
 #from lsst.obs.vista.vistaNullIsr import VistaNullIsrTask
 #config.isr.retarget(VistaNullIsrTask)

@@ -130,6 +130,8 @@ class VistaParseTask(ParseTask):
     standard required by the LSST stack. It will work with the header keys defined in 
     config/ingest.py
     '''
+    #Why a new zero point? To save bits?
+    #DAY0 = 55927  # Zero point for  2012-01-01  51544 -> 2000-01-01 
     def __init__(self, *args, **kwargs):
         super(ParseTask, self).__init__(*args, **kwargs)
 
@@ -172,20 +174,32 @@ class VistaParseTask(ParseTask):
         This strips everything apart form yyyy-mm-dd
         '''
         date = md.get("DATE-OBS")
+        #print(date)
         start = date[11:]
         date = date[0:10]
         
         t = Time(date)
         #If after midnight, set date to date minus 1 day.
         if int(start.split(":")[0]) < 12:
-            date = Time(t.jd-1, format='jd', out_subfmt='date').iso
-                
+            date = Time(t.jd-1, format='jd', out_subfmt='date').isot
+      
+        #print('d'+date)
         return date
+        
+    def translateTai(self, md):
+        '''
+        This gives the full iso time
+        '''
+        t = Time(md.get("DATE-OBS"), format='isot')
+        #print('tai:'+t.isot)
+        return t.isot
         
     def translateJd(self, md):
         date = self.translateDate(md)
-        t = Time(date, format='iso')
-        return int(t.mjd)
+        #print('dateobs' + md.get("DATE-OBS"))
+        t = Time(date, format='isot')
+        #print(int(t.mjd))
+        return int(t.mjd) #- self.DAY0
      
                     
     def translateCcd(self, md):

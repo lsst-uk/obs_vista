@@ -43,6 +43,22 @@ class VistaMapper(CameraMapper):
         #...and add it to the mapper:
         super(VistaMapper, self).__init__(policy, os.path.dirname(policyFile), **kwargs)
 
+        # Ensure each dataset type of interest knows about the full range of keys available from the registry
+        keys = {'visit': int,
+                'ccd': int,
+                'filter': str,
+                'dataType': str,
+                'expTime': float,
+                'dateObs': str,
+                'taiObs': str,
+                #'mjd': int,
+                #'field': str,
+                #'survey': str
+                }
+        for name in ("raw",
+                     "postISRCCD", "calexp", "src", "icSrc", "srcMatch",
+                    ):
+            self.mappings[name].keyDict.update(keys)
         ###Defining your filter set###
         #Create a python dict of filters:
         self.filters = {}
