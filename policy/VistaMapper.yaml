@@ -62,6 +62,8 @@ datasets:
         template: 'sci-results/icSrc/%(dateObs)s/icSrc-%(visit)04d-%(filter)s-%(ccd)02d.fits'
     src:
         template: 'sci-results/src/%(dateObs)s/src-%(visit)04d-%(filter)s-%(ccd)02d.fits'
+    srcMatch:
+        template: 'sci-results/srcMatch/srcMatch-%(visit)07d_%(ccdnum)02d.fits'
     calexpBackground:
         template: 'corr/%(dateObs)s/src-%(visit)04d-%(filter)s-%(ccd)02d.fits'
     forced_src:

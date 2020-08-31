@@ -65,7 +65,7 @@ class VistaMapper(CameraMapper):
  
         #Define your set of filters; you can have as many filters as you like...  
         afwImageUtils.defineFilter(name='Clear',  lambdaEff=0., alias=['Clear'])
-        afwImageUtils.defineFilter(name="VISTA-z",lambdaEff=8762.4, alias=['VISTA-z'])
+        afwImageUtils.defineFilter(name="VISTA-Z",lambdaEff=8762.4, alias=['VISTA-Z'])
         afwImageUtils.defineFilter(name="VISTA-Y",lambdaEff=10184.2, alias=['VISTA-Y'])
         afwImageUtils.defineFilter(name="VISTA-J",lambdaEff=12464.4, alias=['VISTA-J'])
         afwImageUtils.defineFilter(name="VISTA-H",lambdaEff=16310.0, alias=['VISTA-H'])
@@ -73,7 +73,7 @@ class VistaMapper(CameraMapper):
         
         #...add them to your filter dict...
         self.filters['Clear'] = afwImage.Filter('Clear').getCanonicalName()
-        self.filters['VISTA-z'] = afwImage.Filter('VISTA-z').getCanonicalName()
+        self.filters['VISTA-Z'] = afwImage.Filter('VISTA-Z').getCanonicalName()
         self.filters['VISTA-Y'] = afwImage.Filter('VISTA-Y').getCanonicalName()
         self.filters['VISTA-J'] = afwImage.Filter('VISTA-J').getCanonicalName()
         self.filters['VISTA-H'] = afwImage.Filter('VISTA-H').getCanonicalName()
