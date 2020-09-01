@@ -1,12 +1,17 @@
 '''
-Override the default calibrate config parameters by putting them in here.
-e.g.:
-config.doAstrometry = False
+Override the default calibrate config parameters. This is mainly concerned with setting 
+the reference catalogue and colour terms for its use. Perhaps we can also tinker with 
+values here to increase fraction of ccds that pass calibration.
 '''
 import os.path
 ObsConfigDir = os.path.dirname(__file__)
+
 #config.doPhotoCal = False #False # Needs a cal_ref_cat
 #config.doAstrometry = False # Needs reference catalogue ingested
+# Demand astrometry and photoCal succeed
+#config.requireAstrometry = True
+#config.requirePhotoCal = True
+
 # Reference catalogs
 #The following was copied from obs_subaru and manages conflicts between gen2 and gen3
 ref_cat = "ps1_pv3_3pi_20170110_vista" #_vista
