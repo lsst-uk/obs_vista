@@ -3,12 +3,16 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to obs_vista's documentation!
+The obs_vista package
 =====================================
+
+The obs_vista pacage allows the LSST stack to interact with VISTA imaging.
+
+
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+ 
 
 
 
