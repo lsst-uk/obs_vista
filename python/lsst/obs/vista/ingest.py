@@ -142,7 +142,7 @@ class VistaParseTask(ParseTask):
         self.instcalPrefix = "instcal"
         self.confPrefix = "conf"
         self.catPrefix = "cat"
-     
+       
     
     
     
@@ -159,14 +159,23 @@ class VistaParseTask(ParseTask):
         '''
         #Find a better way to get the filter - access to top level header?
         #e.g. turn 'Done with sky_20180911_266_Y.fit[1]' to 'Y'
-        #stack files
+        #_st.fit stack files
         try:
             filter =  'VISTA-'+md.get("SKYSUB").split('.')[0][-1]
             if filter == 'VISTA-s':
                 filter = 'VISTA-Ks'
-        #single exposures
+        
         except:
             filter =  'Clear'#+md.get("ESO INS FILT1 NAME")
+            
+        #[0-9].fit single exposures    
+        try:
+            filter = self.filter
+            if filter == 'VISTA-s':
+                filter = 'VISTA-Ks'
+        except:
+            filter =  'Clear'#+md.get("ESO INS FILT1 NAME")
+            
         return filter
 
     def translateDate(self, md):
@@ -260,14 +269,20 @@ class VistaParseTask(ParseTask):
 
             ingestImagesDecam.py outputRepository --filetype=instcal --mode=link instcal/*fits
         """
+        
+
+        
         if filetype == "raw":
             phuInfo, infoList = super(VistaParseTask, self).getInfo(filename)
+            self.filter = 'VISTA-'+readMetadata(filename, 0).get('ESO INS FILT1 NAME')
+            phuInfo['filter']=self.filter
             for info in infoList:
                 #print("DEBUG raw loop" , info)
                 info[self.instcalPrefix] = ""
                 info[self.confPrefix] = ""
                 info[self.catPrefix] = ""
-        
+                info['filter']=self.filter
+          
         elif filetype == "instcal":
             #if self.expnumMapper is None:
             #    self.buildExpnumMapper(os.path.dirname(os.path.abspath(filename)))

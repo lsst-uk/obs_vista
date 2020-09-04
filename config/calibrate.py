@@ -61,3 +61,17 @@ colorterms.data["ps1*"] = ColortermDict(data={
 #    refObjLoader.filterMap['r2'] = 'r'
 #    refObjLoader.filterMap['i2'] = 'i'
 
+for i in [
+#        'base_GaussianFlux',
+#        'base_SdssShape', #base_SdssShape is needed for PSF determination.
+        #'base_ScaledApertureFlux',
+#        'base_CircularApertureFlux',
+        'base_Blendedness',
+        #'base_LocalBackground',
+        #'base_Jacobian',
+        #'base_FPPosition',
+        #'base_Variance',
+        #'base_InputCount',
+        #'base_SkyCoord',
+]:
+    config.measurement.plugins[i].doMeasure=False

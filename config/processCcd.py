@@ -18,16 +18,7 @@ I have arranged config overides by the errors they were introduced to fix
 #Grab the path to this config directory:
 configDir = os.path.join(getPackageDir("obs_vista"), "config")
 
-#Too many CR pixels error
-#Fix by upping this from 10000
-#Why is it so high? 2k * 2k = 4 m total pixels. 100*100 bad pixels in a ccd?
-config.charImage.repair.cosmicray.nCrPixelMax=1000000
 
-#measureApCorr error?
-# example failure: dataId={'dateObs': '2012-11-22', 'visit': 658653, 'filter': 'VISTA-Ks', 'hdu': 9, 'ccdnum': 8, 'ccd': 8}
-#RuntimeError: Unable to measure aperture correction for required algorithm 'base_GaussianFlux': only 1 sources, but require at least 2.
-#config.calibrate.measurement.undeblended['base_GaussianFlux'].doMeasure=True
-config.charImage.measureApCorr.allowFailure=['base_GaussianFlux', 'base_PsfFlux'] #??
 
 #PSF candidates error 
 # example failure: visit= ccd=
@@ -44,7 +35,7 @@ config.charImage.measureApCorr.allowFailure=['base_GaussianFlux', 'base_PsfFlux'
 #Load ISR configurations:
 config.isr.load(os.path.join(configDir, "isr.py"))
 #Characterise:
-config.isr.load(os.path.join(configDir, "characterise.py"))
+config.charImage.load(os.path.join(configDir, "characterise.py"))
 
 #Load Calibrate configurations
 config.doCalibrate = True
