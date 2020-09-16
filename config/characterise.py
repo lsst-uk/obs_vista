@@ -21,7 +21,7 @@ config.repair.cosmicray.nCrPixelMax=10000000
 # This sets the reference catalog name for Gen2.
 # Note that in Gen3, we've stopped pretending (which is what Gen2 does,
 # for backwards compatibility) that charImage uses a reference catalog.
-config.refObjLoader.ref_dataset_name = "ps1_pv3_3pi_20170110_vista"
+config.refObjLoader.ref_dataset_name = "ps1_pv3_3pi_20170110_2mass"
 
 #measureApCorr error?
 # example failure: dataId={'dateObs': '2012-11-22', 'visit': 658653, 'filter': 'VISTA-Ks', 'hdu': 9, 'ccdnum': 8, 'ccd': 8}
@@ -37,13 +37,13 @@ config.measureApCorr.allowFailure=[
 #Reduce contraints to try to get more psf candidates
 config.measurePsf.starSelector['objectSize'].doFluxLimit=True
 #flux value/mag relation depends on exposure time for given band and stack vs exposure
-config.measurePsf.starSelector['objectSize'].fluxMin=1000.0 #12500.0 #1000. fine for stacks
+config.measurePsf.starSelector['objectSize'].fluxMin=500.0 #12500.0 #1000. fine for stacks
 # specify the minimum signal-to-noise for good Psf Candidates
 config.measurePsf.starSelector['objectSize'].signalToNoiseMin=5.0 #20.0
 # Maximum width to include in histogram
 config.measurePsf.starSelector['objectSize'].widthMax=20.0 #10.0
 #From obs_subaru:
-config.measurePsf.starSelector["objectSize"].widthMin = 0.1
+config.measurePsf.starSelector["objectSize"].widthMin = 0.0
 # Standard deviation of width allowed to be interpreted as good stars
 config.measurePsf.starSelector['objectSize'].widthStdAllowed=5.0 #0.15
 # Keep objects within this many sigma of cluster 0's median
@@ -61,7 +61,7 @@ config.measurePsf.starSelector['objectSize'].badFlags=[
 
 config.measurePsf.starSelector['astrometry'].minSnr=5.0 #10.0
 config.measurePsf.starSelector['matcher'].minSnr=5.0 #40.0
-config.measurePsf.starSelector['matcher'].excludePixelFlags=False
+config.measurePsf.starSelector['matcher'].excludePixelFlags=True
 
 #Trial and error from obs goto:
 #config.detection.minPixels = 20

@@ -28,6 +28,8 @@ config.connections.astromRefCat = ref_cat
 # These are gen2?:
 config.photoCal.applyColorTerms=True
 config.photoCal.photoCatName=ref_cat
+config.photoCal.match.matchRadius=1.0
+config.photoCal.match.sourceSelection.doFlags=False
 
 # Taken from https://github.com/lsst/pipe_tasks/blob/master/python/lsst/pipe/tasks/colorterms.py:
 # p' = primary + c0 + c1*(primary - secondary) + c2*(primary - secondary)**2
@@ -98,3 +100,30 @@ for i in [
         #'base_SkyCoord',
 ]:
     config.measurement.plugins[i].doMeasure=False
+    
+    
+    
+#Astrometry
+# List of flags which cause a source to be rejected as bad
+config.astrometry.sourceSelector['astrometry'].badFlags=[
+    'base_PixelFlags_flag_edge', 
+    'base_PixelFlags_flag_interpolatedCenter', 
+    'base_PixelFlags_flag_saturatedCenter', 
+    'base_PixelFlags_flag_crCenter', 
+    'base_PixelFlags_flag_bad'
+]
+
+# Type of source flux; typically one of Ap or Psf
+config.astrometry.sourceSelector['astrometry'].sourceFluxType='Ap'
+
+# Minimum allowed signal-to-noise ratio for sources used for matching (in the flux specified by sourceFluxType); <= 0 for no limit
+config.astrometry.sourceSelector['astrometry'].minSnr=5.0
+
+# Type of source flux; typically one of Ap or Psf
+config.astrometry.sourceSelector['matcher'].sourceFluxType='Ap'
+
+# Minimum allowed signal-to-noise ratio for sources used for matching (in the flux specified by sourceFluxType); <= 0 for no limit
+config.astrometry.sourceSelector['matcher'].minSnr=5.0
+
+# Exclude objects that have saturated, interpolated, or edge pixels using PixelFlags. For matchOptimisticB set this to False to recover previous matcher selector behavior.
+config.astrometry.sourceSelector['matcher'].excludePixelFlags=False
