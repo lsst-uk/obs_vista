@@ -246,6 +246,8 @@ class VistaParseTask(ParseTask):
         common unique identifier EXPNUM in the FITS header.  We have
         to aggregate the 3 filenames for a given EXPNUM and return
         this information along with that returned by the base class.
+        
+        This appears to be the only way to use the filename.
 
         Parameters
         ----------
