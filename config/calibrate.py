@@ -30,6 +30,14 @@ config.photoCal.applyColorTerms=True
 config.photoCal.photoCatName=ref_cat
 config.photoCal.match.matchRadius=1.0
 config.photoCal.match.sourceSelection.doFlags=False
+# Apply unresolved limitation?
+config.photoCal.match.sourceSelection.doUnresolved=False
+# List of source flag fields that must NOT be set for a source to be used.
+config.photoCal.match.sourceSelection.flags.bad=[
+    #'base_PixelFlags_flag_edge', 
+    #'base_PixelFlags_flag_interpolated', 
+    #'base_PixelFlags_flag_saturated',
+]
 
 # Taken from https://github.com/lsst/pipe_tasks/blob/master/python/lsst/pipe/tasks/colorterms.py:
 # p' = primary + c0 + c1*(primary - secondary) + c2*(primary - secondary)**2
@@ -104,6 +112,9 @@ for i in [
     
     
 #Astrometry
+# Raise an exception if astrometry fails? Ignored if doAstrometry false.
+config.requireAstrometry=False #Debateable?
+
 # List of flags which cause a source to be rejected as bad
 config.astrometry.sourceSelector['astrometry'].badFlags=[
     'base_PixelFlags_flag_edge', 
@@ -127,3 +138,6 @@ config.astrometry.sourceSelector['matcher'].minSnr=5.0
 
 # Exclude objects that have saturated, interpolated, or edge pixels using PixelFlags. For matchOptimisticB set this to False to recover previous matcher selector behavior.
 config.astrometry.sourceSelector['matcher'].excludePixelFlags=False
+
+# specify the minimum psfFlux for good Psf Candidates
+config.astrometry.sourceSelector['objectSize'].fluxMin=1000.0

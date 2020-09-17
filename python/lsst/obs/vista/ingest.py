@@ -142,7 +142,7 @@ class VistaParseTask(ParseTask):
         self.instcalPrefix = "instcal"
         self.confPrefix = "conf"
         self.catPrefix = "cat"
-       
+        
     
     
     
@@ -177,6 +177,15 @@ class VistaParseTask(ParseTask):
             filter =  'Clear'#+md.get("ESO INS FILT1 NAME")
             
         return filter
+        
+    def translateObsNum(self, md):
+        '''Get obsNum from filename parsed to local variable'''
+        try: 
+            obsNum = self.obsNum
+        except:
+            obsNum = '0'
+        return obsNum
+        
 
     def translateDate(self, md):
         '''
@@ -275,14 +284,17 @@ class VistaParseTask(ParseTask):
         if filetype == "raw":
             phuInfo, infoList = super(VistaParseTask, self).getInfo(filename)
             self.filter = 'VISTA-'+readMetadata(filename, 0).get('ESO INS FILT1 NAME')
+            self.obsNum = filename.split('/')[-1].split('_')[1]
             phuInfo['filter']=self.filter
+            phuInfo['obsNum']=self.obsNum
             for info in infoList:
                 #print("DEBUG raw loop" , info)
                 info[self.instcalPrefix] = ""
                 info[self.confPrefix] = ""
                 info[self.catPrefix] = ""
                 info['filter']=self.filter
-          
+                info['obsNum']=self.obsNum
+                
         elif filetype == "instcal":
             #if self.expnumMapper is None:
             #    self.buildExpnumMapper(os.path.dirname(os.path.abspath(filename)))
@@ -332,6 +344,8 @@ class VistaParseTask(ParseTask):
         raw : `str`
             Destination filename.
         """
+        self.filter = 'VISTA-'+readMetadata(filename, 0).get('ESO INS FILT1 NAME')
+        self.obsNum = filename.split('/')[-1].split('_')[1]
         raw = butler.get("%s_filename"%(filetype), info)[0]
         # Ensure filename is devoid of cfitsio directions about HDUs
         c = raw.find("[")
