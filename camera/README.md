@@ -1,5 +1,20 @@
 # The Camera files
 
-In this directory we must have a camera.py and a fits file for each ccd. Together these describe the VISTA camera. We need these to run the ingestImages.py command line task. I am modifying the buildDetectors script from obs_necam to make the fits file for each ccd. This was developed with gen2 and needs updating.
+The files here describe the VISTA VIRCAM Camera. We need to specify the pixel dimensions, gain, saturation and readout noise.
 
-The fits files currently present are a hack based on opening an obs_subaru example fits files for each CCD and modifying key values. In due course we will develop the buildDetector.py code to produce these possibly based on some external descriptions of the CCDs.
+In this directory we must have a fits file for each ccd. Together these describe the VISTA camera. The buildDetectors script is modified from obs_necam to make the fits file for each ccd. 
+
+The fits files currently present are made from an obs_subaru example fits files for each CCD and modifying key values. 
+
+Saturation values are taken from :
+
+http://casu.ast.cam.ac.uk/surveys-projects/vista/technical/linearity-sequences
+
+and gain values are taken from 
+
+http://casu.ast.cam.ac.uk/surveys-projects/vista/technical/vista-gain
+
+The median gain is 4.2. Since gain is electrons per count the effective gain value is different for exposures and stacks. Since stacks are produced from six exposures:
+
+
+gain_{stack} = gain_{exposure}/6

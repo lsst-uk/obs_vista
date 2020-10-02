@@ -27,7 +27,7 @@ config.parse.translators = {'filter': 'translateFilter', # 'FILTER'
                             'mjd':'translateJd',
                             'ccd':'translateCcd', 
                             'ccdnum':'translateCcd',
-                            'obsNum':'translateObsNum',
+                            'numObs':'translateNumObs',
                             #'hdu':'translateCcd', 
                             }
                             
@@ -49,10 +49,10 @@ config.parse.extnames = [
     'DET1.CHIP15',
     'DET1.CHIP16']
                             
-config.register.visit = ['visit', 'filter','dateObs','taiObs']
+config.register.visit = ['visit', 'filter','dateObs','taiObs', 'numObs']
 config.register.unique = ['visit', 'ccdnum' ]#removed ,'ccd'
 config.register.columns = {'visit':'int',
-                           'obsNum':'text',
+                           'numObs':'text',
                            'ccd':'int',
                            'ccdnum':'int',
                            'hdu':'int',#copying from obs_decam
