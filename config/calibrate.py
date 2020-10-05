@@ -14,7 +14,7 @@ ObsConfigDir = os.path.dirname(__file__)
 
 # Reference catalogs
 #The following was copied from obs_subaru and manages conflicts between gen2 and gen3
-ref_cat = "ps1_pv3_3pi_20170110_2mass" #_vista or _2mass
+ref_cat = "ps1_pv3_3pi_20170110_vhs_vista" #_vhs_vista, _video_vista, or _2mass
 for refObjLoader in (config.astromRefObjLoader,
                      config.photoRefObjLoader,
                      ):
@@ -66,7 +66,7 @@ config.photoCal.match.sourceSelection.flags.bad=[
 
 colorterms = config.photoCal.colorterms
 from lsst.pipe.tasks.colorterms import ColortermDict, Colorterm
-if ref_cat.endswith('vista'):
+if 'vista' in ref_cat:
     colorterms.data["ps1*"] = ColortermDict(data={
     #####HSC COLOUR TERMS FROM obs_subaru
     'HSC-G': Colorterm(primary="g", secondary="r", 
