@@ -41,7 +41,7 @@ exposures:
         tables: raw
         template: 'instcal/%(dateObs)s/%(visit)04d-%(filter)s.fits[%(hdu)d]'
     calexp:
-        template: 'calexp/%(dateObs)s/calexp-%(visit)04d-%(filter)s-%(ccd)02d.fits'
+        template: 'calexp/%(dateObs)s/calexp-%(visit)04d-%(numObs)s-%(filter)s-%(ccd)02d.fits'
         recipe: lossyBasic
     deepCoadd_directWarp:
         template: 'deepCoadd/%(filter)s/%(tract)d/%(patch)s/warp-%(filter)s-%(tract)d-%(patch)s-%(dateObs)s-%(visit)04d-%(numObs)s.fits'
