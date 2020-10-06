@@ -17,4 +17,4 @@ http://casu.ast.cam.ac.uk/surveys-projects/vista/technical/vista-gain
 The median gain is 4.2. Since gain is electrons per count the effective gain value is different for exposures and stacks. Since stacks are produced from six exposures:
 
 
-gain_{stack} = gain_{exposure}/6
+gain_{stack} = gain_{exposure} * 6
