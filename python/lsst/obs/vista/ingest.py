@@ -186,6 +186,14 @@ class VistaParseTask(ParseTask):
             numObs = '0'
         return numObs
         
+    def translateDataType(self, md):
+        '''Get data type (stack or exposure) from filename parsed to local variable'''
+        try: 
+            dataType = self.dataType
+        except:
+            dataType = 'unknown'
+        return dataType
+        
 
     def translateDate(self, md):
         '''
@@ -287,8 +295,12 @@ class VistaParseTask(ParseTask):
             phuInfo, infoList = super(VistaParseTask, self).getInfo(filename)
             self.filter = 'VISTA-'+readMetadata(filename, 0).get('ESO INS FILT1 NAME')
             self.numObs = filename.split('/')[-1].split('_')[1].split('.')[0]
+            self.dataType = 'exposure'
+            if filename.endswith('_st.fit'):
+                self.dataType = 'stack'
             phuInfo['filter']=self.filter
             phuInfo['numObs']=self.numObs
+            phuInfo['dataType'] = self.dataType
             for info in infoList:
                 #print("DEBUG raw loop" , info)
                 info[self.instcalPrefix] = ""
@@ -296,6 +308,7 @@ class VistaParseTask(ParseTask):
                 info[self.catPrefix] = ""
                 info['filter']=self.filter
                 info['numObs']=self.numObs
+                info['dataType'] = self.dataType
                 
         elif filetype == "instcal":
             #if self.expnumMapper is None:

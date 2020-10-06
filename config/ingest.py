@@ -15,7 +15,7 @@ config.parse.retarget(VistaParseTask)
 #The following grabs data from the image headers that don't need parsing (i.e., translating). Header keywords are on the right, stack keywords on the left:
 config.parse.translation = { 'expTime': "EXPTIME",       #Nothing can go direct
                             'visit':    "ESO DET EXP NO",#Is exposure number visit number?
-                            'dataType': "XTENSION",
+                            #'dataType': "XTENSION",
                             #'dateObs':'DATE-OBS',
                             #'taiObs':'DATE-OBS',
                            }
@@ -28,6 +28,7 @@ config.parse.translators = {'filter': 'translateFilter', # 'FILTER'
                             'ccd':'translateCcd', 
                             'ccdnum':'translateCcd',
                             'numObs':'translateNumObs',
+                            'dataType': 'translateDataType',
                             #'hdu':'translateCcd', 
                             }
                             
@@ -49,8 +50,8 @@ config.parse.extnames = [
     'DET1.CHIP15',
     'DET1.CHIP16']
                             
-config.register.visit = ['visit', 'filter','dateObs','taiObs', 'numObs']
-config.register.unique = ['visit', 'ccdnum' ]#removed ,'ccd'
+config.register.visit = ['visit', 'filter','dateObs','taiObs', 'numObs', 'dataType']
+config.register.unique = ['visit', 'ccdnum', 'dataType' ]#removed ,'ccd'
 config.register.columns = {'visit':'int',
                            'numObs':'text',
                            'ccd':'int',
