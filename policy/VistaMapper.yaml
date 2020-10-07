@@ -30,7 +30,7 @@ exposures:
         #%(date)s/%(filter)s/decam%(visit)07d.fits.fz[%(hdu)d]
         #The following must be in the .fits format (these can be linked even if
         #the original files are named .fit).
-        template: 'raw/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]' #[%(hdu)d]
+        template: 'raw/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]' 
     postISRCCD:
         template: '%(visit)07d/postISR/postISR-%(visit)07d_%(ccdnum)02d.fits'
     instcal:
@@ -39,8 +39,7 @@ exposures:
         python: lsst.afw.image.DecoratedImageF
         storage: FitsStorage
         tables: raw
-        template: 'instcal/%(dateObs)s/%(visit)04d-%(filter)s.fits[%(hdu)d]'
-    calexp:
+        template: 'instcal/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]
         template: 'calexp/%(dateObs)s/calexp-%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s-%(ccd)02d.fits'
         recipe: lossyBasic
     deepCoadd_directWarp:
