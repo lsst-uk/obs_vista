@@ -39,7 +39,8 @@ exposures:
         python: lsst.afw.image.DecoratedImageF
         storage: FitsStorage
         tables: raw
-        template: 'instcal/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]
+        template: 'instcal/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]'
+    calexp:
         template: 'calexp/%(dateObs)s/calexp-%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s-%(ccd)02d.fits'
         recipe: lossyBasic
     deepCoadd_directWarp:
