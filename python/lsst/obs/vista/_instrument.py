@@ -37,6 +37,12 @@ class VISTA(Instrument):
             ampInfoPath=path,
             shortNameFunc=lambda name: name.replace(" ", "_"),
         )
+        #Gen 3 yaml camera
+        #path = os.path.join(
+        #    getPackageDir("obs_vista"), 
+        #    "camera", 
+        #    'vista.yaml')
+        #return yamlCamera.makeCamera(path)
 
     def register(self, registry):
         camera = self.getCamera()

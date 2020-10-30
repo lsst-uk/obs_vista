@@ -1,24 +1,24 @@
 
-__all__ = ("NeCamTranslator", )
+__all__ = ("VistaTranslator", )
 
 from astro_metadata_translator import cache_translation, FitsTranslator
 import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord, Angle
 
-class NeCamTranslator(FitsTranslator):
-    """Metadata translator for NeCam FITS headers.
+class VistaTranslator(FitsTranslator):
+    """Metadata translator for VISTA FITS headers.
     
     Under normal circumstances, translators are found in the astro_metadata_translator repository. However, it is possible to also put them in an obs_package, provided that they are imported in both the _instrument.py and rawFormatter.py files.
 
-    This one is in obs_necam to keep everything togeter in one place.  
+    This one is in obs_vista to keep everything togeter in one place.  
     """
 
     """Name of this translation class"""
-    name = "NeCam"
+    name = "Vista"
 
-    """Supports the Necam instrument."""
-    supported_instrument = "NeCam"
+    """Supports the Vista instrument."""
+    supported_instrument = "Vista"
 
     """
     _const_map includes properties that you may not know, nor can calculate.
@@ -41,10 +41,10 @@ class NeCamTranslator(FitsTranslator):
     _trivial_map includes properties that can be taken directly from header
     """
     _trivial_map = {
-        "exposure_id": "RUN",
-        "visit_id": "RUN",
-        "observation_id": "RUN",
-        "detector_exposure_id": "RUN",
+        "exposure_id": "ESO DET EXP NO",
+        "visit_id": "ESO DET EXP NO",
+        "observation_id": "ESO DET EXP NO",
+        "detector_exposure_id": "ESO DET EXP NO",
         "detector_num": "DETECTOR",
         "detector_serial": "DETECTOR",
         "physical_filter": "FILTER",
