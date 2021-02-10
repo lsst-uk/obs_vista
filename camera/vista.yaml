@@ -1,5 +1,5 @@
 CCDs:
-- ccd0:
+  ccd0:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -70,7 +70,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd1:
+  ccd1:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -141,7 +141,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd2:
+  ccd2:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -212,7 +212,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd3:
+  ccd3:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -283,7 +283,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd4:
+  ccd4:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -354,7 +354,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd5:
+  ccd5:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -425,7 +425,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd6:
+  ccd6:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -496,7 +496,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd7:
+  ccd7:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -567,7 +567,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd8:
+  ccd8:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -638,7 +638,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd9:
+  ccd9:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -709,7 +709,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd10:
+  ccd10:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -780,7 +780,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd11:
+  ccd11:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -851,7 +851,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd12:
+  ccd12:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -922,7 +922,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd13:
+  ccd13:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -993,7 +993,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd14:
+  ccd14:
     amplifiers:
       AMP_E2V:
         flipXY:
@@ -1064,7 +1064,7 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-- ccd15:
+  ccd15:
     amplifiers:
       AMP_E2V:
         flipXY:

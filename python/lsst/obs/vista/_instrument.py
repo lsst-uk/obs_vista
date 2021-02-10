@@ -6,8 +6,8 @@ __all__ = ("VISTA")
 import os
 
 from lsst.afw.cameraGeom import makeCameraFromPath, CameraConfig
-from lsst.obs.base import Instrument
-from lsst.obs.base.gen2to3 import AbstractToPhysicalFilterKeyHandler, TranslatorFactory
+from lsst.obs.base import Instrument, yamlCamera
+from lsst.obs.base.gen2to3 import TranslatorFactory, PhysicalFilterToBandKeyHandler
 from lsst.obs.vista.vistaFilters import VISTA_FILTER_DEFINITIONS
 
 from lsst.daf.butler.core.utils import getFullTypeName
@@ -29,20 +29,20 @@ class VISTA(Instrument):
         return "VISTA"
 
     def getCamera(self):
-        path = os.path.join(getPackageDir("obs_vista"), self.policyName, "camGeom")
-        config = CameraConfig()
-        config.load(os.path.join(path, "camera.py"))
-        return makeCameraFromPath(
-            cameraConfig=config,
-            ampInfoPath=path,
-            shortNameFunc=lambda name: name.replace(" ", "_"),
-        )
+        #path = os.path.join(getPackageDir("obs_vista"), self.policyName, "camGeom")
+        #config = CameraConfig()
+        #config.load(os.path.join(path, "camera.py"))
+        #return makeCameraFromPath(
+        #    cameraConfig=config,
+        #    ampInfoPath=path,
+        #    shortNameFunc=lambda name: name.replace(" ", "_"),
+        #)
         #Gen 3 yaml camera
-        #path = os.path.join(
-        #    getPackageDir("obs_vista"), 
-        #    "camera", 
-        #    'vista.yaml')
-        #return yamlCamera.makeCamera(path)
+        path = os.path.join(
+            getPackageDir("obs_vista"), 
+            "camera", 
+            'vista.yaml')
+        return yamlCamera.makeCamera(path)
 
     def register(self, registry):
         camera = self.getCamera()
@@ -78,20 +78,34 @@ class VISTA(Instrument):
         from .rawFormatter import VistaRawFormatter
         return VistaRawFormatter
 
+    #def makeDataIdTranslatorFactory(self) -> TranslatorFactory:
+    #    # Docstring inherited from lsst.obs.base.Instrument.
+    #    factory = TranslatorFactory()
+    #    factory.addGenericInstrumentRules(
+    #        self.getName(), 
+    #        calibFilterType="abstract_filter",
+    #        detectorKey="ccdnum"
+    #    )
+        # VISTA calibRegistry entries are abstract_filters, but we need physical_filter
+        # in the gen3 registry. 
+        #UPDATE seems to have been superseeded by band
+        #factory.addRule(AbstractToPhysicalFilterKeyHandler(self.filterDefinitions),
+        #                instrument=self.getName(),
+        #                gen2keys=("filter",),
+        #                consume=("filter",),
+        #                datasetTypeName="cpFlat")
+        # Translate Gen2 `filter` to band if it hasn't been consumed
+        # yet and gen2keys includes tract.
+     #   factory.addRule(PhysicalFilterToBandKeyHandler(self.filterDefinitions),
+     #                   instrument=self.getName(), gen2keys=("filter", "tract"), consume=("filter",))
+     #   return factory
     def makeDataIdTranslatorFactory(self) -> TranslatorFactory:
         # Docstring inherited from lsst.obs.base.Instrument.
         factory = TranslatorFactory()
-        factory.addGenericInstrumentRules(
-            self.getName(), 
-            calibFilterType="abstract_filter",
-            detectorKey="ccdnum"
-        )
-        # VISTA calibRegistry entries are abstract_filters, but we need physical_filter
-        # in the gen3 registry.
-        factory.addRule(AbstractToPhysicalFilterKeyHandler(self.filterDefinitions),
-                        instrument=self.getName(),
-                        gen2keys=("filter",),
-                        consume=("filter",),
-                        datasetTypeName="cpFlat")
+        factory.addGenericInstrumentRules(self.getName())
+        # Translate Gen2 `filter` to band if it hasn't been consumed
+        # yet and gen2keys includes tract.
+        factory.addRule(PhysicalFilterToBandKeyHandler(self.filterDefinitions),
+                        instrument=self.getName(), gen2keys=("filter", "tract"), consume=("filter",))
         return factory
 
