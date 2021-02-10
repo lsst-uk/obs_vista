@@ -77,7 +77,7 @@ class VistaTranslator(FitsTranslator):
         # Use INSTRUME. Because of defaulting behavior only do this
         # if we really have an INSTRUME header
         if "INSTRUME" in header:
-            if header["INSTRUME"] == "NECAM":
+            if header["INSTRUME"] == "VISTA":
                 return True
         return False
 

@@ -3,7 +3,8 @@ Override the default characterise config parameters by putting them in here.
 e.g.:
 config.doWrite = False
 '''
-
+import os
+ObsConfigDir = os.path.dirname(__file__)
 #Too many CR pixels error
 #Fix by upping this from 10000
 #Why is it so high? 2k * 2k = 4 m total pixels. 100*100 bad pixels in a ccd?
@@ -32,6 +33,16 @@ config.measureApCorr.allowFailure=[
     'base_PsfFlux', 
     'base_Blendedness'
 ] #??
+
+# Activate calibration of measurements: required for aperture corrections
+config.load(os.path.join(ObsConfigDir, "cmodel.py"))
+config.measurement.load(os.path.join(ObsConfigDir, "apertures.py"))
+config.measurement.load(os.path.join(ObsConfigDir, "kron.py"))
+config.measurement.load(os.path.join(ObsConfigDir, "convolvedFluxes.py"))
+config.measurement.load(os.path.join(ObsConfigDir, "hsm.py"))
+if "ext_shapeHSM_HsmShapeRegauss" in config.measurement.plugins:
+    # no deblending has been done
+    config.measurement.plugins["ext_shapeHSM_HsmShapeRegauss"].deblendNChild = ""
 
 
 #Reduce contraints to try to get more psf candidates

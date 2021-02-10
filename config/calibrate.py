@@ -154,6 +154,10 @@ config.astrometry.sourceSelector['astrometry'].badFlags=[
     'base_PixelFlags_flag_bad'
 ]
 
+config.measurement.load(os.path.join(ObsConfigDir, "apertures.py"))
+config.measurement.load(os.path.join(ObsConfigDir, "kron.py"))
+config.measurement.load(os.path.join(ObsConfigDir, "hsm.py"))
+
 # Type of source flux; typically one of Ap or Psf
 config.astrometry.sourceSelector['astrometry'].sourceFluxType='Ap'
 

@@ -7,6 +7,7 @@ from lsst.obs.base import CameraMapper
 import lsst.afw.image.utils as afwImageUtils
 import lsst.afw.image as afwImage
 from .makeVistaRawVisitInfo import MakeVistaRawVisitInfo
+from .vistaFilters import VISTA_FILTER_DEFINITIONS
 from ._instrument import VISTA
 
 class VistaMapper(CameraMapper):
@@ -33,6 +34,11 @@ class VistaMapper(CameraMapper):
     13:'DET1.CHIP14',
     14:'DET1.CHIP15',
     15:'DET1.CHIP16'}
+    
+    #Can this replace the filter definitions here in gen 3?
+    #@classmethod
+    #def addFilters(cls):
+    #    HSC_FILTER_DEFINITIONS.defineFilters()
 
     def __init__(self, inputPolicy=None, **kwargs):
 
@@ -70,6 +76,12 @@ class VistaMapper(CameraMapper):
         afwImageUtils.defineFilter(name="VISTA-J",lambdaEff=12464.4, alias=['VISTA-J'])
         afwImageUtils.defineFilter(name="VISTA-H",lambdaEff=16310.0, alias=['VISTA-H'])
         afwImageUtils.defineFilter(name="VISTA-Ks", lambdaEff=21336.6, alias=['VISTA-Ks'])
+        #HSC filters
+        afwImageUtils.defineFilter(name="HSC-G",lambdaEff=477, alias={'HSC-G'}),
+        afwImageUtils.defineFilter(name="HSC-R",lambdaEff=623, alias={'HSC-R'}),
+        afwImageUtils.defineFilter(name="HSC-I",lambdaEff=775, alias={'HSC-I'}),
+        afwImageUtils.defineFilter(name="HSC-Z",lambdaEff=925, alias={'HSC-Z'}),
+        afwImageUtils.defineFilter(name="HSC-Y",lambdaEff=990, alias={'HSC-Y'}),
         
         #...add them to your filter dict...
         self.filters['Clear'] = afwImage.Filter('Clear').getCanonicalName()
@@ -79,6 +91,14 @@ class VistaMapper(CameraMapper):
         self.filters['VISTA-H'] = afwImage.Filter('VISTA-H').getCanonicalName()
         self.filters['VISTA-Ks'] = afwImage.Filter('VISTA-Ks').getCanonicalName()
         
+        self.filters['HSC-G'] = afwImage.Filter('HSC-G').getCanonicalName()
+        self.filters['HSC-R'] = afwImage.Filter('HSC-R').getCanonicalName()
+        self.filters['HSC-I'] = afwImage.Filter('HSC-I').getCanonicalName()
+        self.filters['HSC-Z'] = afwImage.Filter('HSC-Z').getCanonicalName()
+        self.filters['HSC-Y'] = afwImage.Filter('HSC-Y').getCanonicalName()
+        
+        #for filt in VISTA_FILTER_DEFINITIONS:
+        #    self.filters[filt.physical_filter] = afwImage.Filter(filt.physical_filter).getCanonicalName()
 
         #...and set your default filter.
         self.defaultFilterName = 'Clear'
