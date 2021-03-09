@@ -22,7 +22,7 @@ config.repair.cosmicray.nCrPixelMax=10000000
 # This sets the reference catalog name for Gen2.
 # Note that in Gen3, we've stopped pretending (which is what Gen2 does,
 # for backwards compatibility) that charImage uses a reference catalog.
-config.refObjLoader.ref_dataset_name = "ps1_pv3_3pi_20170110_vhs_vista"
+config.refObjLoader.ref_dataset_name = "ps1_pv3_3pi_20170110_vista"
 
 #measureApCorr error?
 # example failure: dataId={'dateObs': '2012-11-22', 'visit': 658653, 'filter': 'VISTA-Ks', 'hdu': 9, 'ccdnum': 8, 'ccd': 8}

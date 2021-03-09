@@ -6,8 +6,8 @@ for source, target in [
     ('HSC-I', 'i'), 
     ('HSC-Z', 'z'),
     ('HSC-Y', 'y'),
-    ('VISTA-Z', 'z'),
-    ('VISTA-Y', 'y'),
+    ('VISTA-Z', 'z2'),
+    ('VISTA-Y', 'y2'),
     ('VISTA-J', 'j'),
     ('VISTA-H', 'h'),
     ('VISTA-Ks', 'ks')

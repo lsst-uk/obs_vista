@@ -11,9 +11,9 @@ config.doMatchSources=False
 
 #config.match.refObjLoader=None
 # Set reference catalog for Gen2. "ps1_pv3_3pi_vist2020"
-config.match.refObjLoader.ref_dataset_name = "ps1_pv3_3pi_20170110_vhs_vista" #ps1_pv3_3pi_20170110
+config.match.refObjLoader.ref_dataset_name = "ps1_pv3_3pi_20170110_vista" #ps1_pv3_3pi_20170110
 # Set reference catalog for Gen3.
-config.connections.refCat = "ps1_pv3_3pi_20170110_vhs_vista" #ps1_pv3_3pi_20170110
+config.connections.refCat = "ps1_pv3_3pi_20170110_vista" #ps1_pv3_3pi_20170110
 
 config.doPropagateFlags=False #This being true fails due to data ids - the bits I'm using?
 #config.doWriteMatchesDenormalized = True

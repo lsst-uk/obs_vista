@@ -6,7 +6,7 @@ import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord, Angle
 
-class VistaTranslator(FitsTranslator):
+class VISTATranslator(FitsTranslator):
     """Metadata translator for VISTA FITS headers.
     
     Under normal circumstances, translators are found in the astro_metadata_translator repository. However, it is possible to also put them in an obs_package, provided that they are imported in both the _instrument.py and rawFormatter.py files.
@@ -15,10 +15,10 @@ class VistaTranslator(FitsTranslator):
     """
 
     """Name of this translation class"""
-    name = "Vista"
+    name = "VISTA"
 
-    """Supports the Vista instrument."""
-    supported_instrument = "Vista"
+    """Supports the VISTA instrument."""
+    supported_instrument = "VISTA"
 
     """
     _const_map includes properties that you may not know, nor can calculate.
@@ -107,8 +107,8 @@ class VistaTranslator(FitsTranslator):
 
     @cache_translation
     def to_instrument(self):
-        if self._header["INSTRUME"] == "NECAM":
-            return "NeCam"
+        if self._header["INSTRUME"] == VISTA":
+            return "VISTA"
         else:
             #It should never get here, given can_translate().
             return "Unknown"
