@@ -27,7 +27,7 @@ After [installing the LSST stack]https://pipelines.lsst.io/install/newinstall.ht
 cd $STACKPATH/stack/current/$SYSTEMTYPE/   # example stack directory
 mkdir obs_vista
 cd obs_vista
-git clone https://github.com/raphaelshirley/obs_vista.git
+git clone https://github.com/lsst-uk/obs_vista.git
 mv obs_vista 20.0.0-1   #Stack version 20.0.0 used for development and obs version 1
 ```
 
