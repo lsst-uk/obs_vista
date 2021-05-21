@@ -1,22 +1,24 @@
-"""Butler instrument description for VISTA.
+"""Butler gen3 instrument description for VISTA.
 """
 
-__all__ = ("VISTA")
+__all__ = ("VIRCAM")
 
 import os
 
 from lsst.afw.cameraGeom import makeCameraFromPath, CameraConfig
 from lsst.obs.base import Instrument, yamlCamera
 from lsst.obs.base.gen2to3 import TranslatorFactory, PhysicalFilterToBandKeyHandler
-from lsst.obs.vista.vistaFilters import VISTA_FILTER_DEFINITIONS
-
+from lsst.obs.vista.vircamFilters import VIRCAM_FILTER_DEFINITIONS
 from lsst.daf.butler.core.utils import getFullTypeName
 from lsst.utils import getPackageDir
+# Comment-out the following line if you put .translators/necam.py in the 
+# astro_metadata_translator repository:
+from .translators import VircamTranslator
 
 
-class VISTA(Instrument):
-    filterDefinitions = VISTA_FILTER_DEFINITIONS
-    policyName = "vista"
+class VIRCAM(Instrument):
+    filterDefinitions = VIRCAM_FILTER_DEFINITIONS
+    policyName = "vircam"
     obsDataPackage = "obs_vista_data"  # What is this?
 
     def __init__(self, **kwargs):
@@ -26,7 +28,7 @@ class VISTA(Instrument):
 
     @classmethod
     def getName(cls):
-        return "VISTA"
+        return "VIRCAM"
 
     def getCamera(self):
         #path = os.path.join(getPackageDir("obs_vista"), self.policyName, "camGeom")
@@ -41,7 +43,7 @@ class VISTA(Instrument):
         path = os.path.join(
             getPackageDir("obs_vista"), 
             "camera", 
-            'vista.yaml')
+            'vircam.yaml')
         return yamlCamera.makeCamera(path)
 
     def register(self, registry):
@@ -75,8 +77,8 @@ class VISTA(Instrument):
 
     def getRawFormatter(self, dataId):
         # local import to prevent circular dependency
-        from .rawFormatter import VistaRawFormatter
-        return VistaRawFormatter
+        from .rawFormatter import VircamRawFormatter
+        return VircamRawFormatter
 
     #def makeDataIdTranslatorFactory(self) -> TranslatorFactory:
     #    # Docstring inherited from lsst.obs.base.Instrument.

@@ -6,16 +6,16 @@ from lsst.daf.persistence import ButlerLocation, Policy
 from lsst.obs.base import CameraMapper
 import lsst.afw.image.utils as afwImageUtils
 import lsst.afw.image as afwImage
-from .makeVistaRawVisitInfo import MakeVistaRawVisitInfo
-from .vistaFilters import VISTA_FILTER_DEFINITIONS
-from ._instrument import VISTA
+from .makeVircamRawVisitInfo import MakeVircamRawVisitInfo
+from .vircamFilters import VIRCAM_FILTER_DEFINITIONS
+from ._instrument import VIRCAM
 
-class VistaMapper(CameraMapper):
+class VircamMapper(CameraMapper):
     packageName = 'obs_vista'
-    _gen3instrument = VISTA
+    _gen3instrument = VIRCAM
     
     # A rawVisitInfoClass is required by processCcd.py
-    MakeRawVisitInfoClass = MakeVistaRawVisitInfo
+    MakeRawVisitInfoClass = MakeVircamRawVisitInfo
     
     detectorNames = {
     0:'DET1.CHIP1',

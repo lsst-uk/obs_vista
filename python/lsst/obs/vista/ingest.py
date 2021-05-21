@@ -3,10 +3,10 @@ import lsst.obs.base
 from lsst.obs.base.ingest import RawFileData
 from lsst.afw.fits import readMetadata
 
-from ._instrument import VISTA
+from ._instrument import VIRCAM
 
 #We need to write a VISTA translator for the gen3 butler
-from astro_metadata_translator import fix_header
+#from astro_metadata_translator import fix_header
 
 import os
 import re
@@ -19,8 +19,12 @@ __all__ = [
     "VistaIngestTask", 
     "VistaParseTask"
 ]
-    
-class VistaRawIngestTask(lsst.obs.base.RawIngestTask):
+
+
+
+
+#This should eventually be deprecated
+class VircamRawIngestTask(lsst.obs.base.RawIngestTask):
     """Task for ingesting raw VISTA data into a Gen3 Butler repository.
     
     Function copied from obs_decam DecamRawIngestTask which also has fits files
@@ -39,15 +43,15 @@ class VistaRawIngestTask(lsst.obs.base.RawIngestTask):
             fitsData.setHdu(i)
             header = fitsData.readMetadata()
           
-            if header['ESO DET CHIP NO'] > 16:  # ignore the guide CCDs#VISTA has these?
-                continue
-            fix_header(header) #needs astro_metadata_translator for VISTA
+            #if header['ESO DET CHIP NO'] > 16:  # ignore the guide CCDs#VISTA has these?
+            #    continue
+            #fix_header(header) #needs astro_metadata_translator for VISTA
             datasets.append(self._calculate_dataset_info(header, filename))
 
         # The data model currently assumes that whilst multiple datasets
         # can be associated with a single file, they must all share the
         # same formatter.
-        instrument = VISTA()
+        instrument = VIRCAM()
         FormatterClass = instrument.getRawFormatter(datasets[0].dataId)
 
         self.log.debug(f"Found images for {len(datasets)} detectors in {filename}")

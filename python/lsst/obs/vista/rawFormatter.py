@@ -9,38 +9,42 @@ import lsst.afw.image
 import lsst.log
 from lsst.obs.base import FitsRawFormatterBase
 
-from ._instrument import VISTA
+from ._instrument import VIRCAM
+from .vircamFilters import VIRCAM_FILTER_DEFINITIONS
+from .translators import VircamTranslator
 
-__all__ = ("VistaRawFormatter")
+__all__ = ("VircamRawFormatter")
 
 
-# The mapping of detector id to HDU in raw files for "most" DECam data.
+# The mapping of detector id to HDU in raw files for.
+# I am trying to move to retain 1 indexing
 # We try this first before scaning the HDUs manually.
 detector_to_hdu = {
-    0:1,
-    1:2,
-    2:3,
-    3:4,
-    4:5,
-    5:6,
-    6:7,
-    7:8,
-    8:9,
-    9:10,
-    10:11,
-    11:12,
-    12:13,
-    13:14,
-    14:15,
-    15:16}
+    1:1,
+    2:2,
+    3:3,
+    4:4,
+    5:5,
+    6:6,
+    7:7,
+    8:8,
+    9:9,
+    10:10,
+    11:11,
+    12:12,
+    13:13,
+    14:14,
+    15:15,
+    16:16}
 
 
-class VistaRawFormatter(FitsRawFormatterBase):
+class VircamRawFormatter(FitsRawFormatterBase):
 
-    filterDefinitions = Vista.filterDefinitions
+    translatorClass = VircamTranslator
+    filterDefinitions = VIRCAM_FILTER_DEFINITIONS
 
     def getDetector(self, id):
-        return VISTA().getCamera()[id]
+        return VIRCAM().getCamera()[id]
 
     def _scanHdus(self, filename, detectorId):
         """Scan through a file for the HDU containing data from one detector.
@@ -111,7 +115,7 @@ class VistaRawFormatter(FitsRawFormatterBase):
 
     def readMetadata(self):
         index, metadata = self._determineHDU(self.dataId['detector'])
-        #astro_metadata_translator.fix_header(metadata)
+        VircamTranslator.fix_header(metadata)
         return metadata
 
     def readImage(self):

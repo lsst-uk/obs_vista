@@ -3,9 +3,9 @@ from lsst.geom import degrees #Many basic astro classes moved from afw.geom to g
 from lsst.afw.coord import Observatory
 from lsst.obs.base import MakeRawVisitInfo
 
-__all__ = ["MakeVistaRawVisitInfo"]
+__all__ = ["MakeVircamRawVisitInfo"]
 
-class MakeVistaRawVisitInfo(MakeRawVisitInfo):
+class MakeVircamRawVisitInfo(MakeRawVisitInfo):
     """Make a VisitInfo from the FITS header of a VISTA image
     """
     observatory = Observatory(-24.62*degrees, 70.4*degrees, 2518)  # long, lat, elev
