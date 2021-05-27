@@ -204,7 +204,7 @@ class VircamTranslator(FitsTranslator):
         # Since we want to scan many HDUs we use astropy directly to keep
         # the file open rather than continually opening and closing it
         # as we go to each HDU.
-        print('helo')
+   
         with fits.open(filename) as fits_file:
             # Astropy does not automatically handle the INHERIT=T in
             # DECam headers so the primary header must be merged.

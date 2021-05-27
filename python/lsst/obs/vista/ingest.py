@@ -14,7 +14,7 @@ import re
 from astropy.time import Time
     
 __all__ = [
-    "VistaRawIngestTask", 
+    "VircamRawIngestTask", 
     "VistaIngestArgumentParser", 
     "VistaIngestTask", 
     "VistaParseTask"
@@ -30,6 +30,8 @@ class VircamRawIngestTask(lsst.obs.base.RawIngestTask):
     Function copied from obs_decam DecamRawIngestTask which also has fits files
     with multiple extensions.
     
+    This is now deprecated and they use the default ingester.
+    
     We need to write an astro_metadata_translator for VISTA to use this with the gen3
     butler
     """
@@ -43,7 +45,7 @@ class VircamRawIngestTask(lsst.obs.base.RawIngestTask):
             fitsData.setHdu(i)
             header = fitsData.readMetadata()
           
-            #if header['ESO DET CHIP NO'] > 16:  # ignore the guide CCDs#VISTA has these?
+            #if header['ESO DET CHIP NO'] > 16:  
             #    continue
             #fix_header(header) #needs astro_metadata_translator for VISTA
             datasets.append(self._calculate_dataset_info(header, filename))

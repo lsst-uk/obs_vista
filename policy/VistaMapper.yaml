@@ -31,8 +31,8 @@ exposures:
         #The following must be in the .fits format (these can be linked even if
         #the original files are named .fit).
         template: 'raw/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]' 
-    postISRCCD:
-        template: '%(visit)07d/postISR/postISR-%(visit)07d_%(ccdnum)02d.fits'
+#    postISRCCD:
+#        template: '%(visit)07d/postISR/postISR-%(visit)07d_%(ccdnum)02d.fits'
     instcal:
         level: ccd
         persistable: DecoratedImageF

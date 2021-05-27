@@ -18,22 +18,22 @@ class VircamMapper(CameraMapper):
     MakeRawVisitInfoClass = MakeVircamRawVisitInfo
     
     detectorNames = {
-    0:'DET1.CHIP1',
-    1:'DET1.CHIP2',
-    2:'DET1.CHIP3',
-    3:'DET1.CHIP4',
-    4:'DET1.CHIP5',
-    5:'DET1.CHIP6',
-    6:'DET1.CHIP7',
-    7:'DET1.CHIP8',
-    8:'DET1.CHIP9',
-    9:'DET1.CHIP10',
-    10:'DET1.CHIP11',
-    11:'DET1.CHIP12',
-    12:'DET1.CHIP13',
-    13:'DET1.CHIP14',
-    14:'DET1.CHIP15',
-    15:'DET1.CHIP16'}
+    1:'DET1.CHIP1',
+    2:'DET1.CHIP2',
+    3:'DET1.CHIP3',
+    4:'DET1.CHIP4',
+    5:'DET1.CHIP5',
+    6:'DET1.CHIP6',
+    7:'DET1.CHIP7',
+    8:'DET1.CHIP8',
+    9:'DET1.CHIP9',
+    10:'DET1.CHIP10',
+    11:'DET1.CHIP11',
+    12:'DET1.CHIP12',
+    13:'DET1.CHIP13',
+    14:'DET1.CHIP14',
+    15:'DET1.CHIP15',
+    16:'DET1.CHIP16'}
     
     #Can this replace the filter definitions here in gen 3?
     #@classmethod
@@ -62,7 +62,8 @@ class VircamMapper(CameraMapper):
                 #'survey': str
                 }
         for name in ("raw",
-                     "postISRCCD", "calexp", "src", "icSrc", "srcMatch",
+                    # "postISRCCD", 
+                    # "calexp", "src", "icSrc", "srcMatch",
                     ):
             self.mappings[name].keyDict.update(keys)
         ###Defining your filter set###
@@ -71,11 +72,11 @@ class VircamMapper(CameraMapper):
  
         #Define your set of filters; you can have as many filters as you like...  
         afwImageUtils.defineFilter(name='Clear',  lambdaEff=0., alias=['Clear'])
-        afwImageUtils.defineFilter(name="VISTA-Z",lambdaEff=8762.4, alias=['VISTA-Z'])
-        afwImageUtils.defineFilter(name="VISTA-Y",lambdaEff=10184.2, alias=['VISTA-Y'])
-        afwImageUtils.defineFilter(name="VISTA-J",lambdaEff=12464.4, alias=['VISTA-J'])
-        afwImageUtils.defineFilter(name="VISTA-H",lambdaEff=16310.0, alias=['VISTA-H'])
-        afwImageUtils.defineFilter(name="VISTA-Ks", lambdaEff=21336.6, alias=['VISTA-Ks'])
+        afwImageUtils.defineFilter(name="VIRCAM-Z",lambdaEff=8762.4, alias=['VIRCAM-Z'])
+        afwImageUtils.defineFilter(name="VIRCAM-Y",lambdaEff=10184.2, alias=['VIRCAM-Y'])
+        afwImageUtils.defineFilter(name="VIRCAM-J",lambdaEff=12464.4, alias=['VIRCAM-J'])
+        afwImageUtils.defineFilter(name="VIRCAM-H",lambdaEff=16310.0, alias=['VIRCAM-H'])
+        afwImageUtils.defineFilter(name="VIRCAM-Ks", lambdaEff=21336.6, alias=['VIRCAM-Ks'])
         #HSC filters
         afwImageUtils.defineFilter(name="HSC-G",lambdaEff=477, alias={'HSC-G'}),
         afwImageUtils.defineFilter(name="HSC-R",lambdaEff=623, alias={'HSC-R'}),
@@ -85,11 +86,11 @@ class VircamMapper(CameraMapper):
         
         #...add them to your filter dict...
         self.filters['Clear'] = afwImage.Filter('Clear').getCanonicalName()
-        self.filters['VISTA-Z'] = afwImage.Filter('VISTA-Z').getCanonicalName()
-        self.filters['VISTA-Y'] = afwImage.Filter('VISTA-Y').getCanonicalName()
-        self.filters['VISTA-J'] = afwImage.Filter('VISTA-J').getCanonicalName()
-        self.filters['VISTA-H'] = afwImage.Filter('VISTA-H').getCanonicalName()
-        self.filters['VISTA-Ks'] = afwImage.Filter('VISTA-Ks').getCanonicalName()
+        self.filters['VIRCAM-Z'] = afwImage.Filter('VIRCAM-Z').getCanonicalName()
+        self.filters['VIRCAM-Y'] = afwImage.Filter('VIRCAM-Y').getCanonicalName()
+        self.filters['VIRCAM-J'] = afwImage.Filter('VIRCAM-J').getCanonicalName()
+        self.filters['VIRCAM-H'] = afwImage.Filter('VIRCAM-H').getCanonicalName()
+        self.filters['VIRCAM-Ks'] = afwImage.Filter('VIRCAM-Ks').getCanonicalName()
         
         self.filters['HSC-G'] = afwImage.Filter('HSC-G').getCanonicalName()
         self.filters['HSC-R'] = afwImage.Filter('HSC-R').getCanonicalName()
@@ -150,13 +151,16 @@ class VircamMapper(CameraMapper):
         return visit*16 + ccd 
 
     def bypass_ccdExposureId(self, datasetType, pythonType, location, dataId):
-        '''You need to tell the stack that it needs to refer to the above _computeCcdExposureId function.
+        '''You need to tell the stack that it needs to refer to the above 
+        _computeCcdExposureId function.
         processCcd.py will fail with an AttributeError without this.
         '''
         return self._computeCcdExposureId(dataId)
 
     def bypass_ccdExposureId_bits(self, datasetType, pythonType, location, dataId):
-        '''You need to tell the stack how many bits to use for the ExposureId. Here I'm say that the ccd ID takes up to 6 bits (2**6=64), and I can have up to 16,777,216 (=2**24) visits in my survey.
+        '''You need to tell the stack how many bits to use for the ExposureId. Here I'm 
+        say that the ccd ID takes up to 6 bits (2**6=64), and I can have up to 16,777,216 
+        (=2**24) visits in my survey.
         processCcd.py will fail with an AttributeError without this.
         '''
         return 32 #Set large to avoid 'Exposure ID '34910216' is too large.
@@ -199,7 +203,8 @@ class VircamMapper(CameraMapper):
     def _extractDetectorName(self, dataId):
         '''
         Every detector needs a name.
-        Here, I simply use the ccd ID number extracted from the header and recorded via the ingest process.
+        Here, I simply use the ccd ID number extracted from the header and recorded via 
+        the ingest process.
         processCcd.py will fail with a NotImplementedError() without this.
         ''' 
         return int("%(hdu)d" % dataId) - 1

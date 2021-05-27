@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#
+
 
 import lsst.pipe.base as pipeBase
 import lsst.pex.config as pexConfig
