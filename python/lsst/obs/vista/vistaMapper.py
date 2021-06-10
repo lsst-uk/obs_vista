@@ -10,7 +10,7 @@ from .makeVircamRawVisitInfo import MakeVircamRawVisitInfo
 from .vircamFilters import VIRCAM_FILTER_DEFINITIONS
 from ._instrument import VIRCAM
 
-class VircamMapper(CameraMapper):
+class VistaMapper(CameraMapper):
     packageName = 'obs_vista'
     _gen3instrument = VIRCAM
     

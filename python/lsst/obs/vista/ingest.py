@@ -167,9 +167,9 @@ class VistaParseTask(ParseTask):
         #e.g. turn 'Done with sky_20180911_266_Y.fit[1]' to 'Y'
         #_st.fit stack files
         try:
-            filter =  'VISTA-'+md.get("SKYSUB").split('.')[0][-1]
-            if filter == 'VISTA-s':
-                filter = 'VISTA-Ks'
+            filter =  'VIRCAM-'+md.get("SKYSUB").split('.')[0][-1]
+            if filter == 'VIRCAM-s':
+                filter = 'VIRCAM-Ks'
         
         except:
             filter =  'Clear'#+md.get("ESO INS FILT1 NAME")
@@ -177,8 +177,8 @@ class VistaParseTask(ParseTask):
         #[0-9].fit single exposures    
         try:
             filter = self.filter
-            if filter == 'VISTA-s':
-                filter = 'VISTA-Ks'
+            if filter == 'VIRCAM-s':
+                filter = 'VIRCAM-Ks'
         except:
             filter =  'Clear'#+md.get("ESO INS FILT1 NAME")
             
@@ -299,7 +299,7 @@ class VistaParseTask(ParseTask):
         
         if filetype == "raw":
             phuInfo, infoList = super(VistaParseTask, self).getInfo(filename)
-            self.filter = 'VISTA-'+readMetadata(filename, 0).get('ESO INS FILT1 NAME')
+            self.filter = 'VIRCAM-'+readMetadata(filename, 0).get('ESO INS FILT1 NAME')
             self.numObs = filename.split('/')[-1].split('_')[1].split('.')[0]
             self.dataType = 'exposure'
             if filename.endswith('_st.fit'):
@@ -365,7 +365,7 @@ class VistaParseTask(ParseTask):
         raw : `str`
             Destination filename.
         """
-        self.filter = 'VISTA-'+readMetadata(filename, 0).get('ESO INS FILT1 NAME')
+        self.filter = 'VIRCAM-'+readMetadata(filename, 0).get('ESO INS FILT1 NAME')
         self.numObs = filename.split('/')[-1].split('_')[1]
         raw = butler.get("%s_filename"%(filetype), info)[0]
         # Ensure filename is devoid of cfitsio directions about HDUs
