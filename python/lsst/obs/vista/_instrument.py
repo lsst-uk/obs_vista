@@ -1,7 +1,7 @@
 """Butler instrument description for VISTA.
 """
 
-__all__ = ("VISTA")
+#__all__ = ("VISTA")
 
 import os
 
@@ -12,12 +12,12 @@ from lsst.obs.vista.vistaFilters import VISTA_FILTER_DEFINITIONS
 
 from lsst.daf.butler.core.utils import getFullTypeName
 from lsst.utils import getPackageDir
-
+from .translators import VistaTranslator
 
 class VISTA(Instrument):
     filterDefinitions = VISTA_FILTER_DEFINITIONS
-    policyName = "vista"
-    obsDataPackage = "obs_vista_data"  # What is this?
+    #policyName = "vista"
+    #obsDataPackage = "obs_vista_data"  # What is this?
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -26,7 +26,7 @@ class VISTA(Instrument):
 
     @classmethod
     def getName(cls):
-        return "VISTA"
+        return "VIRCAM"
 
     def getCamera(self):
         #path = os.path.join(getPackageDir("obs_vista"), self.policyName, "camGeom")
@@ -77,6 +77,11 @@ class VISTA(Instrument):
         # local import to prevent circular dependency
         from .rawFormatter import VistaRawFormatter
         return VistaRawFormatter
+    #def makeDataIdTranslatorFactory(self):
+        '''
+        Needed to register instrument
+        '''
+       # pass
 
     #def makeDataIdTranslatorFactory(self) -> TranslatorFactory:
     #    # Docstring inherited from lsst.obs.base.Instrument.
@@ -105,7 +110,7 @@ class VISTA(Instrument):
         factory.addGenericInstrumentRules(self.getName())
         # Translate Gen2 `filter` to band if it hasn't been consumed
         # yet and gen2keys includes tract.
-        factory.addRule(PhysicalFilterToBandKeyHandler(self.filterDefinitions),
-                        instrument=self.getName(), gen2keys=("filter", "tract"), consume=("filter",))
+        #factory.addRule(PhysicalFilterToBandKeyHandler(VISTA_FILTER_DEFINITIONS),
+                        #instrument=self.getName(), gen2keys=("filter", "tract"), consume=("filter",))
         return factory
-
+     

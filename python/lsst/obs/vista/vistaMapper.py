@@ -18,22 +18,22 @@ class VistaMapper(CameraMapper):
     MakeRawVisitInfoClass = MakeVistaRawVisitInfo
     
     detectorNames = {
-    0:'DET1.CHIP1',
-    1:'DET1.CHIP2',
-    2:'DET1.CHIP3',
-    3:'DET1.CHIP4',
-    4:'DET1.CHIP5',
-    5:'DET1.CHIP6',
-    6:'DET1.CHIP7',
-    7:'DET1.CHIP8',
-    8:'DET1.CHIP9',
-    9:'DET1.CHIP10',
-    10:'DET1.CHIP11',
-    11:'DET1.CHIP12',
-    12:'DET1.CHIP13',
-    13:'DET1.CHIP14',
-    14:'DET1.CHIP15',
-    15:'DET1.CHIP16'}
+    1:'DET1.CHIP1',
+    2:'DET1.CHIP2',
+    3:'DET1.CHIP3',
+    4:'DET1.CHIP4',
+    5:'DET1.CHIP5',
+    6:'DET1.CHIP6',
+    7:'DET1.CHIP7',
+    8:'DET1.CHIP8',
+    9:'DET1.CHIP9',
+    10:'DET1.CHIP10',
+    11:'DET1.CHIP11',
+    12:'DET1.CHIP12',
+    13:'DET1.CHIP13',
+    14:'DET1.CHIP14',
+    15:'DET1.CHIP15',
+    16:'DET1.CHIP16'}
     
     #Can this replace the filter definitions here in gen 3?
     #@classmethod
@@ -62,40 +62,40 @@ class VistaMapper(CameraMapper):
                 #'survey': str
                 }
         for name in ("raw",
-                     "postISRCCD", "calexp", "src", "icSrc", "srcMatch",
+                     #"postISRCCD", "calexp", "src", "icSrc", "srcMatch",
                     ):
             self.mappings[name].keyDict.update(keys)
         ###Defining your filter set###
         #Create a python dict of filters:
-        self.filters = {}
+        #self.filters = {}
  
         #Define your set of filters; you can have as many filters as you like...  
-        afwImageUtils.defineFilter(name='Clear',  lambdaEff=0., alias=['Clear'])
-        afwImageUtils.defineFilter(name="VISTA-Z",lambdaEff=8762.4, alias=['VISTA-Z'])
-        afwImageUtils.defineFilter(name="VISTA-Y",lambdaEff=10184.2, alias=['VISTA-Y'])
-        afwImageUtils.defineFilter(name="VISTA-J",lambdaEff=12464.4, alias=['VISTA-J'])
-        afwImageUtils.defineFilter(name="VISTA-H",lambdaEff=16310.0, alias=['VISTA-H'])
-        afwImageUtils.defineFilter(name="VISTA-Ks", lambdaEff=21336.6, alias=['VISTA-Ks'])
+        #afwImageUtils.defineFilter(name='Clear',  lambdaEff=0., alias=['Clear'])
+        #afwImageUtils.defineFilter(name="VISTA-Z",lambdaEff=8762.4, alias=['VISTA-Z'])
+        #afwImageUtils.defineFilter(name="VISTA-Y",lambdaEff=10184.2, alias=['VISTA-Y'])
+        #afwImageUtils.defineFilter(name="VISTA-J",lambdaEff=12464.4, alias=['VISTA-J'])
+        #afwImageUtils.defineFilter(name="VISTA-H",lambdaEff=16310.0, alias=['VISTA-H'])
+        #afwImageUtils.defineFilter(name="VISTA-Ks", lambdaEff=21336.6, alias=['VISTA-Ks'])
         #HSC filters
-        afwImageUtils.defineFilter(name="HSC-G",lambdaEff=477, alias={'HSC-G'}),
-        afwImageUtils.defineFilter(name="HSC-R",lambdaEff=623, alias={'HSC-R'}),
-        afwImageUtils.defineFilter(name="HSC-I",lambdaEff=775, alias={'HSC-I'}),
-        afwImageUtils.defineFilter(name="HSC-Z",lambdaEff=925, alias={'HSC-Z'}),
-        afwImageUtils.defineFilter(name="HSC-Y",lambdaEff=990, alias={'HSC-Y'}),
+        #afwImageUtils.defineFilter(name="HSC-G",lambdaEff=477, alias={'HSC-G'}),
+        #afwImageUtils.defineFilter(name="HSC-R",lambdaEff=623, alias={'HSC-R'}),
+        #afwImageUtils.defineFilter(name="HSC-I",lambdaEff=775, alias={'HSC-I'}),
+        #afwImageUtils.defineFilter(name="HSC-Z",lambdaEff=925, alias={'HSC-Z'}),
+        #afwImageUtils.defineFilter(name="HSC-Y",lambdaEff=990, alias={'HSC-Y'}),
         
         #...add them to your filter dict...
-        self.filters['Clear'] = afwImage.Filter('Clear').getCanonicalName()
-        self.filters['VISTA-Z'] = afwImage.Filter('VISTA-Z').getCanonicalName()
-        self.filters['VISTA-Y'] = afwImage.Filter('VISTA-Y').getCanonicalName()
-        self.filters['VISTA-J'] = afwImage.Filter('VISTA-J').getCanonicalName()
-        self.filters['VISTA-H'] = afwImage.Filter('VISTA-H').getCanonicalName()
-        self.filters['VISTA-Ks'] = afwImage.Filter('VISTA-Ks').getCanonicalName()
+        #self.filters['Clear'] = afwImage.Filter('Clear').getCanonicalName()
+        #self.filters['VISTA-Z'] = afwImage.Filter('VISTA-Z').getCanonicalName()
+        #self.filters['VISTA-Y'] = afwImage.Filter('VISTA-Y').getCanonicalName()
+        #self.filters['VISTA-J'] = afwImage.Filter('VISTA-J').getCanonicalName()
+        #self.filters['VISTA-H'] = afwImage.Filter('VISTA-H').getCanonicalName()
+        #self.filters['VISTA-Ks'] = afwImage.Filter('VISTA-Ks').getCanonicalName()
         
-        self.filters['HSC-G'] = afwImage.Filter('HSC-G').getCanonicalName()
-        self.filters['HSC-R'] = afwImage.Filter('HSC-R').getCanonicalName()
-        self.filters['HSC-I'] = afwImage.Filter('HSC-I').getCanonicalName()
-        self.filters['HSC-Z'] = afwImage.Filter('HSC-Z').getCanonicalName()
-        self.filters['HSC-Y'] = afwImage.Filter('HSC-Y').getCanonicalName()
+        #self.filters['HSC-G'] = afwImage.Filter('HSC-G').getCanonicalName()
+        #self.filters['HSC-R'] = afwImage.Filter('HSC-R').getCanonicalName()
+        #self.filters['HSC-I'] = afwImage.Filter('HSC-I').getCanonicalName()
+        #self.filters['HSC-Z'] = afwImage.Filter('HSC-Z').getCanonicalName()
+        #self.filters['HSC-Y'] = afwImage.Filter('HSC-Y').getCanonicalName()
         
         #for filt in VISTA_FILTER_DEFINITIONS:
         #    self.filters[filt.physical_filter] = afwImage.Filter(filt.physical_filter).getCanonicalName()
