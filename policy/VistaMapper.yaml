@@ -31,8 +31,8 @@ exposures:
         #The following must be in the .fits format (these can be linked even if
         #the original files are named .fit).
         template: 'raw/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]' 
-#    postISRCCD:
-#        template: '%(visit)07d/postISR/postISR-%(visit)07d_%(ccdnum)02d.fits'
+    postISRCCD:
+        template: 'postISRCCD/%(dateObs)s/%(visit)07d/postISRCCD-%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s-%(ccd)02d.fits'
     instcal:
         level: ccd
         persistable: DecoratedImageF
@@ -40,6 +40,13 @@ exposures:
         storage: FitsStorage
         tables: raw
         template: 'instcal/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]'
+    conf:
+        level: ccd
+        persistable: ImageF
+        python: lsst.afw.image.ImageF
+        storage: FitsStorage
+        tables: raw
+        template: 'conf/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]'
     calexp:
         template: 'calexp/%(dateObs)s/calexp-%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s-%(ccd)02d.fits'
         recipe: lossyBasic
@@ -57,7 +64,7 @@ calibrations:
 
 datasets:
     processCcd_metadata:
-        template: 'processCcd_md/%(dateObs)s/processCcd_md-%(visit)04d-%(filter)s-%(ccd)02d.boost'
+        template: 'processCcd_md/%(dateObs)s/processCcd_md-%(visit)04d-%(filter)s-%(ccd)02d.yaml'
     icSrc:
         template: 'sci-results/icSrc/%(dateObs)s/icSrc-%(visit)04d-%(filter)s-%(ccd)02d.fits'
     src:

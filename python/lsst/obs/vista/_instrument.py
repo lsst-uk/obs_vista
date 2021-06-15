@@ -1,7 +1,9 @@
 """Butler gen3 instrument description for VISTA.
+
+We use VIRCAM as instrument name.
 """
 
-#__all__ = ("VIRCAM")
+__all__ = ("VIRCAM",)
 
 import os
 

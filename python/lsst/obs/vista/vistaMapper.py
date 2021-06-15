@@ -18,27 +18,27 @@ class VistaMapper(CameraMapper):
     MakeRawVisitInfoClass = MakeVircamRawVisitInfo
     
     detectorNames = {
-    1:'DET1.CHIP1',
-    2:'DET1.CHIP2',
-    3:'DET1.CHIP3',
-    4:'DET1.CHIP4',
-    5:'DET1.CHIP5',
-    6:'DET1.CHIP6',
-    7:'DET1.CHIP7',
-    8:'DET1.CHIP8',
-    9:'DET1.CHIP9',
-    10:'DET1.CHIP10',
-    11:'DET1.CHIP11',
-    12:'DET1.CHIP12',
-    13:'DET1.CHIP13',
-    14:'DET1.CHIP14',
-    15:'DET1.CHIP15',
-    16:'DET1.CHIP16'}
+    0:'DET1.CHIP1',
+    1:'DET1.CHIP2',
+    2:'DET1.CHIP3',
+    3:'DET1.CHIP4',
+    4:'DET1.CHIP5',
+    5:'DET1.CHIP6',
+    6:'DET1.CHIP7',
+    7:'DET1.CHIP8',
+    8:'DET1.CHIP9',
+    9:'DET1.CHIP10',
+    10:'DET1.CHIP11',
+    11:'DET1.CHIP12',
+    12:'DET1.CHIP13',
+    13:'DET1.CHIP14',
+    14:'DET1.CHIP15',
+    15:'DET1.CHIP16'}
     
     #Can this replace the filter definitions here in gen 3?
-    #@classmethod
-    #def addFilters(cls):
-    #    HSC_FILTER_DEFINITIONS.defineFilters()
+    @classmethod
+    def addFilters(cls):
+        VIRCAM_FILTER_DEFINITIONS.defineFilters()
 
     def __init__(self, inputPolicy=None, **kwargs):
 
@@ -52,6 +52,7 @@ class VistaMapper(CameraMapper):
         # Ensure each dataset type of interest knows about the full range of keys available from the registry
         keys = {'visit': int,
                 'ccd': int,
+                'ccdnum':int,
                 'filter': str,
                 'dataType': str,
                 'expTime': float,
@@ -62,41 +63,23 @@ class VistaMapper(CameraMapper):
                 #'survey': str
                 }
         for name in ("raw",
-                    # "postISRCCD", 
+                    "postISRCCD", 
+                    "instcal",
+                    "confmap",
                     # "calexp", "src", "icSrc", "srcMatch",
                     ):
             self.mappings[name].keyDict.update(keys)
-        ###Defining your filter set###
-        #Create a python dict of filters:
+
+        
+        self.addFilters()
+
         self.filters = {}
- 
-        #Define your set of filters; you can have as many filters as you like...  
-        afwImageUtils.defineFilter(name='Clear',  lambdaEff=0., alias=['Clear'])
-        afwImageUtils.defineFilter(name="VIRCAM-Z",lambdaEff=8762.4, alias=['VIRCAM-Z'])
-        afwImageUtils.defineFilter(name="VIRCAM-Y",lambdaEff=10184.2, alias=['VIRCAM-Y'])
-        afwImageUtils.defineFilter(name="VIRCAM-J",lambdaEff=12464.4, alias=['VIRCAM-J'])
-        afwImageUtils.defineFilter(name="VIRCAM-H",lambdaEff=16310.0, alias=['VIRCAM-H'])
-        afwImageUtils.defineFilter(name="VIRCAM-Ks", lambdaEff=21336.6, alias=['VIRCAM-Ks'])
-        #HSC filters
-        afwImageUtils.defineFilter(name="HSC-G",lambdaEff=477, alias={'HSC-G'}),
-        afwImageUtils.defineFilter(name="HSC-R",lambdaEff=623, alias={'HSC-R'}),
-        afwImageUtils.defineFilter(name="HSC-I",lambdaEff=775, alias={'HSC-I'}),
-        afwImageUtils.defineFilter(name="HSC-Z",lambdaEff=925, alias={'HSC-Z'}),
-        afwImageUtils.defineFilter(name="HSC-Y",lambdaEff=990, alias={'HSC-Y'}),
-        
-        #...add them to your filter dict...
-        self.filters['Clear'] = afwImage.Filter('Clear').getCanonicalName()
-        self.filters['VIRCAM-Z'] = afwImage.Filter('VIRCAM-Z').getCanonicalName()
-        self.filters['VIRCAM-Y'] = afwImage.Filter('VIRCAM-Y').getCanonicalName()
-        self.filters['VIRCAM-J'] = afwImage.Filter('VIRCAM-J').getCanonicalName()
-        self.filters['VIRCAM-H'] = afwImage.Filter('VIRCAM-H').getCanonicalName()
-        self.filters['VIRCAM-Ks'] = afwImage.Filter('VIRCAM-Ks').getCanonicalName()
-        
-        self.filters['HSC-G'] = afwImage.Filter('HSC-G').getCanonicalName()
-        self.filters['HSC-R'] = afwImage.Filter('HSC-R').getCanonicalName()
-        self.filters['HSC-I'] = afwImage.Filter('HSC-I').getCanonicalName()
-        self.filters['HSC-Z'] = afwImage.Filter('HSC-Z').getCanonicalName()
-        self.filters['HSC-Y'] = afwImage.Filter('HSC-Y').getCanonicalName()
+        with warnings.catch_warnings():
+            # surpress Filter warnings; we already know this is deprecated
+            warnings.simplefilter('ignore', category=FutureWarning)
+            for filt in VIRCAM_FILTER_DEFINITIONS:
+                self.filters[filt.physical_filter] = afwImage.Filter(filt.physical_filter).getCanonicalName()
+        self.defaultFilterName = "unknown"
         
         #for filt in VISTA_FILTER_DEFINITIONS:
         #    self.filters[filt.physical_filter] = afwImage.Filter(filt.physical_filter).getCanonicalName()
@@ -107,9 +90,6 @@ class VistaMapper(CameraMapper):
         
         
         
-        for datasetType in ("raw", "instcal"): #, "stack", "tile"):
-            self.mappings[datasetType].keyDict.update({'ccdnum': int})
-            self.mappings[datasetType].keyDict.update({'ccd': int})
             
         # The number of bits allocated for fields in object IDs
         # TODO: Understand how these were set by obs_decam
@@ -207,8 +187,48 @@ class VistaMapper(CameraMapper):
         the ingest process.
         processCcd.py will fail with a NotImplementedError() without this.
         ''' 
-        return int("%(hdu)d" % dataId) - 1
+        return int("%(hdu)d" % dataId) 
         
+    def translate_confmap(self, confmap):
+        confArr = confmap.getArray()
+    
+        idxUndefWeight = np.where(confArr <= 0)
+        # Reassign weights to be finite but small:
+        confArr[idxUndefWeight] = min(1e-14, np.min(confArr[np.where(confArr > 0)]))
+        #convert percentages
+        confim = afwImage.ImageF(confim/100.)
+        return confim
+
+    def bypass_instcal(self, datasetType, pythonType, butlerLocation, dataId):
+        # Workaround until I can access the butler
+        instcalMap = self.map_instcal(dataId)
+        dqmaskMap = self.map_dqmask(dataId)
+        wtmapMap = self.map_wtmap(dataId)
+        instcalType = getattr(afwImage, instcalMap.getPythonType().split(".")[-1])
+        dqmaskType = getattr(afwImage, dqmaskMap.getPythonType().split(".")[-1])
+        wtmapType = getattr(afwImage, wtmapMap.getPythonType().split(".")[-1])
+        instcal = instcalType(instcalMap.getLocationsWithRoot()[0])
+        dqmask = dqmaskType(dqmaskMap.getLocationsWithRoot()[0])
+        wtmap = wtmapType(wtmapMap.getLocationsWithRoot()[0])
+
+        mask = self.translate_dqmask(dqmask)
+        variance = self.translate_confmap(wtmap)
+
+        mi = afwImage.MaskedImageF(afwImage.ImageF(instcal.getImage()), mask, variance)
+        md = readMetadata(instcalMap.getLocationsWithRoot()[0])
+        fix_header(md, translator_class=DecamTranslator)
+        wcs = makeSkyWcs(md, strip=True)
+        exp = afwImage.ExposureF(mi, wcs)
+
+        exp.setPhotoCalib(afwImage.makePhotoCalibFromCalibZeroPoint(10**(0.4 * md.getScalar("MAGZERO")), 0))
+        visitInfo = self.makeRawVisitInfo(md=md)
+        exp.getInfo().setVisitInfo(visitInfo)
+
+        for kw in ('LTV1', 'LTV2'):
+            md.remove(kw)
+
+        exp.setMetadata(md)
+        return exp
         
     def std_raw(self, item, dataId):
         """Standardize a raw dataset by converting it to an Exposure.
@@ -229,26 +249,6 @@ class VistaMapper(CameraMapper):
         """
         return self._standardizeExposure(self.exposures['raw'], item, dataId,
                                          trimmed=False)
-        
-    #def map_linearizer(self, dataId, write=False):
-    #    """Map a linearizer.
-    #    
-    #    This was copied from obs_subaru to fix an error requiring it
-    #    What does it do?
-    #    
-    #    Linearization is part of the instrument signature removal.
-    #    
-    #    It can be disabled. Should we be doing it for VISTA?
-    #    https://community.lsst.org/t/correcting-non-linearity/816
-    #    """
-    #    actualId = self._transformId(dataId)
-    #    return ButlerLocation(
-    #        pythonType="lsst.ip.isr.LinearizeSquared",
-    #        cppType="Config",
-    #        storageName="PickleStorage",
-    #        locationList="ignored",
-    #        dataId=actualId,
-    #        mapper=self,
-    #        storage=self.rootStorage)
+
    
    
