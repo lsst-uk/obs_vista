@@ -147,16 +147,16 @@ class VircamTranslator(FitsTranslator):
         else:
             return None
 
-    #@cache_translation
-    #def to_instrument(self):
-    #    if self._header["INSTRUME"] == "VIRCAM":
-    #        return "VIRCAM"
-     #   else:
-     #       #It should never get here, given can_translate().
-     #       return "Unknown"
+    @cache_translation
+    def to_instrument(self):
+       if self._header["INSTRUME"].strip(" ")=="VIRCAM":
+           return "VIRCAM"
+       else:
+           #It should never get here, given can_translate().
+           return "Unknown"
     
-    #def to_telescope(self):
-    #    return self.to_instrument()
+    def to_telescope(self):
+        return self.to_instrument()
 
     @cache_translation
     def to_detector_name(self):

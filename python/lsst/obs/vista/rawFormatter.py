@@ -101,7 +101,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
         filename = self.fileDescriptor.location.path
         try:
             index = detector_to_hdu[detectorId]
-            metadata = lsst.afw.image.readMetadata(filename, index)
+            metadata = lsst.afw.fits.readMetadata(filename, index)
             if metadata['ESO DET CHIP NO'] != detectorId:
                 # the detector->HDU mapping is different in this file: try scanning
                 return self._scanHdus(filename, detectorId)
@@ -115,11 +115,12 @@ class VircamRawFormatter(FitsRawFormatterBase):
 
     def readMetadata(self):
         index, metadata = self._determineHDU(self.dataId['detector'])
-        VircamTranslator.fix_header(metadata)
+        print('DATAID',self.dataId)
+        VircamTranslator.fix_header(metadata,self.dataId['instrument'],self.dataId['exposure'])
         return metadata
 
     def readImage(self):
         index, metadata = self._determineHDU(self.dataId['detector'])
-        return lsst.afw.image.ImageI(self.fileDescriptor.location.path, index)
+        return lsst.afw.image.ImageF(self.fileDescriptor.location.path, index)
 
 

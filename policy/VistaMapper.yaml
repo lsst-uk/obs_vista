@@ -21,8 +21,8 @@ levels:
 # Even if it were possible and you **only** used the defaults in the obs_base/policy files you still need to include exposures, calibrations, and datasets so that it knows to refer to the defaults in obs_base.
 exposures: 
     raw:
-        python: lsst.afw.image.DecoratedImageF
-        persistable: DecoratedImageF
+        #python: lsst.afw.image.DecoratedImageF
+        #persistable: DecoratedImageF
         #Should we parse each ccd into a new file or do that in a later step?
         #Removed -%(ccd)02d from end because one file for all ccds
         #'raw/%(dateObs)s/%(dataType)s-%(visit)04d-%(filter)s.fts[%(hdu)d]'
@@ -31,8 +31,8 @@ exposures:
         #The following must be in the .fits format (these can be linked even if
         #the original files are named .fit).
         template: 'raw/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]' 
-    postISRCCD:
-        template: 'postISRCCD/%(dateObs)s/%(visit)07d/postISRCCD-%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s-%(ccd)02d.fits'
+    #postISRCCD:
+    #    template: 'postISRCCD/%(dateObs)s/%(visit)07d/postISRCCD-%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s-%(ccd)02d.fits'
     instcal:
         level: ccd
         persistable: DecoratedImageF
@@ -40,7 +40,7 @@ exposures:
         storage: FitsStorage
         tables: raw
         template: 'instcal/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]'
-    conf:
+    confMap:
         level: ccd
         persistable: ImageF
         python: lsst.afw.image.ImageF
@@ -49,13 +49,13 @@ exposures:
         template: 'conf/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]'
     calexp:
         template: 'calexp/%(dateObs)s/calexp-%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s-%(ccd)02d.fits'
-        recipe: lossyBasic
+        #recipe: lossyBasic
     deepCoadd_directWarp:
-        template: 'deepCoadd/%(filter)s/%(tract)d/%(patch)s/warp-%(filter)s-%(tract)d-%(patch)s-%(dateObs)s-%(visit)04d-%(numObs)s-%(dataType)s.fits'
-        recipe: lossyBasic
+        template: 'deepCoadd/%(filter)s/%(tract)d/%(patch)s/warp-%(filter)s-%(tract)d-%(patch)s-%(dateObs)s-%(visit)04d-%(numObs)s-%(dataType)s-%(ccd)02d.fits'
+        #recipe: lossyBasic
     deepCoadd_psfMatchedWarp:
-        template: 'deepCoadd/%(filter)s/%(tract)d/%(patch)s/psfMatchedWarp-%(filter)s-%(tract)d-%(patch)s-%(dateObs)s-%(visit)04d-%(numObs)s-%(dataType)s.fits'
-        recipe: lossyBasic
+        template: 'deepCoadd/%(filter)s/%(tract)d/%(patch)s/psfMatchedWarp-%(filter)s-%(tract)d-%(patch)s-%(dateObs)s-%(visit)04d-%(numObs)s-%(dataType)s-%(ccd)02d.fits'
+        #recipe: lossyBasic
 
 # We are currently not performing calibrations.
 calibrations:
