@@ -16,7 +16,7 @@ class VistaTranslator(FitsTranslator):
     """
 
     """Name of this translation class"""
-    name = "VISTA"
+    name = "VIRCAM"
 
     """Supports the VISTA instrument."""
     supported_instrument = "VIRCAM"
@@ -217,5 +217,7 @@ class VistaTranslator(FitsTranslator):
                 header = hdu.header
                 if "HIERARCH ESO DET CHIP NO" not in header:  # Primary does not have 
                     continue
+                #if header["HIERARCH ESO DET CHIP NO"] > 62:  # ignore guide CCDs
+                    #continue
 
                 yield merge_headers([primary, header], mode="overwrite")

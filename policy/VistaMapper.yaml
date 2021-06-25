@@ -1,6 +1,6 @@
 needCalibRegistry: true
 camera: ../camera
-defaultLevel: Ccd 
+#defaultLevel: Ccd 
 
 
 levels:
@@ -18,7 +18,7 @@ levels:
   sensor: none
 
 
-#defaultLevel: sensor
+defaultLevel: sensor
 
 
 #defaultSubLevels:
@@ -82,5 +82,5 @@ datasets:
         template: 'forcedPhot/%(dateObs)s/%(filter)s/src/src-%(ccd)02d-%(run)s.fits'
     deepCoadd_measMatch:
         template: 'deepCoadd_results/%(filter)s/%(tract)d/%(patch)s/srcMatch-%(filter)s-%(tract)d-%(patch)s.fits'
-    deepCoadd_forced_src:
-        template: 'deepCoadd_results/%(filter)s/%(tract)d/%(patch)s/forcedSrc-%(filter)s-%(tract)d-%(patch)s.fits'
+    #deepCoadd_forced_src:
+        #template: 'deepCoadd_results/%(filter)s/%(tract)d/%(patch)s/forcedSrc-%(filter)s-%(tract)d-%(patch)s.fits'

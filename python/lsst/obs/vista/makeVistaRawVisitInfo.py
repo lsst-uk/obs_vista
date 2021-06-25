@@ -22,7 +22,7 @@ class MakeVistaRawVisitInfo(MakeRawVisitInfo):
         #Uncommented these
         argDict["exposureTime"] = self.popFloat(md, 'EXPTIME')
         argDict["observatory"] = self.observatory
-        #argDict["ccd"] = self.popFloat(md, 'CCDNUM')
+        argDict["ccd"] = self.popFloat(md, 'CCDNUM')
         startDate = self.popIsoDate(md, "DATE-OBS")
         argDict["date"] = self.offsetDate(startDate, 0.5*argDict["exposureTime"])
     
