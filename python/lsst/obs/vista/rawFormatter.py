@@ -13,6 +13,7 @@ from ._instrument import VIRCAM
 from .vircamFilters import VIRCAM_FILTER_DEFINITIONS
 from .translators import VircamTranslator
 
+
 __all__ = ("VircamRawFormatter")
 
 
@@ -42,6 +43,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
 
     translatorClass = VircamTranslator
     filterDefinitions = VIRCAM_FILTER_DEFINITIONS
+
 
     def getDetector(self, id):
         return VIRCAM().getCamera()[id]
@@ -115,8 +117,10 @@ class VircamRawFormatter(FitsRawFormatterBase):
 
     def readMetadata(self):
         index, metadata = self._determineHDU(self.dataId['detector'])
+
         print('DATAID',self.dataId)
         VircamTranslator.fix_header(metadata,self.dataId['instrument'],self.dataId['exposure'])
+
         return metadata
 
     def readImage(self):

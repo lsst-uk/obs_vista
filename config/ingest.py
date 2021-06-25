@@ -10,11 +10,13 @@ To load them into the stack, we first import them, then retarget them.
 '''
 from lsst.obs.vista.ingest import VistaParseTask
 config.parse.retarget(VistaParseTask)
-
+#from lsst.obs.vista.ingest import VistaRawIngestTask
+#config.raws.retarget(VistaRawIngestTask)
 
 #The following grabs data from the image headers that don't need parsing (i.e., translating). Header keywords are on the right, stack keywords on the left:
 config.parse.translation = { 'expTime': "EXPTIME",       #Nothing can go direct
-                            'visit':    "ESO DET EXP NO",#Is exposure number visit number?
+                            'visit':    "ESO DET EXP NO",
+                            #Is exposure number visit number?
                             #'dataType': "XTENSION",
                             #'dateObs':'DATE-OBS',
                             #'taiObs':'DATE-OBS',
@@ -54,9 +56,9 @@ config.register.visit = ['visit', 'filter','dateObs','taiObs', 'numObs', 'dataTy
 config.register.unique = ['visit', 'ccdnum', 'dataType' ]#removed ,'ccd'
 config.register.columns = {'visit':'int',
                            'numObs':'text',
-                           'ccd':'int',
+                           'ccd': 'int',
                            'ccdnum':'int',
-                           'hdu':'int',#copying from obs_decam
+                           #'hdu':'int',#copying from obs_decam
                            #'instcal': 'text',
                            'filter':'text',
                            'dataType':'text',

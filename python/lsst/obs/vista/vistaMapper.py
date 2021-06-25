@@ -63,6 +63,7 @@ class VistaMapper(CameraMapper):
                 #'survey': str
                 }
         for name in ("raw",
+<<<<<<< HEAD
                     "postISRCCD", 
                     "instcal",
                     "confmap",
@@ -80,9 +81,45 @@ class VistaMapper(CameraMapper):
             for filt in VIRCAM_FILTER_DEFINITIONS:
                 self.filters[filt.physical_filter] = afwImage.Filter(filt.physical_filter).getCanonicalName()
         self.defaultFilterName = "unknown"
+=======
+                     #"postISRCCD", "calexp", "src", "icSrc", "srcMatch",
+                    ):
+            self.mappings[name].keyDict.update(keys)
+        ###Defining your filter set###
+        #Create a python dict of filters:
+        self.filters = {}
+ 
+        #Define your set of filters; you can have as many filters as you like...  
+        afwImageUtils.defineFilter(name='Clear',  lambdaEff=0., alias=['Clear'])
+        #afwImageUtils.defineFilter(name="VISTA-Z",lambdaEff=8762.4, alias=['VISTA-Z'])
+        #afwImageUtils.defineFilter(name="VISTA-Y",lambdaEff=10184.2, alias=['VISTA-Y'])
+        #afwImageUtils.defineFilter(name="VISTA-J",lambdaEff=12464.4, alias=['VISTA-J'])
+        #afwImageUtils.defineFilter(name="VISTA-H",lambdaEff=16310.0, alias=['VISTA-H'])
+        #afwImageUtils.defineFilter(name="VISTA-Ks", lambdaEff=21336.6, alias=['VISTA-Ks'])
+        #HSC filters
+        #afwImageUtils.defineFilter(name="HSC-G",lambdaEff=477, alias={'HSC-G'}),
+        #afwImageUtils.defineFilter(name="HSC-R",lambdaEff=623, alias={'HSC-R'}),
+        #afwImageUtils.defineFilter(name="HSC-I",lambdaEff=775, alias={'HSC-I'}),
+        #afwImageUtils.defineFilter(name="HSC-Z",lambdaEff=925, alias={'HSC-Z'}),
+        #afwImageUtils.defineFilter(name="HSC-Y",lambdaEff=990, alias={'HSC-Y'}),
+        
+        #...add them to your filter dict...
+        #self.filters['Clear'] = afwImage.Filter('Clear').getCanonicalName()
+        #self.filters['VISTA-Z'] = afwImage.Filter('VISTA-Z').getCanonicalName()
+        #self.filters['VISTA-Y'] = afwImage.Filter('VISTA-Y').getCanonicalName()
+        #self.filters['VISTA-J'] = afwImage.Filter('VISTA-J').getCanonicalName()
+        #self.filters['VISTA-H'] = afwImage.Filter('VISTA-H').getCanonicalName()
+        #self.filters['VISTA-Ks'] = afwImage.Filter('VISTA-Ks').getCanonicalName()
+        
+        #self.filters['HSC-G'] = afwImage.Filter('HSC-G').getCanonicalName()
+        #self.filters['HSC-R'] = afwImage.Filter('HSC-R').getCanonicalName()
+        #self.filters['HSC-I'] = afwImage.Filter('HSC-I').getCanonicalName()
+        #self.filters['HSC-Z'] = afwImage.Filter('HSC-Z').getCanonicalName()
+        #self.filters['HSC-Y'] = afwImage.Filter('HSC-Y').getCanonicalName()
+>>>>>>> adab2415332b6a1f780ed0e5d3d4944ddb65b6c2
         
         #for filt in VISTA_FILTER_DEFINITIONS:
-        #    self.filters[filt.physical_filter] = afwImage.Filter(filt.physical_filter).getCanonicalName()
+           # self.filters[filt.physical_filter] = afwImage.Filter(filt.physical_filter).getCanonicalName()
 
         #...and set your default filter.
         self.defaultFilterName = 'Clear'
@@ -163,7 +200,7 @@ class VistaMapper(CameraMapper):
             ((tract << VistaMapper._nbit_patch) + patchX) 
             << VistaMapper._nbit_patch
         ) + patchY
-        
+        print(oid)
         return oid
 
     def bypass_deepCoaddId_bits(self, *args, **kwargs):

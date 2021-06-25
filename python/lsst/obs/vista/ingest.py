@@ -244,7 +244,7 @@ class VistaParseTask(ParseTask):
         #take e.g. 'DET1.CHIP12' and return the integer 11 (we use 0 indexing)
         #This seems to be just taking the first extension
         #ccd = int(md.get("EXTNAME")[9:]) - 1
-        ccd = md.get('ESO DET CHIP NO') -1
+        ccd = int(md.get("ESO DET CHIP NO"))
         return ccd
         
         

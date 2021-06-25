@@ -1,6 +1,6 @@
 needCalibRegistry: true
 camera: ../camera
-defaultLevel: Ccd 
+#defaultLevel: Ccd 
 
 
 levels:
@@ -16,6 +16,14 @@ levels:
   - hdu
   - ccd
   sensor: none
+
+
+defaultLevel: sensor
+
+
+#defaultSubLevels:
+#  skyTile: sensor
+#  visit: sensor
 
 # The default policy file is contained within the obs_base/policy directory of the stack. However, specific entries can be overridden by including them in here (and, indeed, some are mandatory as they don't have equivalents in the default files).
 # Even if it were possible and you **only** used the defaults in the obs_base/policy files you still need to include exposures, calibrations, and datasets so that it knows to refer to the defaults in obs_base.
@@ -33,13 +41,14 @@ exposures:
         template: 'raw/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]' 
     #postISRCCD:
     #    template: 'postISRCCD/%(dateObs)s/%(visit)07d/postISRCCD-%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s-%(ccd)02d.fits'
+
     instcal:
         level: ccd
         persistable: DecoratedImageF
         python: lsst.afw.image.DecoratedImageF
         storage: FitsStorage
         tables: raw
-        template: 'instcal/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]'
+        template: 'instcal/%(dateObs)s/%(visit)07d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]'
     confMap:
         level: ccd
         persistable: ImageF
@@ -48,13 +57,13 @@ exposures:
         tables: raw
         template: 'conf/%(dateObs)s/%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s.fits[%(hdu)d]'
     calexp:
-        template: 'calexp/%(dateObs)s/calexp-%(visit)04d-%(numObs)s-%(filter)s-%(dataType)s-%(ccd)02d.fits'
+        template: 'calexp/%(dateObs)s/calexp-%(visit)07d-%(numObs)s-%(filter)s-%(dataType)s-%(ccdnum)02d.fits'
         #recipe: lossyBasic
     deepCoadd_directWarp:
-        template: 'deepCoadd/%(filter)s/%(tract)d/%(patch)s/warp-%(filter)s-%(tract)d-%(patch)s-%(dateObs)s-%(visit)04d-%(numObs)s-%(dataType)s-%(ccd)02d.fits'
+        template: 'deepCoadd/%(filter)s/%(tract)d/%(patch)s/warp-%(filter)s-%(tract)d-%(patch)s-%(dateObs)s-%(visit)07d-%(numObs)s-%(dataType)s-%(ccdnum)02d.fits'
         #recipe: lossyBasic
     deepCoadd_psfMatchedWarp:
-        template: 'deepCoadd/%(filter)s/%(tract)d/%(patch)s/psfMatchedWarp-%(filter)s-%(tract)d-%(patch)s-%(dateObs)s-%(visit)04d-%(numObs)s-%(dataType)s-%(ccd)02d.fits'
+        template: 'deepCoadd/%(filter)s/%(tract)d/%(patch)s/psfMatchedWarp-%(filter)s-%(tract)d-%(patch)s-%(dateObs)s-%(visit)04d-%(numObs)s-%(dataType)s-%(ccdnum)02d.fits'
         #recipe: lossyBasic
 
 # We are currently not performing calibrations.
@@ -63,19 +72,24 @@ calibrations:
         template: 'this.txt'
 
 datasets:
-    processCcd_metadata:
-        template: 'processCcd_md/%(dateObs)s/processCcd_md-%(visit)04d-%(filter)s-%(ccd)02d.yaml'
+    #processCcd_metadata:
+        #persistable: PropertySet
+        #storage: BoostStorage
+        #python: lsst.daf.base.PropertySet
+        #tables: raw
+        #template: 'processCcd_md/%(dateObs)s/processCcd_md-%(visit)07d-%(filter)s-%(ccdnum)02d.boost'
+
     icSrc:
-        template: 'sci-results/icSrc/%(dateObs)s/icSrc-%(visit)04d-%(filter)s-%(ccd)02d.fits'
+        template: 'sci-results/icSrc/%(dateObs)s/icSrc-%(visit)07d-%(filter)s-%(ccdnum)02d.fits'
     src:
-        template: 'sci-results/src/%(dateObs)s/src-%(visit)04d-%(filter)s-%(ccd)02d.fits'
+        template: 'sci-results/src/%(dateObs)s/src-%(visit)07d-%(filter)s-%(ccdnum)02d.fits'
     srcMatch:
         template: 'sci-results/srcMatch/srcMatch-%(visit)07d_%(ccdnum)02d.fits'
     calexpBackground:
-        template: 'corr/%(dateObs)s/src-%(visit)04d-%(filter)s-%(ccd)02d.fits'
+        template: 'corr/%(dateObs)s/src-%(visit)04d-%(filter)s-%(ccdnum)03d.fits'
     forced_src:
-        template: 'forcedPhot/%(dateObs)s/%(filter)s/src/src-%(ccd)s-%(run)s.fits'
+        template: 'forcedPhot/%(dateObs)s/%(filter)s/src/src-%(ccd)02d-%(run)s.fits'
     deepCoadd_measMatch:
-        template: 'deepCoadd-results/%(filter)s/%(tract)d/%(patch)s/srcMatch-%(filter)s-%(tract)d-%(patch)s.fits'
-    deepCoadd_forced_src:
-        template: 'deepCoadd-results/%(filter)s/%(tract)d/%(patch)s/forcedSrc-%(filter)s-%(tract)d-%(patch)s.fits'
+        template: 'deepCoadd_results/%(filter)s/%(tract)d/%(patch)s/srcMatch-%(filter)s-%(tract)d-%(patch)s.fits'
+    #deepCoadd_forced_src:
+        #template: 'deepCoadd_results/%(filter)s/%(tract)d/%(patch)s/forcedSrc-%(filter)s-%(tract)d-%(patch)s.fits'

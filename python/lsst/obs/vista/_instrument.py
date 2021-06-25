@@ -3,13 +3,16 @@
 We use VIRCAM as instrument name.
 """
 
+
 __all__ = ("VIRCAM",)
+
 
 import os
 
 from lsst.afw.cameraGeom import makeCameraFromPath, CameraConfig
 from lsst.obs.base import Instrument, yamlCamera
 from lsst.obs.base.gen2to3 import TranslatorFactory, PhysicalFilterToBandKeyHandler
+
 from lsst.obs.vista.vircamFilters import VIRCAM_FILTER_DEFINITIONS
 from lsst.daf.butler.core.utils import getFullTypeName
 from lsst.utils import getPackageDir
@@ -21,6 +24,7 @@ from .translators import VircamTranslator
 class VIRCAM(Instrument):
     filterDefinitions = VIRCAM_FILTER_DEFINITIONS
     #policyName = "vircam"
+
     #obsDataPackage = "obs_vista_data"  # What is this?
 
     def __init__(self, **kwargs):
@@ -51,34 +55,36 @@ class VIRCAM(Instrument):
     def register(self, registry):
         camera = self.getCamera()
         obsMax = 2**31  #What is this? VISTA visit numbers will not go above this I think
-        registry.insertDimensionData(
-            "instrument",
-            {
-                "name": self.getName(), 
-                "detector_max": 16, 
-                "visit_max": obsMax, 
-                "exposure_max": obsMax,
-                 "class_name": getFullTypeName(self),
-             }
-        )
-
-        for detector in camera:
-            registry.insertDimensionData(
-                "detector",
+        with registry.transaction():
+            registry.syncDimensionData(
+                "instrument",
                 {
-                    "instrument": self.getName(),
-                    "id": detector.getId(),
-                    "full_name": detector.getName(),
-                    "name_in_raft": detector.getName()[1:],
-                    "raft": detector.getName()[0],
-                    "purpose": str(detector.getType()).split(".")[-1],
-                }
-            )
+                   "name": self.getName(), 
+                   "detector_max": 16, 
+                   "visit_max": obsMax, 
+                   "exposure_max": obsMax,
+                   "class_name": getFullTypeName(self),
+                 }
+            ) 
 
-        self._registerFilters(registry)
+            for detector in camera:
+                registry.syncDimensionData(
+                    "detector",
+                    {
+                        "instrument": self.getName(),
+                        "id": detector.getId(),
+                        "full_name": detector.getName(),
+                        "name_in_raft": detector.getName()[1:],
+                        "raft": detector.getName()[0],
+                        "purpose": str(detector.getType()).split(".")[-1],
+                    }
+                )
+
+            self._registerFilters(registry)
 
     def getRawFormatter(self, dataId):
         # local import to prevent circular dependency
+
         from .rawFormatter import VircamRawFormatter
         return VircamRawFormatter
 
@@ -118,3 +124,27 @@ class VIRCAM(Instrument):
         '''
         pass
 
+
+class _DecamBandToPhysicalFilterKeyHandler(PhysicalFilterToBandKeyHandler):
+    A specialization of `~lsst.obs.base.gen2to3.BandToPhysicalKeyHandler`
+    that allows filter aliases to be used as alternative band names.
+    Parameters
+    ----------
+    filterDefinitions : `lsst.obs.base.FilterDefinitionCollection`
+        The filters to translate from Gen 2 to Gen 3.
+    
+
+    __slots__ = ("_aliasMap",)
+
+    def __init__(self, filterDefinitions):
+        super().__init__(filterDefinitions)
+        self._aliasMap = {alias: d.physical_filter for d in filterDefinitions for alias in d.alias}
+
+    def extract(self, gen2id, *args, **kwargs):
+        # Expect _aliasMap to be small, so try it first
+        gen2Filter = gen2id["filter"]
+        if gen2Filter in self._aliasMap:
+            return self._aliasMap[gen2Filter]
+        else:
+            return super().extract(gen2id, *args, **kwargs) 
+"""
