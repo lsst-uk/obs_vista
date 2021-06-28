@@ -6,9 +6,10 @@ import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord, Angle
 
+
 class VircamTranslator(FitsTranslator):
     """Metadata translator for VISTA FITS headers.
-    
+
     Under normal circumstances, translators are found in the astro_metadata_translator 
     repository. However, it is possible to also put them in an obs_package, provided that 
     they are imported in both the _instrument.py and rawFormatter.py files.
@@ -31,15 +32,15 @@ class VircamTranslator(FitsTranslator):
     """
     _const_map = {"boresight_rotation_coord": "sky",
                   "detector_group": None,
-                  "boresight_airmass": None, #This could be calculated.
+                  "boresight_airmass": None,  # This could be calculated.
                   "boresight_rotation_angle": Angle(90 * u.deg),
                   "science_program": None,
                   "temperature": 300. * u.K,
                   "pressure": 985. * u.hPa,
                   "relative_humidity": None,
-                  "altaz_begin": None, #This could be calculated.
+                  "altaz_begin": None,  # This could be calculated.
                   "location": None,
-        }
+                  }
 
     """
     _trivial_map includes properties that can be taken directly from header
@@ -51,15 +52,15 @@ class VircamTranslator(FitsTranslator):
         "detector_exposure_id": "ESO DET EXP NO",
         "detector_num": "ESO DET CHIP NO",
         "detector_serial": "ESO DET CHIP NO",
-        #"physical_filter": "HIERARCH ESO INS FILT1 NAME",
+        # "physical_filter": "HIERARCH ESO INS FILT1 NAME",
         "exposure_time": ("EXPTIME", dict(unit=u.s)),
         "dark_time": ("EXPTIME", dict(unit=u.s)),
-        #This is a hack we need to merge to primary header
+        # This is a hack we need to merge to primary header
         "object": "ORIGIN",
-        #"observation_type": "ESO DET CON OPMODE",
+        # "observation_type": "ESO DET CON OPMODE",
         "telescope": ("TELESCOP", dict(default="VISTA")),
         "instrument": ("INSTRUME", dict(default="VIRCAM")),
-        }
+    }
 
     @classmethod
     def can_translate(cls, header, filename=None):
@@ -83,14 +84,14 @@ class VircamTranslator(FitsTranslator):
             `True` if the header is recognized by this class. `False`
             otherwise.
         """
-        
+
         # Use INSTRUME. Because of defaulting behavior only do this
         # if we really have an INSTRUME header
 
         if "ORIGIN" in header:
-   
-            if header["ORIGIN"] =="ESO":
-                
+
+            if header["ORIGIN"] == "ESO":
+
                 return True
         return False
 
@@ -100,37 +101,33 @@ class VircamTranslator(FitsTranslator):
     
     For example, the date in the header needs to be converted into an astropy.Time class.
     """
-    @cache_translation 
+    @cache_translation
     def to_datetime_begin(self):
-    
+
         date = self._header["DATE-OBS"]
-        #print(date)
+        # print(date)
         #date = [date[0:4], date[4:6], date[6:]]
         #date = '-'.join(date)
         t = Time(date, format="isot", scale="utc")
         return t
-    
-    @cache_translation 
+
+    @cache_translation
     def to_datetime_end(self):
         datetime_end = self.to_datetime_begin() + self.to_exposure_time()
         return datetime_end
 
-    @cache_translation    
+    @cache_translation
     def to_tracking_radec(self):
         radec = SkyCoord(self._header["CRVAL1"], self._header["CRVAL2"],
                          frame="icrs", unit=(u.hourangle, u.deg))
         return radec
-        
-
-
-
 
     @cache_translation
     def to_physical_filter(self):
         """Calculate physical filter.
         We are reading the headers from the image layers of a multiextension fits
         Not from the primary HDU
-        
+
         Returns
         -------
         filter : `str`
@@ -149,23 +146,23 @@ class VircamTranslator(FitsTranslator):
 
     @cache_translation
     def to_instrument(self):
-       if self._header["INSTRUME"].strip(" ")=="VIRCAM":
-           return "VIRCAM"
-       else:
-           #It should never get here, given can_translate().
-           return "Unknown"
-    
+        if self._header["INSTRUME"].strip(" ") == "VIRCAM":
+            return "VIRCAM"
+        else:
+            # It should never get here, given can_translate().
+            return "Unknown"
+
     def to_telescope(self):
         return self.to_instrument()
 
     @cache_translation
     def to_detector_name(self):
         return '{:02d}'.format(self._header["ESO DET CHIP NO"])
-        
+
     @cache_translation
     def to_observation_type(self):
         return 'science'
-        
+
     @classmethod
     def determine_translatable_headers(cls, filename, primary=None):
         """Given a file return all the headers usable for metadata translation.
@@ -204,7 +201,7 @@ class VircamTranslator(FitsTranslator):
         # Since we want to scan many HDUs we use astropy directly to keep
         # the file open rather than continually opening and closing it
         # as we go to each HDU.
-   
+
         with fits.open(filename) as fits_file:
             # Astropy does not automatically handle the INHERIT=T in
             # DECam headers so the primary header must be merged.
@@ -218,9 +215,7 @@ class VircamTranslator(FitsTranslator):
                     continue
 
                 header = hdu.header
-                if "HIERARCH ESO DET CHIP NO" not in header:  # Primary does not have 
+                if "HIERARCH ESO DET CHIP NO" not in header:  # Primary does not have
                     continue
 
                 yield merge_headers([primary, header], mode="overwrite")
-
-

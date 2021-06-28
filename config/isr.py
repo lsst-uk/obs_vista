@@ -5,12 +5,10 @@ config.doWrite = False
 '''
 
 
-
-
 # config.doWrite = True
 config.doOverscan = False
 # config.doAddDistortionModel = False # Broke tests in 20.0.0
-config.doLinearize=False #made false after failing. Should we be doing linearization?
+config.doLinearize = False  # made false after failing. Should we be doing linearization?
 config.doDefect = False
 config.doAssembleIsrExposures = False
 config.doBias = False

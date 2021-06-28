@@ -9,4 +9,4 @@ config.priorityList = [
     "VISTA-J",
     "VISTA-H",
     "VISTA-Ks"
-        ]
+]

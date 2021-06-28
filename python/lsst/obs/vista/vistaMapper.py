@@ -10,68 +10,67 @@ from .makeVircamRawVisitInfo import MakeVircamRawVisitInfo
 from .vircamFilters import VIRCAM_FILTER_DEFINITIONS
 from ._instrument import VIRCAM
 
+
 class VistaMapper(CameraMapper):
     packageName = 'obs_vista'
     _gen3instrument = VIRCAM
-    
+
     # A rawVisitInfoClass is required by processCcd.py
     MakeRawVisitInfoClass = MakeVircamRawVisitInfo
-    
+
     detectorNames = {
-    0:'DET1.CHIP1',
-    1:'DET1.CHIP2',
-    2:'DET1.CHIP3',
-    3:'DET1.CHIP4',
-    4:'DET1.CHIP5',
-    5:'DET1.CHIP6',
-    6:'DET1.CHIP7',
-    7:'DET1.CHIP8',
-    8:'DET1.CHIP9',
-    9:'DET1.CHIP10',
-    10:'DET1.CHIP11',
-    11:'DET1.CHIP12',
-    12:'DET1.CHIP13',
-    13:'DET1.CHIP14',
-    14:'DET1.CHIP15',
-    15:'DET1.CHIP16'}
-    
-    #Can this replace the filter definitions here in gen 3?
+        0: 'DET1.CHIP1',
+        1: 'DET1.CHIP2',
+        2: 'DET1.CHIP3',
+        3: 'DET1.CHIP4',
+        4: 'DET1.CHIP5',
+        5: 'DET1.CHIP6',
+        6: 'DET1.CHIP7',
+        7: 'DET1.CHIP8',
+        8: 'DET1.CHIP9',
+        9: 'DET1.CHIP10',
+        10: 'DET1.CHIP11',
+        11: 'DET1.CHIP12',
+        12: 'DET1.CHIP13',
+        13: 'DET1.CHIP14',
+        14: 'DET1.CHIP15',
+        15: 'DET1.CHIP16'}
+
+    # Can this replace the filter definitions here in gen 3?
     @classmethod
     def addFilters(cls):
         VIRCAM_FILTER_DEFINITIONS.defineFilters()
 
     def __init__(self, inputPolicy=None, **kwargs):
 
-        #Declare the policy file...
+        # Declare the policy file...
         policyFile = Policy.defaultPolicyFile(
             self.packageName, "VistaMapper.yaml", "policy")
         policy = Policy(policyFile)
-        #...and add it to the mapper:
+        # ...and add it to the mapper:
         super(VistaMapper, self).__init__(policy, os.path.dirname(policyFile), **kwargs)
 
         # Ensure each dataset type of interest knows about the full range of keys available from the registry
         keys = {'visit': int,
                 'ccd': int,
-                'ccdnum':int,
+                'ccdnum': int,
                 'filter': str,
                 'dataType': str,
                 'expTime': float,
                 'dateObs': str,
                 'taiObs': str,
-                #'mjd': int,
-                #'field': str,
-                #'survey': str
+                # 'mjd': int,
+                # 'field': str,
+                # 'survey': str
                 }
         for name in ("raw",
-<<<<<<< HEAD
-                    "postISRCCD", 
-                    "instcal",
-                    "confmap",
-                    # "calexp", "src", "icSrc", "srcMatch",
-                    ):
+                     "postISRCCD",
+                     "instcal",
+                     "confmap",
+                     # "calexp", "src", "icSrc", "srcMatch",
+                     ):
             self.mappings[name].keyDict.update(keys)
 
-        
         self.addFilters()
 
         self.filters = {}
@@ -81,53 +80,14 @@ class VistaMapper(CameraMapper):
             for filt in VIRCAM_FILTER_DEFINITIONS:
                 self.filters[filt.physical_filter] = afwImage.Filter(filt.physical_filter).getCanonicalName()
         self.defaultFilterName = "unknown"
-=======
-                     #"postISRCCD", "calexp", "src", "icSrc", "srcMatch",
-                    ):
-            self.mappings[name].keyDict.update(keys)
-        ###Defining your filter set###
-        #Create a python dict of filters:
-        self.filters = {}
- 
-        #Define your set of filters; you can have as many filters as you like...  
-        afwImageUtils.defineFilter(name='Clear',  lambdaEff=0., alias=['Clear'])
-        #afwImageUtils.defineFilter(name="VISTA-Z",lambdaEff=8762.4, alias=['VISTA-Z'])
-        #afwImageUtils.defineFilter(name="VISTA-Y",lambdaEff=10184.2, alias=['VISTA-Y'])
-        #afwImageUtils.defineFilter(name="VISTA-J",lambdaEff=12464.4, alias=['VISTA-J'])
-        #afwImageUtils.defineFilter(name="VISTA-H",lambdaEff=16310.0, alias=['VISTA-H'])
-        #afwImageUtils.defineFilter(name="VISTA-Ks", lambdaEff=21336.6, alias=['VISTA-Ks'])
-        #HSC filters
-        #afwImageUtils.defineFilter(name="HSC-G",lambdaEff=477, alias={'HSC-G'}),
-        #afwImageUtils.defineFilter(name="HSC-R",lambdaEff=623, alias={'HSC-R'}),
-        #afwImageUtils.defineFilter(name="HSC-I",lambdaEff=775, alias={'HSC-I'}),
-        #afwImageUtils.defineFilter(name="HSC-Z",lambdaEff=925, alias={'HSC-Z'}),
-        #afwImageUtils.defineFilter(name="HSC-Y",lambdaEff=990, alias={'HSC-Y'}),
-        
-        #...add them to your filter dict...
-        #self.filters['Clear'] = afwImage.Filter('Clear').getCanonicalName()
-        #self.filters['VISTA-Z'] = afwImage.Filter('VISTA-Z').getCanonicalName()
-        #self.filters['VISTA-Y'] = afwImage.Filter('VISTA-Y').getCanonicalName()
-        #self.filters['VISTA-J'] = afwImage.Filter('VISTA-J').getCanonicalName()
-        #self.filters['VISTA-H'] = afwImage.Filter('VISTA-H').getCanonicalName()
-        #self.filters['VISTA-Ks'] = afwImage.Filter('VISTA-Ks').getCanonicalName()
-        
-        #self.filters['HSC-G'] = afwImage.Filter('HSC-G').getCanonicalName()
-        #self.filters['HSC-R'] = afwImage.Filter('HSC-R').getCanonicalName()
-        #self.filters['HSC-I'] = afwImage.Filter('HSC-I').getCanonicalName()
-        #self.filters['HSC-Z'] = afwImage.Filter('HSC-Z').getCanonicalName()
-        #self.filters['HSC-Y'] = afwImage.Filter('HSC-Y').getCanonicalName()
->>>>>>> adab2415332b6a1f780ed0e5d3d4944ddb65b6c2
-        
-        #for filt in VISTA_FILTER_DEFINITIONS:
-           # self.filters[filt.physical_filter] = afwImage.Filter(filt.physical_filter).getCanonicalName()
 
-        #...and set your default filter.
+        # for filt in VISTA_FILTER_DEFINITIONS:
+        # self.filters[filt.physical_filter] = afwImage.Filter(filt.physical_filter).getCanonicalName()
+
+        # ...and set your default filter.
         self.defaultFilterName = 'Clear'
         ##############################
-        
-        
-        
-            
+
         # The number of bits allocated for fields in object IDs
         # TODO: Understand how these were set by obs_decam
         VistaMapper._nbit_tract = 16
@@ -136,14 +96,14 @@ class VistaMapper(CameraMapper):
         VistaMapper._nbit_id = 64 - (VistaMapper._nbit_tract
                                      + 2*VistaMapper._nbit_patch
                                      + VistaMapper._nbit_filter)
-        
+
     def _extractDetectorName(self, dataId):
         copyId = self._transformId(dataId)
         try:
             return VistaMapper.detectorNames[copyId['ccdnum']]
         except KeyError:
             raise RuntimeError("No name found for dataId: %s"%(dataId))
-    
+
     def _transformId(self, dataId):
         copyId = CameraMapper._transformId(self, dataId)
         if "ccd" in copyId:
@@ -156,16 +116,15 @@ class VistaMapper(CameraMapper):
         Here, I construct a unique ID by multiplying the visit number by
         64 to accomodate that we may have up to 16 CCDs exposed for every visit.
         processCcd.py will fail with a NotImplementedError() without this.
-        ''' 
-        
+        '''
+
         pathId = self._transformId(dataId)
         #print("DEBUG data id", pathId, dataId)
         visit = pathId['visit']
         ccd = int(pathId['hdu']) - 1
         visit = int(visit)
-       
 
-        return visit*16 + ccd 
+        return visit*16 + ccd
 
     def bypass_ccdExposureId(self, datasetType, pythonType, location, dataId):
         '''You need to tell the stack that it needs to refer to the above 
@@ -180,9 +139,8 @@ class VistaMapper(CameraMapper):
         (=2**24) visits in my survey.
         processCcd.py will fail with an AttributeError without this.
         '''
-        return 32 #Set large to avoid 'Exposure ID '34910216' is too large.
-        
-        
+        return 32  # Set large to avoid 'Exposure ID '34910216' is too large.
+
     def _computeCoaddExposureId(self, dataId):
         '''
         Here I'm saying: 
@@ -197,25 +155,24 @@ class VistaMapper(CameraMapper):
 
         patchX, patchY = [int(patch) for patch in dataId['patch'].split(',')]
         oid = (
-            ((tract << VistaMapper._nbit_patch) + patchX) 
+            ((tract << VistaMapper._nbit_patch) + patchX)
             << VistaMapper._nbit_patch
         ) + patchY
         print(oid)
         return oid
 
     def bypass_deepCoaddId_bits(self, *args, **kwargs):
-        #Up to 1024 (2**10) tracts each containing up to 64x64 (2**6x2**6) patches
-        return 64 - VistaMapper._nbit_id#10+6+6 #Set large to avoid 'Exposure ID '34910216' is too large.
+        # Up to 1024 (2**10) tracts each containing up to 64x64 (2**6x2**6) patches
+        return 64 - VistaMapper._nbit_id  # 10+6+6 #Set large to avoid 'Exposure ID '34910216' is too large.
 
     def bypass_deepCoaddId(self, datasetType, pythonType, location, dataId):
         return self._computeCoaddExposureId(dataId)
 
     def bypass_deepMergedCoaddId_bits(self, *args, **kwargs):
-         return 64 - VistaMapper._nbit_id#10+6+6 #Set large to avoid 'Exposure ID '34910216' is too large.
+        return 64 - VistaMapper._nbit_id  # 10+6+6 #Set large to avoid 'Exposure ID '34910216' is too large.
 
     def bypass_deepMergedCoaddId(self, datasetType, pythonType, location, dataId):
         return self._computeCoaddExposureId(dataId)
-        
 
     def _extractDetectorName(self, dataId):
         '''
@@ -223,16 +180,16 @@ class VistaMapper(CameraMapper):
         Here, I simply use the ccd ID number extracted from the header and recorded via 
         the ingest process.
         processCcd.py will fail with a NotImplementedError() without this.
-        ''' 
-        return int("%(hdu)d" % dataId) 
-        
+        '''
+        return int("%(hdu)d" % dataId)
+
     def translate_confmap(self, confmap):
         confArr = confmap.getArray()
-    
+
         idxUndefWeight = np.where(confArr <= 0)
         # Reassign weights to be finite but small:
         confArr[idxUndefWeight] = min(1e-14, np.min(confArr[np.where(confArr > 0)]))
-        #convert percentages
+        # convert percentages
         confim = afwImage.ImageF(confim/100.)
         return confim
 
@@ -266,7 +223,7 @@ class VistaMapper(CameraMapper):
 
         exp.setMetadata(md)
         return exp
-        
+
     def std_raw(self, item, dataId):
         """Standardize a raw dataset by converting it to an Exposure.
 
@@ -286,6 +243,3 @@ class VistaMapper(CameraMapper):
         """
         return self._standardizeExposure(self.exposures['raw'], item, dataId,
                                          trimmed=False)
-
-   
-   

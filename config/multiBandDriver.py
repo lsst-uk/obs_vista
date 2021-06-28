@@ -8,7 +8,7 @@ for sub in (
     "mergeCoaddDetections",
     "measureCoaddSources",
     "mergeCoaddMeasurements",
-    "forcedPhotCoadd"):
+        "forcedPhotCoadd"):
     path = os.path.join(getPackageDir("obs_vista"), "config", sub + ".py")
     if os.path.exists(path):
         getattr(config, sub).load(path)

@@ -3,7 +3,6 @@
 """
 
 
-
 import lsst.afw.fits
 import lsst.afw.image
 import lsst.log
@@ -21,29 +20,28 @@ __all__ = ("VircamRawFormatter")
 # I am trying to move to retain 1 indexing
 # We try this first before scaning the HDUs manually.
 detector_to_hdu = {
-    1:1,
-    2:2,
-    3:3,
-    4:4,
-    5:5,
-    6:6,
-    7:7,
-    8:8,
-    9:9,
-    10:10,
-    11:11,
-    12:12,
-    13:13,
-    14:14,
-    15:15,
-    16:16}
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+    6: 6,
+    7: 7,
+    8: 8,
+    9: 9,
+    10: 10,
+    11: 11,
+    12: 12,
+    13: 13,
+    14: 14,
+    15: 15,
+    16: 16}
 
 
 class VircamRawFormatter(FitsRawFormatterBase):
 
     translatorClass = VircamTranslator
     filterDefinitions = VIRCAM_FILTER_DEFINITIONS
-
 
     def getDetector(self, id):
         return VIRCAM().getCamera()[id]
@@ -69,8 +67,8 @@ class VircamRawFormatter(FitsRawFormatterBase):
         """
         log = lsst.log.Log.getLogger("VistaRawFormatter")
         log.debug("Did not find detector=%s at expected HDU=%s in %s: scanning through all HDUs.",
-                  detectorId, 
-                  detectorId, detector_to_hdu[detectorId], 
+                  detectorId,
+                  detectorId, detector_to_hdu[detectorId],
                   filename)
 
         fitsData = lsst.afw.fits.Fits(filename, 'r')
@@ -118,13 +116,11 @@ class VircamRawFormatter(FitsRawFormatterBase):
     def readMetadata(self):
         index, metadata = self._determineHDU(self.dataId['detector'])
 
-        print('DATAID',self.dataId)
-        VircamTranslator.fix_header(metadata,self.dataId['instrument'],self.dataId['exposure'])
+        print('DATAID', self.dataId)
+        VircamTranslator.fix_header(metadata, self.dataId['instrument'], self.dataId['exposure'])
 
         return metadata
 
     def readImage(self):
         index, metadata = self._determineHDU(self.dataId['detector'])
         return lsst.afw.image.ImageF(self.fileDescriptor.location.path, index)
-
-

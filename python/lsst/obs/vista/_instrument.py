@@ -16,7 +16,7 @@ from lsst.obs.base.gen2to3 import TranslatorFactory, PhysicalFilterToBandKeyHand
 from lsst.obs.vista.vircamFilters import VIRCAM_FILTER_DEFINITIONS
 from lsst.daf.butler.core.utils import getFullTypeName
 from lsst.utils import getPackageDir
-# Comment-out the following line if you put .translators/necam.py in the 
+# Comment-out the following line if you put .translators/necam.py in the
 # astro_metadata_translator repository:
 from .translators import VircamTranslator
 
@@ -25,7 +25,7 @@ class VIRCAM(Instrument):
     filterDefinitions = VIRCAM_FILTER_DEFINITIONS
     #policyName = "vircam"
 
-    #obsDataPackage = "obs_vista_data"  # What is this?
+    # obsDataPackage = "obs_vista_data"  # What is this?
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -40,32 +40,32 @@ class VIRCAM(Instrument):
         #path = os.path.join(getPackageDir("obs_vista"), self.policyName, "camGeom")
         #config = CameraConfig()
         #config.load(os.path.join(path, "camera.py"))
-        #return makeCameraFromPath(
+        # return makeCameraFromPath(
         #    cameraConfig=config,
         #    ampInfoPath=path,
         #    shortNameFunc=lambda name: name.replace(" ", "_"),
-        #)
-        #Gen 3 yaml camera
+        # )
+        # Gen 3 yaml camera
         path = os.path.join(
-            getPackageDir("obs_vista"), 
-            "camera", 
+            getPackageDir("obs_vista"),
+            "camera",
             'vircam.yaml')
         return yamlCamera.makeCamera(path)
 
     def register(self, registry):
         camera = self.getCamera()
-        obsMax = 2**31  #What is this? VISTA visit numbers will not go above this I think
+        obsMax = 2**31  # What is this? VISTA visit numbers will not go above this I think
         with registry.transaction():
             registry.syncDimensionData(
                 "instrument",
                 {
-                   "name": self.getName(), 
-                   "detector_max": 16, 
-                   "visit_max": obsMax, 
-                   "exposure_max": obsMax,
-                   "class_name": getFullTypeName(self),
-                 }
-            ) 
+                    "name": self.getName(),
+                    "detector_max": 16,
+                    "visit_max": obsMax,
+                    "exposure_max": obsMax,
+                    "class_name": getFullTypeName(self),
+                }
+            )
 
             for detector in camera:
                 registry.syncDimensionData(
@@ -92,12 +92,12 @@ class VIRCAM(Instrument):
 #        # Docstring inherited from lsst.obs.base.Instrument.
 #        factory = TranslatorFactory()
 #        factory.addGenericInstrumentRules(
-#            self.getName(), 
+#            self.getName(),
 #            calibFilterType="abstract_filter",
 #            detectorKey="ccdnum"
 #        )
 #         VISTA calibRegistry entries are abstract_filters, but we need physical_filter
-#         in the gen3 registry. 
+#         in the gen3 registry.
 #         UPDATE seems to have been superseeded by band
 #         factory.addRule(AbstractToPhysicalFilterKeyHandler(self.filterDefinitions),
 #                        instrument=self.getName(),
@@ -125,26 +125,25 @@ class VIRCAM(Instrument):
         pass
 
 
-class _DecamBandToPhysicalFilterKeyHandler(PhysicalFilterToBandKeyHandler):
-    A specialization of `~lsst.obs.base.gen2to3.BandToPhysicalKeyHandler`
-    that allows filter aliases to be used as alternative band names.
-    Parameters
-    ----------
-    filterDefinitions : `lsst.obs.base.FilterDefinitionCollection`
-        The filters to translate from Gen 2 to Gen 3.
-    
-
-    __slots__ = ("_aliasMap",)
-
-    def __init__(self, filterDefinitions):
-        super().__init__(filterDefinitions)
-        self._aliasMap = {alias: d.physical_filter for d in filterDefinitions for alias in d.alias}
-
-    def extract(self, gen2id, *args, **kwargs):
-        # Expect _aliasMap to be small, so try it first
-        gen2Filter = gen2id["filter"]
-        if gen2Filter in self._aliasMap:
-            return self._aliasMap[gen2Filter]
-        else:
-            return super().extract(gen2id, *args, **kwargs) 
-"""
+# class _DecamBandToPhysicalFilterKeyHandler(PhysicalFilterToBandKeyHandler):
+#     """A specialization of `~lsst.obs.base.gen2to3.BandToPhysicalKeyHandler`
+#     that allows filter aliases to be used as alternative band names.
+#     Parameters
+#     ----------
+#     filterDefinitions : `lsst.obs.base.FilterDefinitionCollection`
+#         The filters to translate from Gen 2 to Gen 3.
+#     """
+#
+#     __slots__ = ("_aliasMap",)
+#
+#     def __init__(self, filterDefinitions):
+#         super().__init__(filterDefinitions)
+#         self._aliasMap = {alias: d.physical_filter for d in filterDefinitions for alias in d.alias}
+#
+#     def extract(self, gen2id, *args, **kwargs):
+#         # Expect _aliasMap to be small, so try it first
+#         gen2Filter = gen2id["filter"]
+#         if gen2Filter in self._aliasMap:
+#             return self._aliasMap[gen2Filter]
+#         else:
+#             return super().extract(gen2id, *args, **kwargs)
