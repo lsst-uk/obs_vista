@@ -27,7 +27,7 @@ config.transformDict.transforms['FieldAngle'].transform.name = 'inverted'
 # Define the 16 CCDs that comprise VIRCAM.
 # TODO: set all 16 after checking we can import with one test ccd
 config.detectorList = {}
-for i in range(16):
+for i in range(1,16):
     config.detectorList[i] = lsst.afw.cameraGeom.cameraConfig.DetectorConfig()
     config.detectorList[i].bbox_y0 = 0         # y0 of pixel bounding box
     config.detectorList[i].bbox_y1 = 2048      # y1 of pixel bounding box
@@ -57,4 +57,4 @@ for i in range(16):
 # Name of this config
 # This isn't strictly required for CameraMapper
 # but I'm keeping it there as it seems like a good idea:
-config.name = 'Vista'
+config.name = 'Vircam'

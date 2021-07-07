@@ -14,6 +14,7 @@ config.parse.retarget(VistaParseTask)
 config.parse.translation = {
     'expTime': "EXPTIME",  
     'visit': "ESO DET EXP NO",
+    'ndit': "HIERARCH ESO DET NDIT",
 }
 
 # Metadata requiring 'translation'
@@ -61,4 +62,5 @@ config.register.columns = {
     'dateObs': 'text',
     'taiObs': 'text',
     'mjd': 'int',
+    'ndit': 'int',
 }
