@@ -1,2 +1,2 @@
 from ._instrument import *
-from .vistaMapper import *
+from .vircamMapper import *

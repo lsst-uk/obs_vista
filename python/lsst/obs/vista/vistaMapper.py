@@ -1,6 +1,6 @@
 from __future__ import absolute_import, division, print_function
 
-import os
+import os, warnings
 
 from lsst.daf.persistence import ButlerLocation, Policy
 from lsst.obs.base import CameraMapper
@@ -65,8 +65,8 @@ class VistaMapper(CameraMapper):
                 }
         for name in ("raw",
                      "postISRCCD",
-                     "instcal",
-                     "confmap",
+                     #"instcal",
+                     #"confmap",
                      # "calexp", "src", "icSrc", "srcMatch",
                      ):
             self.mappings[name].keyDict.update(keys)
