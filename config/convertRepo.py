@@ -1,9 +1,9 @@
-from lsst.obs.vista.ingest import VistaRawIngestTask
+from lsst.obs.vista.ingest import VircamRawIngestTask
 import os.path
 
 from lsst.obs.base.gen2to3 import ConvertRepoSkyMapConfig
-from lsst.obs.vista import VISTA
-from lsst.obs.vista.translators import VistaTranslator
+from lsst.obs.vista import VIRCAM
+from lsst.obs.vista.translators import VircamTranslator
 
 # maskCollection = VISTA().makeCollectionName("masks")
 # config.runsForced["brightObjectMask"] = maskCollection
@@ -48,9 +48,9 @@ config.datasetIgnorePatterns.extend(["deep_compareWarpAssembleCoadd_metadata",
 
 
 # Use the specialized Vista ingest task to handle multi-HDU FITS files.
-
-config.raws.retarget(VistaRawIngestTask)
+config.refCats.append("ps1_pv3_3pi_20170110_vista")
+config.raws.retarget(VircamRawIngestTask)
 config.ccdKey = "ccdnum"
-config.instrument = "lsst.obs.vista.VIRCAM"
-translatorClass = VistaTranslator
+#config.instrument = "lsst.obs.vista.VIRCAM"
+#translatorClass = VircamTranslator
 print("covertRepo.py run")

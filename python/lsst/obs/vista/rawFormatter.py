@@ -35,7 +35,8 @@ detector_to_hdu = {
     13: 13,
     14: 14,
     15: 15,
-    16: 16}
+    16: 16,
+}
 
 
 class VircamRawFormatter(FitsRawFormatterBase):

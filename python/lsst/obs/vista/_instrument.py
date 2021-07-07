@@ -96,33 +96,33 @@ class VIRCAM(Instrument):
 #            calibFilterType="abstract_filter",
 #            detectorKey="ccdnum"
 #        )
-#         VISTA calibRegistry entries are abstract_filters, but we need physical_filter
-#         in the gen3 registry.
-#         UPDATE seems to have been superseeded by band
-#         factory.addRule(AbstractToPhysicalFilterKeyHandler(self.filterDefinitions),
-#                        instrument=self.getName(),
-#                        gen2keys=("filter",),
-#                        consume=("filter",),
-#                        datasetTypeName="cpFlat")
-#         Translate Gen2 `filter` to band if it hasn't been consumed
-#         yet and gen2keys includes tract.
+#         # VISTA calibRegistry entries are abstract_filters, but we need physical_filter
+#         # in the gen3 registry.
+#         # UPDATE seems to have been superseeded by band
+# #         factory.addRule(AbstractToPhysicalFilterKeyHandler(self.filterDefinitions),
+# #                        instrument=self.getName(),
+# #                        gen2keys=("filter",),
+# #                        consume=("filter",),
+# #                        datasetTypeName="cpFlat")
+#        # Translate Gen2 `filter` to band if it hasn't been consumed
+#        # yet and gen2keys includes tract.
 #        factory.addRule(PhysicalFilterToBandKeyHandler(self.filterDefinitions),
 #                        instrument=self.getName(), gen2keys=("filter", "tract"), consume=("filter",))
 #        return factory
-#     def makeDataIdTranslatorFactory(self) -> TranslatorFactory:
-#         # Docstring inherited from lsst.obs.base.Instrument.
-#         factory = TranslatorFactory()
-#         factory.addGenericInstrumentRules(self.getName())
-#         # Translate Gen2 `filter` to band if it hasn't been consumed
-#         # yet and gen2keys includes tract.
-#         factory.addRule(PhysicalFilterToBandKeyHandler(self.filterDefinitions),
-#                         instrument=self.getName(), gen2keys=("filter", "tract"), consume=("filter",))
-#         return factory
-    def makeDataIdTranslatorFactory(self):
-        '''
-        Needed to register instrument
-        '''
-        pass
+    def makeDataIdTranslatorFactory(self) -> TranslatorFactory:
+        # Docstring inherited from lsst.obs.base.Instrument.
+        factory = TranslatorFactory()
+        factory.addGenericInstrumentRules(self.getName())
+        # Translate Gen2 `filter` to band if it hasn't been consumed
+        # yet and gen2keys includes tract.
+        factory.addRule(PhysicalFilterToBandKeyHandler(self.filterDefinitions),
+                        instrument=self.getName(), gen2keys=("filter", "tract"), consume=("filter",))
+        return factory
+#     def makeDataIdTranslatorFactory(self):
+#         '''
+#         Needed to register instrument
+#         '''
+#         pass
 
 
 # class _DecamBandToPhysicalFilterKeyHandler(PhysicalFilterToBandKeyHandler):
