@@ -28,11 +28,11 @@ config.data = {
         # 'HSC-I2': Colorterm(primary="i", secondary="z", c0=0.001625, c1=-0.200406, c2=-0.013666),
         'HSC-Z': Colorterm(primary="z", secondary="y", c0=-0.005362, c1=-0.221551, c2=-0.308279),
         'HSC-Y': Colorterm(primary="y", secondary="z", c0=-0.002055, c1=0.209680, c2=0.227296),
-        'VISTA-Z': Colorterm(primary="z2", secondary="z2"),
-        'VISTA-Y': Colorterm(primary="y2", secondary="y2"),
-        'VISTA-J': Colorterm(primary="j", secondary="j"),
-        'VISTA-H': Colorterm(primary="h", secondary="h"),
-        'VISTA-Ks': Colorterm(primary="ks", secondary="ks"),
+        'VIRCAM-Z': Colorterm(primary="z2", secondary="z2"),
+        'VIRCAM-Y': Colorterm(primary="y2", secondary="y2"),
+        'VIRCAM-J': Colorterm(primary="j", secondary="j"),
+        'VIRCAM-H': Colorterm(primary="h", secondary="h"),
+        'VIRCAM-Ks': Colorterm(primary="ks", secondary="ks"),
     }),
 }
 

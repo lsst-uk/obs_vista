@@ -25,9 +25,8 @@ config.transformDict.transforms['FieldAngle'].transform['inverted'].transform.co
 config.transformDict.transforms['FieldAngle'].transform.name = 'inverted'
 
 # Define the 16 CCDs that comprise VIRCAM.
-# TODO: set all 16 after checking we can import with one test ccd
 config.detectorList = {}
-for i in range(1,16):
+for i in range(1,17):
     config.detectorList[i] = lsst.afw.cameraGeom.cameraConfig.DetectorConfig()
     config.detectorList[i].bbox_y0 = 0         # y0 of pixel bounding box
     config.detectorList[i].bbox_y1 = 2048      # y1 of pixel bounding box

@@ -4,9 +4,9 @@ config.priorityList = [
     "HSC-Z",
     "HSC-Y",
     "HSC-G",
-    "VISTA-Z",
-    "VISTA-Y",
-    "VISTA-J",
-    "VISTA-H",
-    "VISTA-Ks"
+    "VIRCAM-Z",
+    "VIRCAM-Y",
+    "VIRCAM-J",
+    "VIRCAM-H",
+    "VIRCAM-Ks"
 ]
