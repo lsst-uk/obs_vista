@@ -34,7 +34,7 @@ configDir = os.path.join(getPackageDir("obs_vista"), "config")
 # Load ISR configurations:
 config.isr.load(os.path.join(configDir, "isr.py"))
 # Characterise:
-config.charImage.load(os.path.join(configDir, "characterise.py"))
+config.charImage.load(os.path.join(configDir, "characterizeImage.py"))
 
 # Load Calibrate configurations
 config.doCalibrate = True
