@@ -14,7 +14,7 @@ ObsConfigDir = os.path.dirname(__file__)
 
 # Reference catalogs
 # The following was copied from obs_subaru and manages conflicts between gen2 and gen3
-ref_cat = "ps1_pv3_3pi_20170110_vista"  # _vhs_vista, _video_vista, or _2mass
+ref_cat = "ps1_pv3_3pi_20170110_vista"  
 for refObjLoader in (config.astromRefObjLoader,
                      config.photoRefObjLoader,
                      ):
@@ -25,7 +25,7 @@ for refObjLoader in (config.astromRefObjLoader,
 # These are the Gen3 configuration options for reference catalog name.
 config.connections.photoRefCat = ref_cat
 config.connections.astromRefCat = ref_cat
-# These are gen2?:
+
 config.photoCal.applyColorTerms = True
 config.photoCal.photoCatName = ref_cat
 config.photoCal.match.matchRadius = 1.0
@@ -38,6 +38,11 @@ config.photoCal.match.sourceSelection.flags.bad = [
     # 'base_PixelFlags_flag_interpolated',
     # 'base_PixelFlags_flag_saturated',
 ]
+
+#TEMP turn off cal to see if we can get past singleFrame
+config.doPhotoCal = False
+config.doAstrometry = False
+
 
 # Taken from https://github.com/lsst/pipe_tasks/blob/master/python/lsst/pipe/tasks/colorterms.py:
 # p' = primary + c0 + c1*(primary - secondary) + c2*(primary - secondary)**2

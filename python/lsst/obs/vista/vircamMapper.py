@@ -159,7 +159,7 @@ class VircamMapper(CameraMapper):
             ((tract << VircamMapper._nbit_patch) + patchX)
             << VircamMapper._nbit_patch
         ) + patchY
-        print(oid)
+        #print(oid)
         return oid
 
     def bypass_deepCoaddId_bits(self, *args, **kwargs):

@@ -5,7 +5,7 @@ from astro_metadata_translator import cache_translation, FitsTranslator
 import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord, Angle
-
+from astropy.io import fits
 
 class VircamTranslator(FitsTranslator):
     """Metadata translator for VISTA FITS headers.
@@ -46,10 +46,10 @@ class VircamTranslator(FitsTranslator):
     _trivial_map includes properties that can be taken directly from header
     """
     _trivial_map = {
-        "exposure_id": "ESO DET EXP NO",
-        "visit_id": "ESO DET EXP NO",
+        #"exposure_id": "ESO DET EXP NO",
+        #"visit_id": "ESO DET EXP NO",
         "observation_id": "ESO DET EXP NO",
-        "detector_exposure_id": "ESO DET EXP NO",
+        #"detector_exposure_id": "ESO DET EXP NO",
         "detector_num": "ESO DET CHIP NO",
         "detector_serial": "ESO DET CHIP NO",
         # "physical_filter": "HIERARCH ESO INS FILT1 NAME",
@@ -144,17 +144,43 @@ class VircamTranslator(FitsTranslator):
         else:
             return None
 
+#     @cache_translation
+#     def to_instrument(self):
+#         if self._header["INSTRUME"].strip(" ") == "VIRCAM":
+#             return "VIRCAM"
+#         else:
+#             # It should never get here, given can_translate().
+#             return "Unknown"
+# 
+#     def to_telescope(self):
+#         return self.to_instrument()
     @cache_translation
-    def to_instrument(self):
-        if self._header["INSTRUME"].strip(" ") == "VIRCAM":
-            return "VIRCAM"
-        else:
-            # It should never get here, given can_translate().
-            return "Unknown"
+    def to_exposure_id(self):
+        """Calculate exposure ID.
+        Returns
+        -------
+        id : `int`
+            ID of exposure.
+        """
+        value = self._header["ESO DET EXP NO"]
+        self._used_these_cards("ESO DET EXP NO")
+        return value
 
-    def to_telescope(self):
-        return self.to_instrument()
+    @cache_translation
+    def to_observation_counter(self):
+        """Return the lifetime exposure number.
+        Returns
+        -------
+        sequence : `int`
+            The observation counter.
+        """
+        return self.to_exposure_id()
 
+    @cache_translation
+    def to_visit_id(self):
+        # Docstring will be inherited. Property defined in properties.py
+        return self.to_exposure_id()
+        
     @cache_translation
     def to_detector_name(self):
         return '{:02d}'.format(self._header["ESO DET CHIP NO"])
@@ -162,6 +188,26 @@ class VircamTranslator(FitsTranslator):
     @cache_translation
     def to_observation_type(self):
         return 'science'
+        
+    @cache_translation
+    def to_detector_exposure_id(self):
+        # Docstring will be inherited. Property defined in properties.py
+        exposure_id = self.to_exposure_id()
+        if exposure_id is None:
+            return None
+        return int("{:07d}{:02d}".format(exposure_id, self.to_detector_num()))
+
+#     @cache_translation
+#     def to_detector_group(self):
+#         # Docstring will be inherited. Property defined in properties.py
+#         name = self.to_detector_unique_name()
+#         return name[0]
+
+#     @cache_translation
+#     def to_detector_name(self):
+#         # Docstring will be inherited. Property defined in properties.py
+#         name = self.to_detector_unique_name()
+#         return name[1:]
 
     @classmethod
     def determine_translatable_headers(cls, filename, primary=None):
@@ -215,7 +261,7 @@ class VircamTranslator(FitsTranslator):
                     continue
 
                 header = hdu.header
-                if "HIERARCH ESO DET CHIP NO" not in header:  # Primary does not have
+                if "ESO DET CHIP NO" not in header:  # Primary does not have
                     continue
 
                 yield merge_headers([primary, header], mode="overwrite")

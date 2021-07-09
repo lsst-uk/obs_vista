@@ -1,75 +1,4 @@
 CCDs:
-  ccd0:
-    amplifiers:
-      AMP_E2V:
-        flipXY:
-        - false
-        - false
-        gain: 21.96
-        hdu: 0
-        ixy:
-        - 0
-        - 0
-        linearityCoeffs:
-        - 0.022000000000000002
-        - 33000
-        linearityMax: 33000
-        linearityThreshold: 0
-        linearityType: None
-        perAmpData: true
-        rawBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawDataBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        readCorner: LL
-        readNoise: 24.268
-        saturation: 33000
-    bbox:
-    - - 0
-      - 0
-    - - 2048
-      - 2048
-    detectorType: 0
-    id: 1
-    name: ccd1
-    offset:
-    - 0
-    - 0
-    pitch: 0.0
-    pixelSize:
-    - 1.0
-    - 1.0
-    refpos:
-    - 0
-    - 0
-    roll: 0.0
-    serial: '1'
-    transformDict:
-      nativeSys: Pixels
-      transforms: None
-    transposeDetector: false
-    yaw: 0.0
   ccd1:
     amplifiers:
       AMP_E2V:
@@ -77,7 +6,7 @@ CCDs:
         - false
         - false
         gain: 21.96
-        hdu: 0
+        hdu: 1
         ixy:
         - 0
         - 0
@@ -148,7 +77,7 @@ CCDs:
         - false
         - false
         gain: 23.82
-        hdu: 9
+        hdu: 10
         ixy:
         - 0
         - 0
@@ -219,7 +148,7 @@ CCDs:
         - false
         - false
         gain: 27.72
-        hdu: 10
+        hdu: 11
         ixy:
         - 0
         - 0
@@ -290,7 +219,7 @@ CCDs:
         - false
         - false
         gain: 23.700000000000003
-        hdu: 11
+        hdu: 12
         ixy:
         - 0
         - 0
@@ -361,7 +290,7 @@ CCDs:
         - false
         - false
         gain: 34.019999999999996
-        hdu: 12
+        hdu: 13
         ixy:
         - 0
         - 0
@@ -432,7 +361,7 @@ CCDs:
         - false
         - false
         gain: 28.68
-        hdu: 13
+        hdu: 14
         ixy:
         - 0
         - 0
@@ -503,7 +432,7 @@ CCDs:
         - false
         - false
         gain: 23.94
-        hdu: 14
+        hdu: 15
         ixy:
         - 0
         - 0
@@ -574,7 +503,7 @@ CCDs:
         - false
         - false
         gain: 29.759999999999998
-        hdu: 15
+        hdu: 16
         ixy:
         - 0
         - 0
@@ -645,7 +574,7 @@ CCDs:
         - false
         - false
         gain: 25.5
-        hdu: 1
+        hdu: 2
         ixy:
         - 0
         - 0
@@ -716,7 +645,7 @@ CCDs:
         - false
         - false
         gain: 23.700000000000003
-        hdu: 2
+        hdu: 3
         ixy:
         - 0
         - 0
@@ -787,7 +716,7 @@ CCDs:
         - false
         - false
         gain: 24.96
-        hdu: 3
+        hdu: 4
         ixy:
         - 0
         - 0
@@ -858,7 +787,7 @@ CCDs:
         - false
         - false
         gain: 25.44
-        hdu: 4
+        hdu: 5
         ixy:
         - 0
         - 0
@@ -929,7 +858,7 @@ CCDs:
         - false
         - false
         gain: 24.660000000000004
-        hdu: 5
+        hdu: 6
         ixy:
         - 0
         - 0
@@ -1000,7 +929,7 @@ CCDs:
         - false
         - false
         gain: 23.04
-        hdu: 6
+        hdu: 7
         ixy:
         - 0
         - 0
@@ -1071,7 +1000,7 @@ CCDs:
         - false
         - false
         gain: 25.32
-        hdu: 7
+        hdu: 8
         ixy:
         - 0
         - 0
@@ -1142,7 +1071,7 @@ CCDs:
         - false
         - false
         gain: 27.18
-        hdu: 8
+        hdu: 9
         ixy:
         - 0
         - 0

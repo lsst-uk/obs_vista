@@ -44,13 +44,13 @@ from lsst.obs.vista.translators import VircamTranslator
 config.datasetIgnorePatterns.extend(["deep_compareWarpAssembleCoadd_metadata",
                                      "deep_safeClipAssembleCoadd_metadata",
                                      "deep_dcrAssembleCoadd_metadata",
-                                     ".DS_Store"])
+                                     ".DS_Store",
+                                     ])
 
 
 # Use the specialized Vista ingest task to handle multi-HDU FITS files.
 config.refCats.append("ps1_pv3_3pi_20170110_vista")
-config.raws.retarget(VircamRawIngestTask)
-config.ccdKey = "ccdnum"
+#config.raws.retarget(VircamRawIngestTask)
+config.ccdKey = "ccdnum"  #From obs_decam
 #config.instrument = "lsst.obs.vista.VIRCAM"
 #translatorClass = VircamTranslator
-print("covertRepo.py run")

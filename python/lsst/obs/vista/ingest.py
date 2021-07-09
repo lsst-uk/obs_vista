@@ -34,29 +34,29 @@ class VircamRawIngestTask(lsst.obs.base.RawIngestTask):
     butler
     """
 
-    def extractMetadata(self, filename: str) -> RawFileData:
-        datasets = []
-        fitsData = lsst.afw.fits.Fits(filename, 'r')
-        # NOTE: The primary header (HDU=0) does not contain detector data.
-        for i in range(1, fitsData.countHdus()):
-            fitsData.setHdu(i)
-            header = fitsData.readMetadata()
-
-            # if header['ESO DET CHIP NO'] > 16:
-            #    continue
-            # fix_header(header) #needs astro_metadata_translator for VISTA
-            datasets.append(self._calculate_dataset_info(header, filename))
-
-        # The data model currently assumes that whilst multiple datasets
-        # can be associated with a single file, they must all share the
-        # same formatter.
-        instrument = VIRCAM()
-        FormatterClass = instrument.getRawFormatter(datasets[0].dataId)
-
-        self.log.debug(f"Found images for {len(datasets)} detectors in {filename}")
-        return RawFileData(datasets=datasets, filename=filename,
-                           FormatterClass=FormatterClass,
-                           instrumentClass=type(instrument))
+#     def extractMetadata(self, filename: str) -> RawFileData:
+#         datasets = []
+#         fitsData = lsst.afw.fits.Fits(filename, 'r')
+#         # NOTE: The primary header (HDU=0) does not contain detector data.
+#         for i in range(1, fitsData.countHdus()):
+#             fitsData.setHdu(i)
+#             header = fitsData.readMetadata()
+# 
+#             # if header['ESO DET CHIP NO'] > 16:
+#             #    continue
+#             # fix_header(header) #needs astro_metadata_translator for VISTA
+#             datasets.append(self._calculate_dataset_info(header, filename))
+# 
+#         # The data model currently assumes that whilst multiple datasets
+#         # can be associated with a single file, they must all share the
+#         # same formatter.
+#         instrument = VIRCAM()
+#         FormatterClass = instrument.getRawFormatter(datasets[0].dataId)
+# 
+#         self.log.debug(f"Found images for {len(datasets)} detectors in {filename}")
+#         return RawFileData(datasets=datasets, filename=filename,
+#                            FormatterClass=FormatterClass,
+#                            instrumentClass=type(instrument))
 
 
 class VistaIngestArgumentParser(IngestArgumentParser):

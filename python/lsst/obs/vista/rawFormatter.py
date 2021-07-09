@@ -66,7 +66,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
         ValueError
             Raised if detectorId is not found in any of the file HDUs
         """
-        log = lsst.log.Log.getLogger("VistaRawFormatter")
+        log = lsst.log.Log.getLogger("VircamRawFormatter")
         log.debug("Did not find detector=%s at expected HDU=%s in %s: scanning through all HDUs.",
                   detectorId,
                   detectorId, detector_to_hdu[detectorId],
@@ -118,7 +118,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
         index, metadata = self._determineHDU(self.dataId['detector'])
 
         print('DATAID', self.dataId)
-        VircamTranslator.fix_header(metadata, self.dataId['instrument'], self.dataId['exposure'])
+        VircamTranslator.fix_header(metadata, self.dataId['instrument'], self.dataId['exposure'])#
 
         return metadata
 
