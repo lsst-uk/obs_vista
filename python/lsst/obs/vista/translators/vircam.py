@@ -53,6 +53,7 @@ class VircamTranslator(FitsTranslator):
         "detector_num": "ESO DET CHIP NO",
         "detector_serial": "ESO DET CHIP NO",
         # "physical_filter": "HIERARCH ESO INS FILT1 NAME",
+        "dithers": "ESO DET NDIT",
         "exposure_time": ("EXPTIME", dict(unit=u.s)),
         "dark_time": ("EXPTIME", dict(unit=u.s)),
         # This is a hack we need to merge to primary header
