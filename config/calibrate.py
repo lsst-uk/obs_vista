@@ -40,8 +40,8 @@ config.photoCal.match.sourceSelection.flags.bad = [
 ]
 
 #TEMP turn off cal to see if we can get past singleFrame
-config.doPhotoCal = False
-config.doAstrometry = False
+config.doPhotoCal = True
+config.doAstrometry = True
 
 
 # Taken from https://github.com/lsst/pipe_tasks/blob/master/python/lsst/pipe/tasks/colorterms.py:
