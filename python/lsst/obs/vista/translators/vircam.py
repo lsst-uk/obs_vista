@@ -2,9 +2,10 @@
 __all__ = ("VircamTranslator", )
 
 from astro_metadata_translator import cache_translation, FitsTranslator
+from astro_metadata_translator.translators.helpers import tracking_from_degree_headers,altaz_from_degree_headers
 import astropy.units as u
 from astropy.time import Time
-from astropy.coordinates import SkyCoord, Angle
+from astropy.coordinates import SkyCoord, Angle, AltAz, EarthLocation
 from astropy.io import fits
 
 class VircamTranslator(FitsTranslator):
@@ -38,8 +39,8 @@ class VircamTranslator(FitsTranslator):
                   "temperature": 300. * u.K,
                   "pressure": 985. * u.hPa,
                   "relative_humidity": None,
-                  "altaz_begin": None,  # This could be calculated.
-                  "location": None,
+                  "altaz_begin": AltAz(0*u.deg,90*u.deg),  # This could be calculated.
+                  #"location": None,
                   }
 
     """
@@ -53,15 +54,19 @@ class VircamTranslator(FitsTranslator):
         "detector_num": "ESO DET CHIP NO",
         "detector_serial": "ESO DET CHIP NO",
         # "physical_filter": "HIERARCH ESO INS FILT1 NAME",
-        "dithers": "ESO DET NDIT",
+        #"dithers": "ESO DET NDIT",
         "exposure_time": ("EXPTIME", dict(unit=u.s)),
         "dark_time": ("EXPTIME", dict(unit=u.s)),
         # This is a hack we need to merge to primary header
         "object": "ORIGIN",
-        # "observation_type": "ESO DET CON OPMODE",
+        #"observation_type": "ESO DPR TYPE",
         "telescope": ("TELESCOP", dict(default="VISTA")),
         "instrument": ("INSTRUME", dict(default="VIRCAM")),
     }
+    
+#     detector_names = {
+#         1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 
+#         9: '9', 10: '10', 11: '11', 12: '12', 13: '13', 14: '14', 15: '15', 16: '16', }
 
     @classmethod
     def can_translate(cls, header, filename=None):
@@ -117,11 +122,32 @@ class VircamTranslator(FitsTranslator):
         datetime_end = self.to_datetime_begin() + self.to_exposure_time()
         return datetime_end
 
+#     @cache_translation
+#     def to_tracking_radec(self):
+#         """Tracking radec
+#         
+#         This is the pointing of the telescope not a reference pixel
+#         """
+#         radec = SkyCoord(self._header["CRVAL1"], self._header["CRVAL2"],
+#                          frame="icrs", unit=(u.deg, u.deg))
+#         return radec
+        
     @cache_translation
     def to_tracking_radec(self):
-        radec = SkyCoord(self._header["CRVAL1"], self._header["CRVAL2"],
-                         frame="icrs", unit=(u.hourangle, u.deg))
-        return radec
+        # Docstring will be inherited. Property defined in properties.py
+        radecsys = ("RADECSYS",)
+        radecpairs = (("CRVAL1", "CRVAL2"),)
+        return tracking_from_degree_headers(self, radecsys, radecpairs, unit=u.deg)
+        
+        
+#         HIERARCH ESO TEL ALT 
+#         HIERARCH ESO TEL AZ
+#     @cache_translation
+#     #Not working possibly due to not being in extension header
+#     def to_altaz_begin(self):
+#         # Docstring will be inherited. Property defined in properties.py
+#         return altaz_from_degree_headers(self, (("ESO TEL ALT", "ESO TEL AZ"),),
+#                                          self.to_datetime_begin())
 
     @cache_translation
     def to_physical_filter(self):
@@ -144,6 +170,20 @@ class VircamTranslator(FitsTranslator):
             return value
         else:
             return None
+            
+    @cache_translation
+    def to_location(self):
+        """Calculate the observatory location.
+        Returns
+        -------
+        location : `astropy.coordinates.EarthLocation`
+            An object representing the location of the telescope.
+        """
+
+        # Look up the value since files do not have location
+        value = EarthLocation.of_site("paranal")
+
+        return value
 
 #     @cache_translation
 #     def to_instrument(self):
@@ -185,6 +225,11 @@ class VircamTranslator(FitsTranslator):
     @cache_translation
     def to_detector_name(self):
         return '{:02d}'.format(self._header["ESO DET CHIP NO"])
+#     @cache_translation
+#     def to_detector_name(self):
+#         # Docstring will be inherited. Property defined in properties.py
+#         name = self.to_detector_unique_name()
+#         return name[1:]
 
     @cache_translation
     def to_observation_type(self):
@@ -262,7 +307,7 @@ class VircamTranslator(FitsTranslator):
                     continue
 
                 header = hdu.header
-                if "ESO DET CHIP NO" not in header:  # Primary does not have
-                    continue
+                #if "ESO DET CHIP NO" not in header:  # Primary does not have
+                #    continue
 
                 yield merge_headers([primary, header], mode="overwrite")

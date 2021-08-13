@@ -2,6 +2,8 @@ from lsst.pipe.tasks.ingest import ParseTask, IngestTask, IngestArgumentParser
 import lsst.obs.base
 from lsst.obs.base.ingest import RawFileData
 from lsst.afw.fits import readMetadata
+import lsst.obs.base.RawIngestTask
+import lsst.afw.fits.Fits 
 
 from ._instrument import VIRCAM
 
@@ -37,6 +39,7 @@ class VircamRawIngestTask(lsst.obs.base.RawIngestTask):
 
     def extractMetadata(self, filename: str) -> RawFileData:
         datasets = []
+        print(filename)
         fitsData = lsst.afw.fits.Fits(filename, 'r')
         # NOTE: The primary header (HDU=0) does not contain detector data.
         for i in range(1, fitsData.countHdus()):
@@ -200,17 +203,17 @@ class VistaParseTask(ParseTask):
         This strips everything apart form yyyy-mm-dd
         '''
         date = md.get("DATE-OBS")
-        # print(date)
+        # print(date,type(date))
         start = date[11:]
         date = date[0:10]
 
         t = Time(date)
         # If after midnight, set date to date minus 1 day.
         if int(start.split(":")[0]) < 12:
-            date = Time(t.jd-1, format='jd', out_subfmt='date').isot
+            date = Time(t.jd-1, format='jd').isot
 
         # print('d'+date)
-        return date
+        return date[0:10]
 
     def translateTai(self, md):
         '''
@@ -222,7 +225,7 @@ class VistaParseTask(ParseTask):
 
     def translateJd(self, md):
         date = self.translateDate(md)
-        #print('dateobs' + md.get("DATE-OBS"))
+        # print(date)
         t = Time(date, format='isot')
         # print(int(t.mjd))
         return int(t.mjd)  # - self.DAY0

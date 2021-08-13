@@ -1136,7 +1136,7 @@ CCDs:
     transposeDetector: false
     yaw: 0.0
 name: vista
-plateScale: 1.24
+plateScale: 0.336
 transforms:
   FieldAngle:
     coeffs:
