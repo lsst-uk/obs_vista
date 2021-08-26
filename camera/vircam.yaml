@@ -61,8 +61,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 5405.375
+    - -4704.391
     roll: 0.0
     serial: '1'
     transformDict:
@@ -132,8 +132,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 2472.604
+    - 3063.0881
     roll: 0.0
     serial: '10'
     transformDict:
@@ -203,8 +203,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -446.1697
+    - 3059.6677
     roll: 0.0
     serial: '11'
     transformDict:
@@ -274,8 +274,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -3362.077
+    - 3058.3582
     roll: 0.0
     serial: '12'
     transformDict:
@@ -345,8 +345,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 5391.87
+    - 6952.053
     roll: 0.0
     serial: '13'
     transformDict:
@@ -416,8 +416,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 2464.172
+    - 6956.306
     roll: 0.0
     serial: '14'
     transformDict:
@@ -487,8 +487,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -452.8867
+    - 6949.927
     roll: 0.0
     serial: '15'
     transformDict:
@@ -558,8 +558,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -3368.577
+    - 6946.762
     roll: 0.0
     serial: '16'
     transformDict:
@@ -629,8 +629,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 2481.837
+    - -4716.058
     roll: 0.0
     serial: '2'
     transformDict:
@@ -700,8 +700,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -432.6327
+    - -4720.338
     roll: 0.0
     serial: '3'
     transformDict:
@@ -771,8 +771,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -3349.992
+    - -4723.811
     roll: 0.0
     serial: '4'
     transformDict:
@@ -842,8 +842,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 5395.107
+    - -821.3359999999998
     roll: 0.0
     serial: '5'
     transformDict:
@@ -913,8 +913,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 2476.565
+    - -825.2289999999998
     roll: 0.0
     serial: '6'
     transformDict:
@@ -984,8 +984,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -440.3481
+    - -829.2820000000002
     roll: 0.0
     serial: '7'
     transformDict:
@@ -1055,8 +1055,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -3355.422
+    - -836.0889999999999
     roll: 0.0
     serial: '8'
     transformDict:
@@ -1126,8 +1126,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 5388.051
+    - 3068.3450000000003
     roll: 0.0
     serial: '9'
     transformDict:

@@ -2,11 +2,13 @@
 __all__ = ("VircamTranslator", )
 
 from astro_metadata_translator import cache_translation, FitsTranslator
-from astro_metadata_translator.translators.helpers import tracking_from_degree_headers,altaz_from_degree_headers
+from astro_metadata_translator.translators.helpers import (
+    tracking_from_degree_headers,altaz_from_degree_headers)
 import astropy.units as u
 from astropy.time import Time
 from astropy.coordinates import SkyCoord, Angle, AltAz, EarthLocation
 from astropy.io import fits
+from astropy.wcs import WCS
 
 class VircamTranslator(FitsTranslator):
     """Metadata translator for VISTA FITS headers.
@@ -34,12 +36,12 @@ class VircamTranslator(FitsTranslator):
     _const_map = {"boresight_rotation_coord": "sky",
                   "detector_group": None,
                   "boresight_airmass": None,  # This could be calculated.
-                  "boresight_rotation_angle": Angle(90 * u.deg),
+                  "boresight_rotation_angle": Angle(0 * u.deg),
                   "science_program": None,
-                  "temperature": 300. * u.K,
+                 # "temperature": 300. * u.K,
                   "pressure": 985. * u.hPa,
                   "relative_humidity": None,
-                  "altaz_begin": AltAz(0*u.deg,90*u.deg),  # This could be calculated.
+                 # "altaz_begin": AltAz(0*u.deg,90*u.deg),  # This could be calculated.
                   #"location": None,
                   }
 
@@ -49,6 +51,7 @@ class VircamTranslator(FitsTranslator):
     _trivial_map = {
         #"exposure_id": "ESO DET EXP NO",
         #"visit_id": "ESO DET EXP NO",
+        #"temperature":("ESO INS THERMAL AMB MEAN", dict(unit=u.K)),
         "observation_id": "ESO DET EXP NO",
         #"detector_exposure_id": "ESO DET EXP NO",
         "detector_num": "ESO DET CHIP NO",
@@ -94,9 +97,9 @@ class VircamTranslator(FitsTranslator):
         # Use INSTRUME. Because of defaulting behavior only do this
         # if we really have an INSTRUME header
 
-        if "ORIGIN" in header:
+        if "INSTRUME" in header:
 
-            if header["ORIGIN"] == "ESO":
+            if header["INSTRUME"] == "VIRCAM":
 
                 return True
         return False
@@ -121,33 +124,61 @@ class VircamTranslator(FitsTranslator):
     def to_datetime_end(self):
         datetime_end = self.to_datetime_begin() + self.to_exposure_time()
         return datetime_end
+    
+    @cache_translation
+    def to_temperature(self):
 
-#     @cache_translation
-#     def to_tracking_radec(self):
-#         """Tracking radec
-#         
-#         This is the pointing of the telescope not a reference pixel
-#         """
-#         radec = SkyCoord(self._header["CRVAL1"], self._header["CRVAL2"],
-#                          frame="icrs", unit=(u.deg, u.deg))
-#         return radec
+        #print(self._header)
+        return self._header["ESO INS THERMAL AMB MEAN"]*u.K
         
     @cache_translation
     def to_tracking_radec(self):
         # Docstring will be inherited. Property defined in properties.py
         radecsys = ("RADECSYS",)
         radecpairs = (("CRVAL1", "CRVAL2"),)
+        #return None
         return tracking_from_degree_headers(self, radecsys, radecpairs, unit=u.deg)
+
+#         wcs_input_dict = {
+#             'CTYPE1': self._header['CTYPE1'],
+#             'CUNIT1': 'deg',
+#             'CD1_1':  self._header['CD1_1'],                   
+#             'CD1_2':  self._header['CD1_2'] ,                 
+#             'CRPIX1': self._header['CRPIX1'],
+#             'CRVAL1': self._header['CRVAL1'],
+#             'NAXIS1': self._header['NAXIS1'],
+#             
+#             'CTYPE2': self._header['CTYPE2'],
+#             'CUNIT2': 'deg',                
+#             'CD2_1':  self._header['CD2_1'],                  
+#             'CD2_2':  self._header['CD2_2'],
+#             'CRPIX2': self._header['CRPIX2'],
+#             'CRVAL2': self._header['CRVAL2'],
+#             'NAXIS2': self._header['NAXIS2'],
+#             'PV2_1':  self._header['PV2_1'],                 
+#             'PV2_2':  self._header['PV2_2'],                      
+#             'PV2_3':  self._header['PV2_3'],                       
+#             'PV2_4':  self._header['PV2_4'],                      
+#             'PV2_5':  self._header['PV2_5'], 
+#         }
+#         w = WCS(wcs_input_dict)
+#         return w.pixel_to_world(self._header['CRVAL1'],self._header['CRVAL2'])
+
+#         print(self._header)
+#         radecsys = ("RADECSYS",)
+#         radecpairs = (("RA", "DEC"),)
+#         return tracking_from_degree_headers(self, radecsys, radecpairs, unit=u.deg)
         
         
-#         HIERARCH ESO TEL ALT 
-#         HIERARCH ESO TEL AZ
-#     @cache_translation
-#     #Not working possibly due to not being in extension header
-#     def to_altaz_begin(self):
-#         # Docstring will be inherited. Property defined in properties.py
-#         return altaz_from_degree_headers(self, (("ESO TEL ALT", "ESO TEL AZ"),),
-#                                          self.to_datetime_begin())
+
+    @cache_translation
+    #Not working possibly due to not being in extension header
+    def to_altaz_begin(self):
+        # Docstring will be inherited. Property defined in properties.py
+#        return AltAz(self._header["ESO TEL AZ"]*u.deg,self._header["ESO TEL ALT"]*u.deg)
+         return altaz_from_degree_headers(self, (("ESO TEL ALT","ESO TEL AZ"),),
+                                          self.to_datetime_begin(), 
+                                          is_zd=set(["ESO TEL ALT"]))
 
     @cache_translation
     def to_physical_filter(self):
@@ -258,8 +289,8 @@ class VircamTranslator(FitsTranslator):
     @classmethod
     def determine_translatable_headers(cls, filename, primary=None):
         """Given a file return all the headers usable for metadata translation.
-        DECam files are multi-extension FITS with a primary header and
-        each detector stored in a subsequent extension.  DECam uses
+        VIRCAM files are multi-extension FITS with a primary header and
+        each detector stored in a subsequent extension.  VIRCAM uses
         ``INHERIT=T`` and each detector header will be merged with the
         primary header.
         Guide headers are not returned.

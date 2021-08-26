@@ -7,6 +7,12 @@ import lsst.afw.fits
 import lsst.afw.image
 import lsst.log
 from lsst.obs.base import FitsRawFormatterBase
+from lsst.obs.base.utils import InitialSkyWcsError
+
+import astro_metadata_translator
+
+import logging
+log = logging.getLogger("fitsRawFormatter")
 
 from ._instrument import VIRCAM
 from .vircamFilters import VIRCAM_FILTER_DEFINITIONS
@@ -40,12 +46,58 @@ detector_to_hdu = {
 
 
 class VircamRawFormatter(FitsRawFormatterBase):
+    """Gen 3 Butler Formatters for VIRCAM raw data.
+    
+    This is built on examples from obs_decam, obs_subaru, and obs_necam
+    
+    """
 
+    
     translatorClass = VircamTranslator
     filterDefinitions = VIRCAM_FILTER_DEFINITIONS
 
     def getDetector(self, id):
         return VIRCAM().getCamera()[id]
+        
+    def makeWcs(self, visitInfo, detector):
+        """Create a SkyWcs from information about the exposure.
+        Overide the default which uses visit info
+        Return the metadata-based SkyWcs (always created, so that
+        the relevant metadata keywords are stripped).
+        
+        Is geometry based WCS superior?
+        
+        Parameters
+        ----------
+        visitInfo : `~lsst.afw.image.VisitInfo`
+            The information about the telescope boresight and camera
+            orientation angle for this exposure.
+        detector : `~lsst.afw.cameraGeom.Detector`
+            The detector used to acquire this exposure.
+        Returns
+        -------
+        skyWcs : `~lsst.afw.geom.SkyWcs`
+            Reversible mapping from pixel coordinates to sky coordinates.
+        Raises
+        ------
+        InitialSkyWcsError
+            Raised if there is an error generating the SkyWcs, chained from the
+            lower-level exception if available.
+        """
+        useMetadataWcs=True
+        if not self.isOnSky():
+            # This is not an on-sky observation
+            return None
+
+        skyWcs = self._createSkyWcsFromMetadata()
+
+        if useMetadataWcs:
+            msg = "VIRCAM camera geom not set. Defaulting to metadata-based SkyWcs."
+            log.warning(msg)
+            if skyWcs is None:
+                raise InitialSkyWcsError("Failed to create both metadata and boresight-based SkyWcs."
+                                         "See warnings in log messages for details.")
+            return skyWcs
 
     def _scanHdus(self, filename, detectorId):
         """Scan through a file for the HDU containing data from one detector.
@@ -102,6 +154,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
         filename = self.fileDescriptor.location.path
         try:
             index = detector_to_hdu[detectorId]
+            print('detectorId {} type'.format(detectorId),type(detectorId))
             metadata = lsst.afw.fits.readMetadata(filename, index)
             if metadata['ESO DET CHIP NO'] != detectorId:
                 # the detector->HDU mapping is different in this file: try scanning
@@ -116,10 +169,10 @@ class VircamRawFormatter(FitsRawFormatterBase):
 
     def readMetadata(self):
         index, metadata = self._determineHDU(self.dataId['detector'])
-
-        print('DATAID', self.dataId)
-        VircamTranslator.fix_header(metadata, self.dataId['instrument'], self.dataId['exposure'])#
-
+        #print(metadata)
+        astro_metadata_translator.fix_header(metadata,translator_class=VircamTranslator)
+        #VircamTranslator.fix_header(metadata, self.dataId['instrument'], self.dataId['exposure'])#
+        #print(metadata)
         return metadata
 
     def readImage(self):

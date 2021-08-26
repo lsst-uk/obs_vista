@@ -6,18 +6,18 @@ config.data = {
 
     "ps1*": ColortermDict(data={
         # Names used by Exposure.getFilter() in Gen2.
-        'g': Colorterm(primary="g", secondary="r", c0=0.005728, c1=0.061749, c2=-0.001125),
-        'r': Colorterm(primary="r", secondary="i", c0=-0.000144, c1=0.001369, c2=-0.008380),
-        # 'r2': Colorterm(primary="r", secondary="i", c0=-0.000032, c1=-0.002866, c2=-0.012638),
-        'i': Colorterm(primary="i", secondary="z", c0=0.000643, c1=-0.130078, c2=-0.006855),
-        # 'i2': Colorterm(primary="i", secondary="z", c0=0.001625, c1=-0.200406, c2=-0.013666),
-        'z': Colorterm(primary="z", secondary="y", c0=-0.005362, c1=-0.221551, c2=-0.308279),
-        'y': Colorterm(primary="y", secondary="z", c0=-0.002055, c1=0.209680, c2=0.227296),
-        'z2': Colorterm(primary="z2", secondary="z2"),
-        'y2': Colorterm(primary="y2", secondary="y2"),
-        'j': Colorterm(primary="j", secondary="j"),
-        'h': Colorterm(primary="h", secondary="h"),
-        'ks': Colorterm(primary="ks", secondary="ks"),
+#         'g': Colorterm(primary="g", secondary="r", c0=0.005728, c1=0.061749, c2=-0.001125),
+#         'r': Colorterm(primary="r", secondary="i", c0=-0.000144, c1=0.001369, c2=-0.008380),
+#         # 'r2': Colorterm(primary="r", secondary="i", c0=-0.000032, c1=-0.002866, c2=-0.012638),
+#         'i': Colorterm(primary="i", secondary="z", c0=0.000643, c1=-0.130078, c2=-0.006855),
+#         # 'i2': Colorterm(primary="i", secondary="z", c0=0.001625, c1=-0.200406, c2=-0.013666),
+#         'z': Colorterm(primary="z", secondary="y", c0=-0.005362, c1=-0.221551, c2=-0.308279),
+#         'y': Colorterm(primary="y", secondary="z", c0=-0.002055, c1=0.209680, c2=0.227296),
+#         'z2': Colorterm(primary="z2", secondary="z2"),
+#         'y2': Colorterm(primary="y2", secondary="y2"),
+#         'j': Colorterm(primary="j", secondary="j"),
+#         'h': Colorterm(primary="h", secondary="h"),
+#         'ks': Colorterm(primary="ks", secondary="ks"),
 
         # Names used by data IDs in both Gen2 and Gen3, and
         # Exposure.getFilter() in Gen3 (data is the same).

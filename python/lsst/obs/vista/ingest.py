@@ -2,8 +2,9 @@ from lsst.pipe.tasks.ingest import ParseTask, IngestTask, IngestArgumentParser
 import lsst.obs.base
 from lsst.obs.base.ingest import RawFileData
 from lsst.afw.fits import readMetadata
-import lsst.obs.base.RawIngestTask
-import lsst.afw.fits.Fits 
+#import lsst.obs.base.RawIngestTask
+#import lsst.afw.fits.Fits 
+
 
 from ._instrument import VIRCAM
 
@@ -25,42 +26,43 @@ __all__ = [
 
 # This should eventually be deprecated
 #We still need it while the translator is not in astro_meta_data_translator
-class VircamRawIngestTask(lsst.obs.base.RawIngestTask):
-    """Task for ingesting raw VISTA data into a Gen3 Butler repository.
 
-    Function copied from obs_decam DecamRawIngestTask which also has fits files
-    with multiple extensions.
-
-    This is now deprecated and they use the default ingester.
-
-    We need to write an astro_metadata_translator for VISTA to use this with the gen3
-    butler
-    """
-
-    def extractMetadata(self, filename: str) -> RawFileData:
-        datasets = []
-        print(filename)
-        fitsData = lsst.afw.fits.Fits(filename, 'r')
-        # NOTE: The primary header (HDU=0) does not contain detector data.
-        for i in range(1, fitsData.countHdus()):
-            fitsData.setHdu(i)
-            header = fitsData.readMetadata()
-
-            # if header['ESO DET CHIP NO'] > 16:
-            #    continue
-            # fix_header(header) #needs astro_metadata_translator for VISTA
-            datasets.append(self._calculate_dataset_info(header, filename))
-
-        # The data model currently assumes that whilst multiple datasets
-        # can be associated with a single file, they must all share the
-        # same formatter.
-        instrument = VIRCAM()
-        FormatterClass = instrument.getRawFormatter(datasets[0].dataId)
-
-        self.log.debug(f"Found images for {len(datasets)} detectors in {filename}")
-        return RawFileData(datasets=datasets, filename=filename,
-                           FormatterClass=FormatterClass,
-                           instrumentClass=type(instrument))
+# class VircamRawIngestTask(lsst.obs.base.RawIngestTask):
+#     """Task for ingesting raw VISTA data into a Gen3 Butler repository.
+# 
+#     Function copied from obs_decam DecamRawIngestTask which also has fits files
+#     with multiple extensions.
+# 
+#     This is now deprecated and they use the default ingester.
+# 
+#     We need to write an astro_metadata_translator for VISTA to use this with the gen3
+#     butler
+#     """
+# 
+#     def extractMetadata(self, filename: str) -> RawFileData:
+#         datasets = []
+#         print(filename)
+#         fitsData = lsst.afw.fits.Fits(filename, 'r')
+#         # NOTE: The primary header (HDU=0) does not contain detector data.
+#         for i in range(1, fitsData.countHdus()):
+#             fitsData.setHdu(i)
+#             header = fitsData.readMetadata()
+# 
+#             # if header['ESO DET CHIP NO'] > 16:
+#             #    continue
+#             # fix_header(header) #needs astro_metadata_translator for VISTA
+#             datasets.append(self._calculate_dataset_info(header, filename))
+# 
+#         # The data model currently assumes that whilst multiple datasets
+#         # can be associated with a single file, they must all share the
+#         # same formatter.
+#         instrument = VIRCAM()
+#         FormatterClass = instrument.getRawFormatter(datasets[0].dataId)
+# 
+#         self.log.debug(f"Found images for {len(datasets)} detectors in {filename}")
+#         return RawFileData(datasets=datasets, filename=filename,
+#                            FormatterClass=FormatterClass,
+#                            instrumentClass=type(instrument))
 
 
 class VistaIngestArgumentParser(IngestArgumentParser):
