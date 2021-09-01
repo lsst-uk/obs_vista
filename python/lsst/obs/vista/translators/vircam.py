@@ -162,8 +162,8 @@ class VircamTranslator(FitsTranslator):
 #             'PV2_5':  self._header['PV2_5'], 
 #         }
 #         w = WCS(wcs_input_dict)
-#         return w.pixel_to_world(self._header['CRVAL1'],self._header['CRVAL2'])
-
+#         #return w.pixel_to_world(self._header['CRVAL1'],self._header['CRVAL2'])
+#         return w.pixel_to_world(self._header['NAXIS1']/2,self._header['NAXIS2']/2)
 #         print(self._header)
 #         radecsys = ("RADECSYS",)
 #         radecpairs = (("RA", "DEC"),)

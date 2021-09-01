@@ -1,12 +1,12 @@
 config.priorityList = [
-    "HSC-I",
-    "HSC-R",
-    "HSC-Z",
-    "HSC-Y",
-    "HSC-G",
-    "VIRCAM-Z",
-    "VIRCAM-Y",
-    "VIRCAM-J",
-    "VIRCAM-H",
-    "VIRCAM-Ks"
+    "i",
+    "r",
+    "z",
+    "y",
+    "g",
+    "Z",
+    "Y",
+    "J",
+    "H",
+    "K"
 ]

@@ -50,6 +50,20 @@ Should show the 20.0.0-1 version of obs_vista as current and setup. Check the se
 processCcd.py
 ```
 
+### Updating the science pipelines
+
+The pipelines are currently under active development. Given the latest release has been installed you can update to the latest weekly using:
+
+```Shell
+eups distrib install -t w_latest lsst_distrib
+```
+
+### Generation 3 Butler
+
+The Generation 3 Butler pipeline is under development. 
+
+### Generation 2 Butler
+
 You will also need to create a _mapper file in the Butler data directory:
 
 ```Shell
