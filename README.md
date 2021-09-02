@@ -56,7 +56,10 @@ The pipelines are currently under active development. Given the latest release h
 
 ```Shell
 eups distrib install -t w_latest lsst_distrib
+<<<<<<< HEAD
 setup lsst_distrib -t w_latest
+=======
+>>>>>>> 78e0ebac788c5123e0806fad7cfa148628bf44c7
 ```
 
 ### Generation 3 Butler
