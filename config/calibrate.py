@@ -26,39 +26,11 @@ for refObjLoader in (config.astromRefObjLoader,
 config.connections.photoRefCat = ref_cat
 config.connections.astromRefCat = ref_cat
 
-config.photoCal.applyColorTerms = True
-config.photoCal.photoCatName = ref_cat
-config.photoCal.match.matchRadius = 2.0
-config.photoCal.match.sourceSelection.doFlags = False
-# Apply unresolved limitation?
-config.photoCal.match.sourceSelection.doUnresolved = False
-# List of source flag fields that must NOT be set for a source to be used.
-config.photoCal.match.sourceSelection.flags.bad = [
-    # 'base_PixelFlags_flag_edge',
-    # 'base_PixelFlags_flag_interpolated',
-    # 'base_PixelFlags_flag_saturated',
-]
+
 
 config.doPhotoCal = True
 config.doAstrometry = True
 
-config.photoCal.colorterms.load(os.path.join(ObsConfigDir, 'colorterms.py'))
-
-
-for i in [
-        # 'base_GaussianFlux',
-        # 'base_SdssShape', #base_SdssShape is needed for PSF determination.
-        # 'base_ScaledApertureFlux',
-        # 'base_CircularApertureFlux',
-        'base_Blendedness',
-        # 'base_LocalBackground',
-        # 'base_Jacobian',
-        # 'base_FPPosition',
-        # 'base_Variance',
-        # 'base_InputCount',
-        # 'base_SkyCoord',
-]:
-    config.measurement.plugins[i].doMeasure = False
 
 
 # Astrometry
@@ -94,4 +66,36 @@ config.astrometry.sourceSelector['matcher'].minSnr = 0.0
 config.astrometry.sourceSelector['matcher'].excludePixelFlags = False
 
 # specify the minimum psfFlux for good Psf Candidates
-config.astrometry.sourceSelector['objectSize'].fluxMin = 1000.0
+config.astrometry.sourceSelector['objectSize'].fluxMin = 100.0
+
+
+config.photoCal.colorterms.load(os.path.join(ObsConfigDir, 'colorterms.py'))
+
+
+for i in [
+        # 'base_GaussianFlux',
+        # 'base_SdssShape', #base_SdssShape is needed for PSF determination.
+        # 'base_ScaledApertureFlux',
+        # 'base_CircularApertureFlux',
+        'base_Blendedness',
+        # 'base_LocalBackground',
+        # 'base_Jacobian',
+        # 'base_FPPosition',
+        # 'base_Variance',
+        # 'base_InputCount',
+        # 'base_SkyCoord',
+]:
+    config.measurement.plugins[i].doMeasure = False
+    
+config.photoCal.applyColorTerms = True
+config.photoCal.photoCatName = ref_cat
+config.photoCal.match.matchRadius = 2.0
+config.photoCal.match.sourceSelection.doFlags = False
+# Apply unresolved limitation?
+config.photoCal.match.sourceSelection.doUnresolved = False
+# List of source flag fields that must NOT be set for a source to be used.
+config.photoCal.match.sourceSelection.flags.bad = [
+    # 'base_PixelFlags_flag_edge',
+    # 'base_PixelFlags_flag_interpolated',
+    # 'base_PixelFlags_flag_saturated',
+]
