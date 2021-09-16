@@ -4,7 +4,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 21.96
         hdu: 1
         ixy:
@@ -58,11 +58,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - 5406.375
-    - 6832.391
+    - 2048
+    - 2048
     roll: 0.0
     serial: '1'
     transformDict:
@@ -75,7 +75,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 23.82
         hdu: 10
         ixy:
@@ -129,11 +129,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - 2473.604
-    - -935.0881
+    - 2048
+    - 2048
     roll: 0.0
     serial: '10'
     transformDict:
@@ -146,7 +146,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 27.72
         hdu: 11
         ixy:
@@ -200,11 +200,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - -445.1697
-    - -931.6677
+    - 2048
+    - 2048
     roll: 0.0
     serial: '11'
     transformDict:
@@ -217,7 +217,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 23.700000000000003
         hdu: 12
         ixy:
@@ -271,11 +271,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - -3361.077
-    - -930.3582
+    - 2048
+    - 2048
     roll: 0.0
     serial: '12'
     transformDict:
@@ -288,7 +288,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 34.019999999999996
         hdu: 13
         ixy:
@@ -342,11 +342,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - 5392.87
-    - -4822.053
+    - 2048
+    - 2048
     roll: 0.0
     serial: '13'
     transformDict:
@@ -359,7 +359,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 28.68
         hdu: 14
         ixy:
@@ -413,11 +413,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - 2465.172
-    - -4827.306
+    - 2048
+    - 2048
     roll: 0.0
     serial: '14'
     transformDict:
@@ -430,7 +430,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 23.94
         hdu: 15
         ixy:
@@ -484,11 +484,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - -451.8867
-    - -4820.927
+    - 2048
+    - 2048
     roll: 0.0
     serial: '15'
     transformDict:
@@ -501,7 +501,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 29.759999999999998
         hdu: 16
         ixy:
@@ -555,11 +555,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - -3367.577
-    - -4818.762
+    - 2048
+    - 2048
     roll: 0.0
     serial: '16'
     transformDict:
@@ -572,7 +572,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 25.5
         hdu: 2
         ixy:
@@ -626,11 +626,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - 2482.837
-    - 6845.058
+    - 2048
+    - 2048
     roll: 0.0
     serial: '2'
     transformDict:
@@ -643,7 +643,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 23.700000000000003
         hdu: 3
         ixy:
@@ -697,11 +697,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - -431.6327
-    - 6849.338
+    - 2048
+    - 2048
     roll: 0.0
     serial: '3'
     transformDict:
@@ -714,7 +714,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 24.96
         hdu: 4
         ixy:
@@ -768,11 +768,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - -3348.992
-    - 6852.811
+    - 2048
+    - 2048
     roll: 0.0
     serial: '4'
     transformDict:
@@ -785,7 +785,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 25.44
         hdu: 5
         ixy:
@@ -839,11 +839,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - 5396.107
-    - 2949.336
+    - 2048
+    - 2048
     roll: 0.0
     serial: '5'
     transformDict:
@@ -856,7 +856,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 24.660000000000004
         hdu: 6
         ixy:
@@ -910,11 +910,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - 2477.565
-    - 2953.229
+    - 2048
+    - 2048
     roll: 0.0
     serial: '6'
     transformDict:
@@ -927,7 +927,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 23.04
         hdu: 7
         ixy:
@@ -981,11 +981,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - -439.3481
-    - 2957.282
+    - 2048
+    - 2048
     roll: 0.0
     serial: '7'
     transformDict:
@@ -998,7 +998,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 25.32
         hdu: 8
         ixy:
@@ -1052,11 +1052,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - -3354.422
-    - 2964.089
+    - 2048
+    - 2048
     roll: 0.0
     serial: '8'
     transformDict:
@@ -1069,7 +1069,7 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
+        - false
         gain: 27.18
         hdu: 9
         ixy:
@@ -1123,11 +1123,11 @@ CCDs:
     - 0
     pitch: 0.0
     pixelSize:
-    - 1.0
-    - 1.0
+    - 0.02
+    - 0.02
     refpos:
-    - 5389.051
-    - -940.345
+    - 2048
+    - 2048
     roll: 0.0
     serial: '9'
     transformDict:

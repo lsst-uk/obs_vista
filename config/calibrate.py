@@ -29,45 +29,52 @@ config.connections.astromRefCat = ref_cat
 
 
 config.doPhotoCal = True
+
+#config.astrometry.forceKnownWcs=True
+
 config.doAstrometry = True
 
-
-
-# Astrometry
 # Raise an exception if astrometry fails? Ignored if doAstrometry false.
-config.requireAstrometry = False  
+#config.requireAstrometry = False  
+# Raise an exception if photoCal fails? Ignored if doPhotoCal false.
+#config.requirePhotoCal=False
 
 # List of flags which cause a source to be rejected as bad
-config.astrometry.sourceSelector['astrometry'].badFlags = [
-    'base_PixelFlags_flag_edge',
-    'base_PixelFlags_flag_interpolatedCenter',
-    'base_PixelFlags_flag_saturatedCenter',
-    'base_PixelFlags_flag_crCenter',
-    'base_PixelFlags_flag_bad'
-]
+# config.astrometry.sourceSelector['astrometry'].badFlags = [
+#     'base_PixelFlags_flag_edge',
+#     #'base_PixelFlags_flag_interpolatedCenter',
+#     'base_PixelFlags_flag_saturatedCenter',
+#     'base_PixelFlags_flag_crCenter',
+#     'base_PixelFlags_flag_bad'
+# ]
 
 config.measurement.load(os.path.join(ObsConfigDir, "apertures.py"))
 config.measurement.load(os.path.join(ObsConfigDir, "kron.py"))
 config.measurement.load(os.path.join(ObsConfigDir, "hsm.py"))
 
 # Type of source flux; typically one of Ap or Psf
-config.astrometry.sourceSelector['astrometry'].sourceFluxType = 'Ap'
+#config.astrometry.sourceSelector['astrometry'].sourceFluxType = 'Ap'
 
 # Minimum allowed signal-to-noise ratio for sources used for matching (in the flux specified by sourceFluxType); <= 0 for no limit
-config.astrometry.sourceSelector['astrometry'].minSnr = 0.0
+#config.astrometry.sourceSelector['astrometry'].minSnr = 0.0
 
 # Type of source flux; typically one of Ap or Psf
-config.astrometry.sourceSelector['matcher'].sourceFluxType = 'Ap'
+#config.astrometry.sourceSelector['matcher'].sourceFluxType = 'Ap'
 
 # Minimum allowed signal-to-noise ratio for sources used for matching (in the flux specified by sourceFluxType); <= 0 for no limit
-config.astrometry.sourceSelector['matcher'].minSnr = 0.0
+#config.astrometry.sourceSelector['matcher'].minSnr = 0.0
 
 # Exclude objects that have saturated, interpolated, or edge pixels using PixelFlags. For matchOptimisticB set this to False to recover previous matcher selector behavior.
-config.astrometry.sourceSelector['matcher'].excludePixelFlags = False
+#config.astrometry.sourceSelector['matcher'].excludePixelFlags = False
 
 # specify the minimum psfFlux for good Psf Candidates
-config.astrometry.sourceSelector['objectSize'].fluxMin = 100.0
+#config.astrometry.sourceSelector['objectSize'].fluxMin = 100.0
 
+# number of iterations of fitter (which fits X and Y separately, and so benefits from a few iterations
+#config.astrometry.wcsFitter.order = 4
+
+# Select objects with value less than this
+#config.astrometry.referenceSelector.unresolved.maximum=0.9
 
 config.photoCal.colorterms.load(os.path.join(ObsConfigDir, 'colorterms.py'))
 

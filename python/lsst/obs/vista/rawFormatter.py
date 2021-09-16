@@ -19,7 +19,7 @@ from .vircamFilters import VIRCAM_FILTER_DEFINITIONS
 from .translators import VircamTranslator
 
 
-__all__ = ("VircamRawFormatter")
+__all__ = ("VircamRawFormatter",)
 
 
 # The mapping of detector id to HDU in raw files for.

@@ -17,7 +17,7 @@ import re
 from astropy.time import Time
 
 __all__ = [
-    "VircamRawIngestTask",
+   # "VircamRawIngestTask",
     "VistaIngestArgumentParser",
     "VistaIngestTask",
     "VistaParseTask"
