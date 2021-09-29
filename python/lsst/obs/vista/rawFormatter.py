@@ -8,6 +8,10 @@ import lsst.afw.image
 import lsst.log
 from lsst.obs.base import FitsRawFormatterBase
 from lsst.obs.base.utils import InitialSkyWcsError
+from lsst.afw.image import ImageU, bboxFromMetadata
+from lsst.afw.geom import makeSkyWcs, makeFlippedWcs
+from lsst.afw.math import flipImage
+from lsst.geom import Point2D
 
 import astro_metadata_translator
 
@@ -55,6 +59,11 @@ class VircamRawFormatter(FitsRawFormatterBase):
     
     translatorClass = VircamTranslator
     filterDefinitions = VIRCAM_FILTER_DEFINITIONS
+    
+#     wcsFlipX = False
+#     wcsFlipY = False
+    FLIP_LR = False
+    FLIP_TB = True
 
     def getDetector(self, id):
         return VIRCAM().getCamera()[id]
@@ -98,6 +107,10 @@ class VircamRawFormatter(FitsRawFormatterBase):
                 raise InitialSkyWcsError("Failed to create both metadata and boresight-based SkyWcs."
                                          "See warnings in log messages for details.")
             return skyWcs
+        else:
+            return self.makeRawSkyWcsFromBoresight(visitInfo.getBoresightRaDec(),
+                                               visitInfo.getBoresightRotAngle(),
+                                               detector)
 
     def _scanHdus(self, filename, detectorId):
         """Scan through a file for the HDU containing data from one detector.
@@ -174,7 +187,26 @@ class VircamRawFormatter(FitsRawFormatterBase):
         #VircamTranslator.fix_header(metadata, self.dataId['instrument'], self.dataId['exposure'])#
         #print(metadata)
         return metadata
+        
+    def _createSkyWcsFromMetadata(self):
+        # We need to know which direction the chip is "flipped" in order to
+        # make a sensible WCS from the header metadata.
+        wcs = makeSkyWcs(self.metadata, strip=True)
+        dimensions = bboxFromMetadata(self.metadata).getDimensions()
+        center = Point2D(dimensions/2.0)
+        return makeFlippedWcs(wcs, self.FLIP_LR, self.FLIP_TB, center)
+
+#     def readImage(self):
+#         if self.fileDescriptor.parameters:
+#             # It looks like the Gen2 std_raw code wouldn't have handled
+#             # flipping vs. subimages correctly, so we won't bother to either.
+#             # But we'll make sure no one tries to get a subimage, rather than
+#             # doing something confusing.
+#             raise NotImplementedError("Formatter does not support subimages.")
+#         image = ImageU(self.fileDescriptor.location.path)
+#         return flipImage(image, self.FLIP_LR, self.FLIP_TB)
 
     def readImage(self):
         index, metadata = self._determineHDU(self.dataId['detector'])
-        return lsst.afw.image.ImageF(self.fileDescriptor.location.path, index)
+        image = lsst.afw.image.ImageF(self.fileDescriptor.location.path, index)
+        return flipImage(image, self.FLIP_LR, self.FLIP_TB)

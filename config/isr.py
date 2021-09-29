@@ -4,7 +4,7 @@ e.g.:
 config.doWrite = False
 '''
 
-
+config.expectWcs = True
 # config.doWrite = True
 config.doOverscan = False
 # config.doAddDistortionModel = False # Broke tests in 20.0.0

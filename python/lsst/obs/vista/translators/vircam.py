@@ -36,7 +36,7 @@ class VircamTranslator(FitsTranslator):
     _const_map = {"boresight_rotation_coord": "sky",
                   "detector_group": None,
                   "boresight_airmass": None,  # This could be calculated.
-                  "boresight_rotation_angle": Angle(0 * u.deg),
+                  "boresight_rotation_angle": Angle(90 * u.deg),
                   "science_program": None,
                  # "temperature": 300. * u.K,
                   "pressure": 985. * u.hPa,
@@ -97,11 +97,18 @@ class VircamTranslator(FitsTranslator):
         # Use INSTRUME. Because of defaulting behavior only do this
         # if we really have an INSTRUME header
 
+#         if "INSTRUME" in header:
+# 
+#             if header["INSTRUME"] == "VIRCAM":
+# 
+#                 return True
+#         return False
         if "INSTRUME" in header:
-
-            if header["INSTRUME"] == "VIRCAM":
-
-                return True
+            via_instrume = super().can_translate(header, filename=filename)
+            if via_instrume:
+                return via_instrume
+#         if cls.is_keyword_defined(header, "FILTER") and "VIRCAM" in header["FILTER"]:
+#             return True
         return False
 
     """
