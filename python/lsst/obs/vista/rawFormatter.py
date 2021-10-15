@@ -60,10 +60,11 @@ class VircamRawFormatter(FitsRawFormatterBase):
     translatorClass = VircamTranslator
     filterDefinitions = VIRCAM_FILTER_DEFINITIONS
     
-#     wcsFlipX = False
-#     wcsFlipY = False
+    #This is set in base class as False
+    wcsFlipX = False
+    
     FLIP_LR = False
-    FLIP_TB = True
+    FLIP_TB = False
 
     def getDetector(self, id):
         return VIRCAM().getCamera()[id]
@@ -101,7 +102,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
         skyWcs = self._createSkyWcsFromMetadata()
 
         if useMetadataWcs:
-            msg = "VIRCAM camera geom not set. Defaulting to metadata-based SkyWcs."
+            msg = "VIRCAM camera geom not used. Defaulting to metadata-based SkyWcs."
             log.warning(msg)
             if skyWcs is None:
                 raise InitialSkyWcsError("Failed to create both metadata and boresight-based SkyWcs."
@@ -203,7 +204,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
 #             # But we'll make sure no one tries to get a subimage, rather than
 #             # doing something confusing.
 #             raise NotImplementedError("Formatter does not support subimages.")
-#         image = ImageU(self.fileDescriptor.location.path)
+#         image = lsst.afw.image.ImageF(self.fileDescriptor.location.path, index)
 #         return flipImage(image, self.FLIP_LR, self.FLIP_TB)
 
     def readImage(self):

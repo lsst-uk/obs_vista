@@ -4,8 +4,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 21.96
+        - false
+        gain: 25.62
         hdu: 1
         ixy:
         - 0
@@ -20,36 +20,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 24.268
         saturation: 33000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 1
     name: ccd1
@@ -75,8 +75,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 23.82
+        - false
+        gain: 27.790000000000003
         hdu: 10
         ixy:
         - 0
@@ -91,36 +91,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 24.935333333333332
         saturation: 35000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 10
     name: ccd10
@@ -146,8 +146,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 27.72
+        - false
+        gain: 32.34
         hdu: 11
         ixy:
         - 0
@@ -162,36 +162,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 24.186333333333334
         saturation: 37000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 11
     name: ccd11
@@ -217,8 +217,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 23.700000000000003
+        - false
+        gain: 27.650000000000002
         hdu: 12
         ixy:
         - 0
@@ -233,36 +233,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 23.318
         saturation: 34000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 12
     name: ccd12
@@ -288,8 +288,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 34.019999999999996
+        - false
+        gain: 39.69
         hdu: 13
         ixy:
         - 0
@@ -304,36 +304,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 26.480666666666668
         saturation: 33000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 13
     name: ccd13
@@ -359,8 +359,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 28.68
+        - false
+        gain: 33.46
         hdu: 14
         ixy:
         - 0
@@ -375,36 +375,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 18.39966666666667
         saturation: 35000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 14
     name: ccd14
@@ -430,8 +430,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 23.94
+        - false
+        gain: 27.93
         hdu: 15
         ixy:
         - 0
@@ -446,36 +446,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 17.891000000000002
         saturation: 34000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 15
     name: ccd15
@@ -501,8 +501,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 29.759999999999998
+        - false
+        gain: 34.72
         hdu: 16
         ixy:
         - 0
@@ -517,36 +517,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 19.869666666666664
         saturation: 34000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 16
     name: ccd16
@@ -572,8 +572,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 25.5
+        - false
+        gain: 29.75
         hdu: 2
         ixy:
         - 0
@@ -588,36 +588,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 25.122
         saturation: 32000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 2
     name: ccd2
@@ -643,8 +643,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 23.700000000000003
+        - false
+        gain: 27.650000000000002
         hdu: 3
         ixy:
         - 0
@@ -659,36 +659,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 23.457000000000004
         saturation: 33000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 3
     name: ccd3
@@ -714,8 +714,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 24.96
+        - false
+        gain: 29.12
         hdu: 4
         ixy:
         - 0
@@ -730,36 +730,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 24.708333333333332
         saturation: 32000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 4
     name: ccd4
@@ -785,8 +785,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 25.44
+        - false
+        gain: 29.68
         hdu: 5
         ixy:
         - 0
@@ -801,36 +801,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 25.313000000000002
         saturation: 24000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 5
     name: ccd5
@@ -856,8 +856,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 24.660000000000004
+        - false
+        gain: 28.770000000000003
         hdu: 6
         ixy:
         - 0
@@ -872,36 +872,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 24.441333333333333
         saturation: 26000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 6
     name: ccd6
@@ -927,8 +927,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 23.04
+        - false
+        gain: 26.88
         hdu: 7
         ixy:
         - 0
@@ -943,36 +943,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 22.685333333333332
         saturation: 35000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 7
     name: ccd7
@@ -998,8 +998,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 25.32
+        - false
+        gain: 29.54
         hdu: 8
         ixy:
         - 0
@@ -1014,36 +1014,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 25.162333333333333
         saturation: 33000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 8
     name: ccd8
@@ -1069,8 +1069,8 @@ CCDs:
       AMP_E2V:
         flipXY:
         - false
-        - true
-        gain: 27.18
+        - false
+        gain: 31.71
         hdu: 9
         ixy:
         - 0
@@ -1085,36 +1085,36 @@ CCDs:
         rawBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawDataBBox:
         - - 0
           - 0
-        - - 2100
-          - 2100
+        - - 2048
+          - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 18.816000000000003
         saturation: 35000
     bbox:
     - - 0
       - 0
-    - - 2100
-      - 2100
+    - - 2048
+      - 2048
     detectorType: 0
     id: 9
     name: ccd9

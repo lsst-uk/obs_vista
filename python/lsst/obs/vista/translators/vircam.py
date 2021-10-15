@@ -32,11 +32,15 @@ class VircamTranslator(FitsTranslator):
     Bear in mind that some examples listed here as "None" may require units or be a 
     specific class should you want to upgrade them to _trivial_map or to_<<example>>. 
     For example, "altaz_begin" needs to be an astropy.coordinates.AltAz class. 
+    
+    https://www.eso.org/sci/facilities/paranal/instruments/vircam/inst.html
+    On the sky (in the default instrument rotator position) +Y corresponds to N, 
+    and +X to West:
     """
     _const_map = {"boresight_rotation_coord": "sky",
                   "detector_group": None,
                   "boresight_airmass": None,  # This could be calculated.
-                  "boresight_rotation_angle": Angle(90 * u.deg),
+                  "boresight_rotation_angle": Angle(0 * u.deg),
                   "science_program": None,
                  # "temperature": 300. * u.K,
                   "pressure": 985. * u.hPa,

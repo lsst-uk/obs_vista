@@ -1,6 +1,6 @@
 # Calibrate uses this to load calibrators
 # All names on right are used in the refcats
-#All names on the left are names of image bands as physcial_filter or band
+# All names on the left are names of image bands as physcial_filter or band
 for source, target in [
     ('HSC-G', 'g'),
     ('HSC-R', 'r'),
@@ -11,11 +11,11 @@ for source, target in [
     ('VIRCAM-Y', 'y2'),
     ('VIRCAM-J', 'j'),
     ('VIRCAM-H', 'h'),
-    ('VIRCAM-Ks', 'ks'),
+    ('VIRCAM-Ks', 'g'),
     ('Z', 'z2'),
     ('Y', 'y2'),
     ('J', 'j'),
     ('H', 'h'),
-    ('K','ks'),
+    ('K','g'),
 ]:
     config.filterMap[source] = target

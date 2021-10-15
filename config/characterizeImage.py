@@ -8,7 +8,8 @@ ObsConfigDir = os.path.dirname(__file__)
 # Too many CR pixels error
 # Fix by upping this from 10000
 # Why is it so high? 2k * 2k = 4 m total pixels. 100*100 bad pixels in a ccd?
-config.repair.doCosmicRay = True
+#Good PSF peaks are being flagged as CR
+config.repair.doCosmicRay = False
 config.repair.cosmicray.nCrPixelMax = 10000000
 # CRs must be > this many sky-sig above sky
 # config.repair.cosmicray.minSigma=40.0 #6.0
@@ -48,7 +49,7 @@ if "ext_shapeHSM_HsmShapeRegauss" in config.measurement.plugins:
 # Reduce contraints to try to get more psf candidates
 config.measurePsf.starSelector['objectSize'].doFluxLimit = True
 # flux value/mag relation depends on exposure time for given band and stack vs exposure
-config.measurePsf.starSelector['objectSize'].fluxMin = 500.0  # 12500.0 #1000. fine for stacks
+config.measurePsf.starSelector['objectSize'].fluxMin = 100.0  # 12500.0 #1000. fine for stacks
 # specify the minimum signal-to-noise for good Psf Candidates
 config.measurePsf.starSelector['objectSize'].signalToNoiseMin = 5.0  # 20.0
 # Maximum width to include in histogram
@@ -72,7 +73,7 @@ config.measurePsf.starSelector['objectSize'].badFlags = [
 
 config.measurePsf.starSelector['astrometry'].minSnr = 5.0  # 10.0
 config.measurePsf.starSelector['matcher'].minSnr = 5.0  # 40.0
-config.measurePsf.starSelector['matcher'].excludePixelFlags = True
+config.measurePsf.starSelector['matcher'].excludePixelFlags = False
 
 # Trial and error from obs goto:
 #config.detection.minPixels = 20
