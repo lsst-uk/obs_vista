@@ -99,7 +99,7 @@ config.astrometry.sourceSelector['matcher'].minSnr = 3.0
 config.astrometry.sourceSelector['matcher'].excludePixelFlags=False
 
 # specify the minimum psfFlux for good Psf Candidates. Unit=instrument flux
-config.astrometry.sourceSelector['objectSize'].fluxMin=500.0
+config.astrometry.sourceSelector['objectSize'].fluxMin=250.0
 
 # Minimum number of matched pairs; see also minFracMatchedPairs.
 #config.astrometry.matcher.minMatchedPairs=10

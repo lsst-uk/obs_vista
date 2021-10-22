@@ -140,16 +140,20 @@ class VircamTranslator(FitsTranslator):
     def to_temperature(self):
 
         #print(self._header)
-        return self._header["ESO INS THERMAL AMB MEAN"]*u.K
+#         primary=fits.open(self.filename)[0]
+#         temp=primary.header["ESO INS THERMAL AMB MEAN"]*u.K
+        temp=self._header["ESO INS THERMAL AMB MEAN"]*u.K
+        return temp
         
     @cache_translation
     def to_tracking_radec(self):
         # Docstring will be inherited. Property defined in properties.py
         radecsys = ("RADECSYS",)
         radecpairs = (("CRVAL1", "CRVAL2"),)
-        #return None
-        return tracking_from_degree_headers(self, radecsys, radecpairs, unit=u.deg)
-
+        #print("FILENAME:",self.filename)
+#         #return None
+# 
+# 
 #         wcs_input_dict = {
 #             'CTYPE1': self._header['CTYPE1'],
 #             'CUNIT1': 'deg',
@@ -173,7 +177,11 @@ class VircamTranslator(FitsTranslator):
 #             'PV2_5':  self._header['PV2_5'], 
 #         }
 #         w = WCS(wcs_input_dict)
-#         #return w.pixel_to_world(self._header['CRVAL1'],self._header['CRVAL2'])
+        #return w.pixel_to_world(0,0)
+        #primary=fits.open(self.filename)[0]
+        #c=SkyCoord(primary.header['RA'],primary.header['DEC'],unit='deg')
+        #return c
+        return tracking_from_degree_headers(self, radecsys, radecpairs, unit=u.deg)
 #         return w.pixel_to_world(self._header['NAXIS1']/2,self._header['NAXIS2']/2)
 #         print(self._header)
 #         radecsys = ("RADECSYS",)
@@ -186,7 +194,8 @@ class VircamTranslator(FitsTranslator):
     #Not working possibly due to not being in extension header
     def to_altaz_begin(self):
         # Docstring will be inherited. Property defined in properties.py
-#        return AltAz(self._header["ESO TEL AZ"]*u.deg,self._header["ESO TEL ALT"]*u.deg)
+#         primary=fits.open(self.filename)[0]
+#         return AltAz(primary.header["ESO TEL AZ"]*u.deg,primary.header["ESO TEL ALT"]*u.deg)
          return altaz_from_degree_headers(self, (("ESO TEL ALT","ESO TEL AZ"),),
                                           self.to_datetime_begin(), 
                                           is_zd=set(["ESO TEL ALT"]))

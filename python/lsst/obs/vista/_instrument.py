@@ -14,7 +14,8 @@ from lsst.obs.base import Instrument, yamlCamera
 from lsst.obs.base.gen2to3 import TranslatorFactory, PhysicalFilterToBandKeyHandler, BandToPhysicalFilterKeyHandler
 
 from lsst.obs.vista.vircamFilters import VIRCAM_FILTER_DEFINITIONS
-from lsst.daf.butler.core.utils import getFullTypeName
+#from lsst.daf.butler.core.utils import getFullTypeName
+from lsst.utils.introspection import get_full_type_name
 from lsst.utils import getPackageDir
 # Comment-out the following line if you put .translators/necam.py in the
 # astro_metadata_translator repository:
@@ -52,9 +53,41 @@ class VIRCAM(Instrument):
             'vircam.yaml')
         return yamlCamera.makeCamera(path)
 
-    def register(self, registry):
+#     def register(self, registry):
+#         camera = self.getCamera()
+#         obsMax = 2**31  # What is this? VISTA visit numbers will not go above this I think
+#         with registry.transaction():
+#             registry.syncDimensionData(
+#                 "instrument",
+#                 {
+#                     "name": self.getName(),
+#                     "detector_max": 16,
+#                     "visit_max": obsMax,
+#                     "exposure_max": obsMax,
+#                     "class_name": getFullTypeName(self),
+#                 }
+#             )
+# 
+#             for detector in camera:
+#                 registry.syncDimensionData(
+#                     "detector",
+#                     {
+#                         "instrument": self.getName(),
+#                         "id": detector.getId(),
+#                         "full_name": detector.getName(),
+#                         "name_in_raft": detector.getName()[1:],
+#                         "raft": detector.getName()[0],
+#                         "purpose": str(detector.getType()).split(".")[-1],
+#                     }
+#                 )
+# 
+#             self._registerFilters(registry)
+    def register(self, registry, update=False):
+        # Docstring inherited from Instrument.register
         camera = self.getCamera()
-        obsMax = 2**31  # What is this? VISTA visit numbers will not go above this I think
+        # The maximum values below make Gen3's ObservationDataIdPacker produce
+        # outputs that match Gen2's ccdExposureId.
+        obsMax = 2**31
         with registry.transaction():
             registry.syncDimensionData(
                 "instrument",
@@ -63,10 +96,11 @@ class VIRCAM(Instrument):
                     "detector_max": 16,
                     "visit_max": obsMax,
                     "exposure_max": obsMax,
-                    "class_name": getFullTypeName(self),
-                }
+                    #"class_name": getFullTypeName(self),
+                    "class_name": get_full_type_name(self),
+                },
+                update=update
             )
-
             for detector in camera:
                 registry.syncDimensionData(
                     "detector",
@@ -74,13 +108,16 @@ class VIRCAM(Instrument):
                         "instrument": self.getName(),
                         "id": detector.getId(),
                         "full_name": detector.getName(),
-                        "name_in_raft": detector.getName()[1:],
-                        "raft": detector.getName()[0],
+                        # TODO: make sure these definitions are consistent with
+                        # those extracted by astro_metadata_translator, and
+                        # test that they remain consistent somehow.
+                        "name_in_raft": detector.getName()[1:], #detector.getName().split("_")[1],
+                        "raft": detector.getName().split("_")[0],
                         "purpose": str(detector.getType()).split(".")[-1],
-                    }
+                    },
+                    update=update
                 )
-
-            self._registerFilters(registry)
+            self._registerFilters(registry, update=update)
 
     def getRawFormatter(self, dataId):
         # local import to prevent circular dependency

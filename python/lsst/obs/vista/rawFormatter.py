@@ -61,7 +61,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
     filterDefinitions = VIRCAM_FILTER_DEFINITIONS
     
     #This is set in base class as False
-    wcsFlipX = False
+    wcsFlipX = True
     
     FLIP_LR = False
     FLIP_TB = False
@@ -94,7 +94,8 @@ class VircamRawFormatter(FitsRawFormatterBase):
             Raised if there is an error generating the SkyWcs, chained from the
             lower-level exception if available.
         """
-        useMetadataWcs=True
+        #Setting this to True improves the WCS but is very slow due to downloading objs
+        useMetadataWcs=False
         if not self.isOnSky():
             # This is not an on-sky observation
             return None
@@ -112,6 +113,25 @@ class VircamRawFormatter(FitsRawFormatterBase):
             return self.makeRawSkyWcsFromBoresight(visitInfo.getBoresightRaDec(),
                                                visitInfo.getBoresightRotAngle(),
                                                detector)
+                                               
+#     @classmethod
+#     def makeRawSkyWcsFromBoresight(cls, boresight, orientation, detector):
+#         """Class method to make a raw sky WCS from boresight and detector.
+#         Parameters
+#         ----------
+#         boresight : `lsst.geom.SpherePoint`
+#             The ICRS boresight RA/Dec
+#         orientation : `lsst.geom.Angle`
+#             The rotation angle of the focal plane on the sky.
+#         detector : `lsst.afw.cameraGeom.Detector`
+#             Where to get the camera geomtry from.
+#         Returns
+#         -------
+#         skyWcs : `~lsst.afw.geom.SkyWcs`
+#             Reversible mapping from pixel coordinates to sky coordinates.
+#         """
+#         #return createInitialSkyWcsFromBoresight(boresight, orientation, detector, flipX=cls.wcsFlipX)
+#         return self._createSkyWcsFromMetadata()
 
     def _scanHdus(self, filename, detectorId):
         """Scan through a file for the HDU containing data from one detector.
@@ -195,7 +215,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
         wcs = makeSkyWcs(self.metadata, strip=True)
         dimensions = bboxFromMetadata(self.metadata).getDimensions()
         center = Point2D(dimensions/2.0)
-        return makeFlippedWcs(wcs, self.FLIP_LR, self.FLIP_TB, center)
+        return wcs #makeFlippedWcs(wcs, self.FLIP_LR, self.FLIP_TB, center)
 
 #     def readImage(self):
 #         if self.fileDescriptor.parameters:
