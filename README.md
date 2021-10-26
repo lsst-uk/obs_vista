@@ -71,18 +71,14 @@ To run this you will need access to the VIDEO test data. This will be made avail
 
 ### Generation 2 Butler
 
-We are currently trying to maintain generation 2 functionality so the first prototype runs remain accessible. This functionality should be deprecated around the start of 2022 following which we will delete all the generation 2 prototype data. You will also need to create a `_mapper' file in the Butler data directory:
+We are currently trying to maintain generation 2 functionality so the first prototype runs remain accessible. This functionality should be deprecated around the start of 2022 following which we will delete all the generation 2 prototype data. If in doubt use the generation 3 Butler.
 
-```Shell
-echo "lsst.obs.vista.VistaMapper" > ./data/_mapper
-```
-
-After which the gen2 command line tasks should accept that data folder as a Butler repo to interact with. The gen3 obs_vista is under development.
 
 ## The Camera
 
-The package is designed to work with all VISTA data products. The calibration of the
-VIRCAM instrument on the ESO VISTA telescope is described in [González-Fernández et al.](2018 https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.5459G/abstract)
+The package is designed to work with all VISTA data products. 
+We are using the stacked images made by the VISTA pipeline so the camera definition is slightly artificial and not identical to the true camera geometry.
+The calibration of the VIRCAM instrument on the ESO VISTA telescope is described in [González-Fernández et al. 2018](https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.5459G/abstract)
 
 There is also further information on the VISTA technical specifications on the CASU website http://casu.ast.cam.ac.uk/surveys-projects/vista/technical
 
