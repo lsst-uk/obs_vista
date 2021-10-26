@@ -48,7 +48,8 @@ eups list
 Should show the 22.0.0-1 version of obs_vista as current and setup. Check the setup has worked by running
 
 ```Shell
-processCcd.py
+butler create data                                      # Initiates Butler in data folder
+butler register-instrument data lsst.obs.vista.VIRCAM   # Will only register VIRCAM instrument if obs_vista has been setup correctly
 ```
 
 ### Updating the science pipelines
