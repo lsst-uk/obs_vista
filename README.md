@@ -56,19 +56,20 @@ The pipelines are currently under active development. Given the latest release h
 
 ```Shell
 eups distrib install -t w_latest lsst_distrib
-<<<<<<< HEAD
 setup lsst_distrib -t w_latest
-=======
->>>>>>> 78e0ebac788c5123e0806fad7cfa148628bf44c7
 ```
 
 ### Generation 3 Butler
 
-The Generation 3 Butler pipeline is under development. 
+The Generation 3 Butler pipeline is under development. An example generation 3 run is available here:
+
+https://github.com/lsst-uk/lsst-ir-fusion/blob/master/dmu4/dmu4_Example/test_patch_gen3.sh
+
+To run this you will need access to the VIDEO test data. This will be made available shortly.
 
 ### Generation 2 Butler
 
-You will also need to create a _mapper file in the Butler data directory:
+We are currently trying to maintain generation 2 functionality so the first prototype runs remain accessible. This functionality should be deprecated around the start of 2022 following which we will delete all the generation 2 prototype data. You will also need to create a `_mapper' file in the Butler data directory:
 
 ```Shell
 echo "lsst.obs.vista.VistaMapper" > ./data/_mapper
@@ -83,14 +84,6 @@ VIRCAM instrument on the ESO VISTA telescope is described in [González-Fernánd
 
 There is also further information on the VISTA technical specifications on the CASU website http://casu.ast.cam.ac.uk/surveys-projects/vista/technical
 
-The key numbers specified in [camera/camera.py](camera/camera.py) are:
-
-| parameter   | value | unit |
-|-------------|-------|------|
-| pixel scale |       |      |
-| dimensions  |       |      |
-| name        |       |      |
-
-The script [camera/buildDetectors.py](camera/buildDetectors.py) will be used to make a fits file describing each of the 16 CCDs. This is not currently functioning and we have a basic ccd description in place.
+The script [camera/buildDetectors.py](camera/buildDetectors.py) is used to create the camera definition. In the new generation 3 package this is stored in a single yaml file: [camera/camera.yaml](camera/camera.yaml).
 
 
