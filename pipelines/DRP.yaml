@@ -1,0 +1,28 @@
+description: The DRP pipeline specialized for the VIRCAM instrument
+instrument: lsst.obs.vista.VIRCAM
+imports:
+  - $PIPE_TASKS_DIR/pipelines/DRP.yaml
+tasks:
+  isr: lsst.ip.isr.IsrTask
+  characterizeImage: lsst.pipe.tasks.characterizeImage.CharacterizeImageTask
+  calibrate: lsst.pipe.tasks.calibrate.CalibrateTask
+subsets:
+  processCcd:
+    subset:
+      - isr
+      - characterizeImage
+      - calibrate
+    description: A set of tasks to run when doing single frame processing
+  singleFrame:
+    subset:
+      - isr
+      - characterizeImage
+      - calibrate
+      - writeSourceTable
+      - transformSourceTable
+      - consolidateSourceTable
+      - consolidateVisitSummary
+      - skyCorr
+    description: >
+      Set of tasks for complete single frame processing. Analogous to
+      SingleFrameDriver.

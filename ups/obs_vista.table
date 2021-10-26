@@ -1,3 +1,12 @@
 setupRequired(pipe_tasks)
 setupRequired(pipe_drivers)
+setupRequired(meas_modelfit)
+setupRequired(meas_extensions_psfex)
+setupRequired(meas_extensions_shapeHSM)
+
+
+envPrepend(LD_LIBRARY_PATH, ${PRODUCT_DIR}/lib)
+envPrepend(DYLD_LIBRARY_PATH, ${PRODUCT_DIR}/lib)
+envPrepend(LSST_LIBRARY_PATH, ${PRODUCT_DIR}/lib)
 envPrepend(PYTHONPATH, ${PRODUCT_DIR}/python)
+envPrepend(PATH, ${PRODUCT_DIR}/bin)

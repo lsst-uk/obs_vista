@@ -6,35 +6,36 @@ for Astronomy (VISTA) telescope has produced a number of wide and deep surveys i
 
 This code is a modification of the obs\_necam "Any cam" template; https://github.com/jrmullaney/obs_necam
 
-The documenttation for this is at https://lsstcamdocs.readthedocs.io/en/latest/intro.html This documentation was developed during production of the obs package for the GOTO telescope.
+The documentation for this is at https://lsstcamdocs.readthedocs.io/en/latest/intro.html This documentation was developed during production of the obs package for the GOTO telescope.
 
-The package is currently configured to work with the second generation 'Butler'. Development of a version compatible with the third generation Butler is ongoing. Note that we use the telescope name VISTA to describe the VIRCAM camera for simplicity. 
+The package is currently configured to work with both the second generation 'Butler' and the evolving third generation version. Development of a version compatible with the third generation Butler is ongoing. Note that we use the telescope name VISTA to describe the telescope and VIRCAM to describe the camera. 
 
 Folders:
 
 - [camera](camera) Files containing information that describe the properties of VISTA (dimensions, gain etc).
 - [config](config) Configuration files that tell the various stack process that access your data how to behave. The final data products will also contain automatically generated config files in case the standard here have changed or were overridden during processing.
 - [policy](policy) Files describing the file structure and type of input and output data (e.g., image, table etc).
-- [python/lsst](python/lsst) This is where all the scripts go that manipulate VISTA data
+- [python/lsst](python/lsst) This is where all the VISTA specific code and instrument classes go.
 - [ups](ups) A file telling the [eups](https://developer.lsst.io/stack/eups-tutorial.html) system what other packages need to be set up to use this obs_package.
 
 ## Installation
 
-After [installing the LSST stack]https://pipelines.lsst.io/install/newinstall.html() the obs_vista package must go in the stack folder which contains all the obs packages:
+After [installing the LSST stack](https://pipelines.lsst.io/install/newinstall.html) the obs_vista package must go in the stack folder which contains all the obs packages:
 
 
 ```Shell
-cd $STACKPATH/stack/current/$SYSTEMTYPE/   # example stack directory
+cd $RUBIN_EUPS_PATH  # Stack directory set during installation
+cd DarwinX86 # Typical mac system directory
 mkdir obs_vista
 cd obs_vista
 git clone https://github.com/lsst-uk/obs_vista.git
-mv obs_vista 20.0.0-1   #Stack version 20.0.0 used for development and obs version 1
+mv obs_vista 22.0.0-1   #Stack version 22.0.0 used for development and obs version 1
 ```
 
 This will now be a git submodule so any git commands run inside this directory will interact with the obs_vista git repo and not the lsstsw repo. You now need to declare the package to EUPS.
 
 ```Shell
-eups declare -t current obs_vista 20.0.0-1   # run once
+eups declare -t current obs_vista 22.0.0-1   # run once
 setup obs_vista                              # run in every shell
 ```
 
@@ -44,35 +45,43 @@ Running
 eups list
 ```
 
-Should show the 20.0.0-1 version of obs_vista as current and setup. Check the setup has worked by running
+Should show the 22.0.0-1 version of obs_vista as current and setup. Check the setup has worked by running
 
 ```Shell
-processCcd.py
+butler create data                                      # Initiates Butler in data folder
+butler register-instrument data lsst.obs.vista.VIRCAM   # Will only register VIRCAM instrument if obs_vista has been setup correctly
 ```
 
-You will also need to create a _mapper file in the Butler data directory:
+### Updating the science pipelines
+
+The pipelines are currently under active development. Given the latest release has been installed you can update to the latest weekly using:
 
 ```Shell
-echo "lsst.obs.vista.VistaMapper" > ./data/_mapper
+eups distrib install -t w_latest lsst_distrib
+setup lsst_distrib -t w_latest
 ```
 
-After which the gen2 command line tasks should accept that data folder as a Butler repo to interact with. The gen3 obs_vista is under development.
+### Generation 3 Butler
+
+The Generation 3 Butler pipeline is under development. An example generation 3 run is available here:
+
+https://github.com/lsst-uk/lsst-ir-fusion/blob/master/dmu4/dmu4_Example/test_patch_gen3.sh
+
+To run this you will need access to the VIDEO test data. This will be made available shortly.
+
+### Generation 2 Butler
+
+We are currently trying to maintain generation 2 functionality so the first prototype runs remain accessible. This functionality should be deprecated around the start of 2022 following which we will delete all the generation 2 prototype data. If in doubt use the generation 3 Butler.
+
 
 ## The Camera
 
-The package is designed to work with all VISTA data products. The calibration of the
-VIRCAM instrument on the ESO VISTA telescope is described in [González-Fernández et al.](2018 https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.5459G/abstract)
+The package is designed to work with all VISTA data products. 
+We are using the stacked images made by the VISTA pipeline so the camera definition is slightly artificial and not identical to the true camera geometry.
+The calibration of the VIRCAM instrument on the ESO VISTA telescope is described in [González-Fernández et al. 2018](https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.5459G/abstract)
 
 There is also further information on the VISTA technical specifications on the CASU website http://casu.ast.cam.ac.uk/surveys-projects/vista/technical
 
-The key numbers specified in [camera/camera.py](camera/camera.py) are:
-
-| parameter   | value | unit |
-|-------------|-------|------|
-| pixel scale |       |      |
-| dimensions  |       |      |
-| name        |       |      |
-
-The script [camera/buildDetectors.py](camera/buildDetectors.py) will be used to make a fits file describing each of the 16 CCDs. This is not currently functioning and we have a basic ccd description in place.
+The script [camera/buildDetectors.py](camera/buildDetectors.py) is used to create the camera definition. In the new generation 3 package this is stored in a single yaml file: [camera/camera.yaml](camera/camera.yaml).
 
 

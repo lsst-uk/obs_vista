@@ -1,15 +1,21 @@
-#From obs_goto. Do I need this?
-#I think that the targets here do NOT refer to color terms.
+# Calibrate uses this to load calibrators
+# All names on right are used in the refcats
+# All names on the left are names of image bands as physcial_filter or band
 for source, target in [
-    ('HSC-G', 'g'), 
-    ('HSC-R', 'r'), 
-    ('HSC-I', 'i'), 
+    ('HSC-G', 'g'),
+    ('HSC-R', 'r'),
+    ('HSC-I', 'i'),
     ('HSC-Z', 'z'),
     ('HSC-Y', 'y'),
-    ('VISTA-Z', 'z2'),
-    ('VISTA-Y', 'y2'),
-    ('VISTA-J', 'j'),
-    ('VISTA-H', 'h'),
-    ('VISTA-Ks', 'ks')
-    ]:
+    ('VIRCAM-Z', 'z2'),
+    ('VIRCAM-Y', 'y2'),
+    ('VIRCAM-J', 'j'),
+    ('VIRCAM-H', 'h'),
+    ('VIRCAM-Ks', 'g'),
+    ('Z', 'z2'),
+    ('Y', 'y2'),
+    ('J', 'j'),
+    ('H', 'h'),
+    ('K','g'),
+]:
     config.filterMap[source] = target

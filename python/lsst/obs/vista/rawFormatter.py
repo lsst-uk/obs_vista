@@ -3,44 +3,135 @@
 """
 
 
-
 import lsst.afw.fits
 import lsst.afw.image
 import lsst.log
 from lsst.obs.base import FitsRawFormatterBase
+from lsst.obs.base.utils import InitialSkyWcsError
+from lsst.afw.image import ImageU, bboxFromMetadata
+from lsst.afw.geom import makeSkyWcs, makeFlippedWcs
+from lsst.afw.math import flipImage
+from lsst.geom import Point2D
 
-from ._instrument import VISTA
+import astro_metadata_translator
 
-__all__ = ("VistaRawFormatter")
+import logging
+log = logging.getLogger("fitsRawFormatter")
+
+from ._instrument import VIRCAM
+from .vircamFilters import VIRCAM_FILTER_DEFINITIONS
+from .translators import VircamTranslator
 
 
-# The mapping of detector id to HDU in raw files for "most" DECam data.
+__all__ = ("VircamRawFormatter",)
+
+
+# The mapping of detector id to HDU in raw files for.
+# I am trying to move to retain 1 indexing
 # We try this first before scaning the HDUs manually.
 detector_to_hdu = {
-    0:1,
-    1:2,
-    2:3,
-    3:4,
-    4:5,
-    5:6,
-    6:7,
-    7:8,
-    8:9,
-    9:10,
-    10:11,
-    11:12,
-    12:13,
-    13:14,
-    14:15,
-    15:16}
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+    6: 6,
+    7: 7,
+    8: 8,
+    9: 9,
+    10: 10,
+    11: 11,
+    12: 12,
+    13: 13,
+    14: 14,
+    15: 15,
+    16: 16,
+}
 
 
-class VistaRawFormatter(FitsRawFormatterBase):
+class VircamRawFormatter(FitsRawFormatterBase):
+    """Gen 3 Butler Formatters for VIRCAM raw data.
+    
+    This is built on examples from obs_decam, obs_subaru, and obs_necam
+    
+    """
 
-    filterDefinitions = Vista.filterDefinitions
+    
+    translatorClass = VircamTranslator
+    filterDefinitions = VIRCAM_FILTER_DEFINITIONS
+    
+    #This is set in base class as False
+    wcsFlipX = True
+    
+    FLIP_LR = False
+    FLIP_TB = False
 
     def getDetector(self, id):
-        return VISTA().getCamera()[id]
+        return VIRCAM().getCamera()[id]
+        
+    def makeWcs(self, visitInfo, detector):
+        """Create a SkyWcs from information about the exposure.
+        Overide the default which uses visit info
+        Return the metadata-based SkyWcs (always created, so that
+        the relevant metadata keywords are stripped).
+        
+        Is geometry based WCS superior?
+        
+        Parameters
+        ----------
+        visitInfo : `~lsst.afw.image.VisitInfo`
+            The information about the telescope boresight and camera
+            orientation angle for this exposure.
+        detector : `~lsst.afw.cameraGeom.Detector`
+            The detector used to acquire this exposure.
+        Returns
+        -------
+        skyWcs : `~lsst.afw.geom.SkyWcs`
+            Reversible mapping from pixel coordinates to sky coordinates.
+        Raises
+        ------
+        InitialSkyWcsError
+            Raised if there is an error generating the SkyWcs, chained from the
+            lower-level exception if available.
+        """
+        #Setting this to True improves the WCS but is very slow due to downloading objs
+        useMetadataWcs=False
+        if not self.isOnSky():
+            # This is not an on-sky observation
+            return None
+
+        skyWcs = self._createSkyWcsFromMetadata()
+
+        if useMetadataWcs:
+            msg = "VIRCAM camera geom not used. Defaulting to metadata-based SkyWcs."
+            log.warning(msg)
+            if skyWcs is None:
+                raise InitialSkyWcsError("Failed to create both metadata and boresight-based SkyWcs."
+                                         "See warnings in log messages for details.")
+            return skyWcs
+        else:
+            return self.makeRawSkyWcsFromBoresight(visitInfo.getBoresightRaDec(),
+                                               visitInfo.getBoresightRotAngle(),
+                                               detector)
+                                               
+#     @classmethod
+#     def makeRawSkyWcsFromBoresight(cls, boresight, orientation, detector):
+#         """Class method to make a raw sky WCS from boresight and detector.
+#         Parameters
+#         ----------
+#         boresight : `lsst.geom.SpherePoint`
+#             The ICRS boresight RA/Dec
+#         orientation : `lsst.geom.Angle`
+#             The rotation angle of the focal plane on the sky.
+#         detector : `lsst.afw.cameraGeom.Detector`
+#             Where to get the camera geomtry from.
+#         Returns
+#         -------
+#         skyWcs : `~lsst.afw.geom.SkyWcs`
+#             Reversible mapping from pixel coordinates to sky coordinates.
+#         """
+#         #return createInitialSkyWcsFromBoresight(boresight, orientation, detector, flipX=cls.wcsFlipX)
+#         return self._createSkyWcsFromMetadata()
 
     def _scanHdus(self, filename, detectorId):
         """Scan through a file for the HDU containing data from one detector.
@@ -61,10 +152,10 @@ class VistaRawFormatter(FitsRawFormatterBase):
         ValueError
             Raised if detectorId is not found in any of the file HDUs
         """
-        log = lsst.log.Log.getLogger("VistaRawFormatter")
+        log = lsst.log.Log.getLogger("VircamRawFormatter")
         log.debug("Did not find detector=%s at expected HDU=%s in %s: scanning through all HDUs.",
-                  detectorId, 
-                  detectorId, detector_to_hdu[detectorId], 
+                  detectorId,
+                  detectorId, detector_to_hdu[detectorId],
                   filename)
 
         fitsData = lsst.afw.fits.Fits(filename, 'r')
@@ -97,7 +188,8 @@ class VistaRawFormatter(FitsRawFormatterBase):
         filename = self.fileDescriptor.location.path
         try:
             index = detector_to_hdu[detectorId]
-            metadata = lsst.afw.image.readMetadata(filename, index)
+            print('detectorId {} type'.format(detectorId),type(detectorId))
+            metadata = lsst.afw.fits.readMetadata(filename, index)
             if metadata['ESO DET CHIP NO'] != detectorId:
                 # the detector->HDU mapping is different in this file: try scanning
                 return self._scanHdus(filename, detectorId)
@@ -111,11 +203,31 @@ class VistaRawFormatter(FitsRawFormatterBase):
 
     def readMetadata(self):
         index, metadata = self._determineHDU(self.dataId['detector'])
-        #astro_metadata_translator.fix_header(metadata)
+        #print(metadata)
+        astro_metadata_translator.fix_header(metadata,translator_class=VircamTranslator)
+        #VircamTranslator.fix_header(metadata, self.dataId['instrument'], self.dataId['exposure'])#
+        #print(metadata)
         return metadata
+        
+    def _createSkyWcsFromMetadata(self):
+        # We need to know which direction the chip is "flipped" in order to
+        # make a sensible WCS from the header metadata.
+        wcs = makeSkyWcs(self.metadata, strip=True)
+        dimensions = bboxFromMetadata(self.metadata).getDimensions()
+        center = Point2D(dimensions/2.0)
+        return wcs #makeFlippedWcs(wcs, self.FLIP_LR, self.FLIP_TB, center)
+
+#     def readImage(self):
+#         if self.fileDescriptor.parameters:
+#             # It looks like the Gen2 std_raw code wouldn't have handled
+#             # flipping vs. subimages correctly, so we won't bother to either.
+#             # But we'll make sure no one tries to get a subimage, rather than
+#             # doing something confusing.
+#             raise NotImplementedError("Formatter does not support subimages.")
+#         image = lsst.afw.image.ImageF(self.fileDescriptor.location.path, index)
+#         return flipImage(image, self.FLIP_LR, self.FLIP_TB)
 
     def readImage(self):
         index, metadata = self._determineHDU(self.dataId['detector'])
-        return lsst.afw.image.ImageI(self.fileDescriptor.location.path, index)
-
-
+        image = lsst.afw.image.ImageF(self.fileDescriptor.location.path, index)
+        return flipImage(image, self.FLIP_LR, self.FLIP_TB)

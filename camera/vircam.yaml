@@ -1,11 +1,11 @@
 CCDs:
-  ccd0:
+  ccd1:
     amplifiers:
       AMP_E2V:
         flipXY:
-        - false
-        - false
-        gain: 21.96
+        - true
+        - true
+        gain: 25.62
         hdu: 1
         ixy:
         - 0
@@ -28,94 +28,23 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 24.268
         saturation: 33000
-    bbox:
-    - - 0
-      - 0
-    - - 2048
-      - 2048
-    detectorType: 0
-    id: 0
-    name: ccd0
-    offset:
-    - 0
-    - 0
-    pitch: 0.0
-    pixelSize:
-    - 1.0
-    - 1.0
-    refpos:
-    - 0
-    - 0
-    roll: 0.0
-    serial: '0'
-    transformDict:
-      nativeSys: Pixels
-      transforms: None
-    transposeDetector: false
-    yaw: 0.0
-  ccd1:
-    amplifiers:
-      AMP_E2V:
-        flipXY:
-        - false
-        - false
-        gain: 25.5
-        hdu: 2
-        ixy:
-        - 0
-        - 0
-        linearityCoeffs:
-        - 0.033
-        - 32000
-        linearityMax: 32000
-        linearityThreshold: 0
-        linearityType: None
-        perAmpData: true
-        rawBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawDataBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        readCorner: LL
-        readNoise: 25.122
-        saturation: 32000
     bbox:
     - - 0
       - 0
@@ -132,8 +61,8 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -3358.375
+    - -4784.391
     roll: 0.0
     serial: '1'
     transformDict:
@@ -141,510 +70,13 @@ CCDs:
       transforms: None
     transposeDetector: false
     yaw: 0.0
-  ccd2:
+  ccd10:
     amplifiers:
       AMP_E2V:
         flipXY:
-        - false
-        - false
-        gain: 23.700000000000003
-        hdu: 3
-        ixy:
-        - 0
-        - 0
-        linearityCoeffs:
-        - 0.038
-        - 33000
-        linearityMax: 33000
-        linearityThreshold: 0
-        linearityType: None
-        perAmpData: true
-        rawBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawDataBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        readCorner: LL
-        readNoise: 23.457000000000004
-        saturation: 33000
-    bbox:
-    - - 0
-      - 0
-    - - 2048
-      - 2048
-    detectorType: 0
-    id: 2
-    name: ccd2
-    offset:
-    - 0
-    - 0
-    pitch: 0.0
-    pixelSize:
-    - 1.0
-    - 1.0
-    refpos:
-    - 0
-    - 0
-    roll: 0.0
-    serial: '2'
-    transformDict:
-      nativeSys: Pixels
-      transforms: None
-    transposeDetector: false
-    yaw: 0.0
-  ccd3:
-    amplifiers:
-      AMP_E2V:
-        flipXY:
-        - false
-        - false
-        gain: 24.96
-        hdu: 4
-        ixy:
-        - 0
-        - 0
-        linearityCoeffs:
-        - 0.035
-        - 32000
-        linearityMax: 32000
-        linearityThreshold: 0
-        linearityType: None
-        perAmpData: true
-        rawBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawDataBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        readCorner: LL
-        readNoise: 24.708333333333332
-        saturation: 32000
-    bbox:
-    - - 0
-      - 0
-    - - 2048
-      - 2048
-    detectorType: 0
-    id: 3
-    name: ccd3
-    offset:
-    - 0
-    - 0
-    pitch: 0.0
-    pixelSize:
-    - 1.0
-    - 1.0
-    refpos:
-    - 0
-    - 0
-    roll: 0.0
-    serial: '3'
-    transformDict:
-      nativeSys: Pixels
-      transforms: None
-    transposeDetector: false
-    yaw: 0.0
-  ccd4:
-    amplifiers:
-      AMP_E2V:
-        flipXY:
-        - false
-        - false
-        gain: 25.44
-        hdu: 5
-        ixy:
-        - 0
-        - 0
-        linearityCoeffs:
-        - 0.02
-        - 24000
-        linearityMax: 24000
-        linearityThreshold: 0
-        linearityType: None
-        perAmpData: true
-        rawBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawDataBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        readCorner: LL
-        readNoise: 25.313000000000002
-        saturation: 24000
-    bbox:
-    - - 0
-      - 0
-    - - 2048
-      - 2048
-    detectorType: 0
-    id: 4
-    name: ccd4
-    offset:
-    - 0
-    - 0
-    pitch: 0.0
-    pixelSize:
-    - 1.0
-    - 1.0
-    refpos:
-    - 0
-    - 0
-    roll: 0.0
-    serial: '4'
-    transformDict:
-      nativeSys: Pixels
-      transforms: None
-    transposeDetector: false
-    yaw: 0.0
-  ccd5:
-    amplifiers:
-      AMP_E2V:
-        flipXY:
-        - false
-        - false
-        gain: 24.660000000000004
-        hdu: 6
-        ixy:
-        - 0
-        - 0
-        linearityCoeffs:
-        - 0.03
-        - 26000
-        linearityMax: 26000
-        linearityThreshold: 0
-        linearityType: None
-        perAmpData: true
-        rawBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawDataBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        readCorner: LL
-        readNoise: 24.441333333333333
-        saturation: 26000
-    bbox:
-    - - 0
-      - 0
-    - - 2048
-      - 2048
-    detectorType: 0
-    id: 5
-    name: ccd5
-    offset:
-    - 0
-    - 0
-    pitch: 0.0
-    pixelSize:
-    - 1.0
-    - 1.0
-    refpos:
-    - 0
-    - 0
-    roll: 0.0
-    serial: '5'
-    transformDict:
-      nativeSys: Pixels
-      transforms: None
-    transposeDetector: false
-    yaw: 0.0
-  ccd6:
-    amplifiers:
-      AMP_E2V:
-        flipXY:
-        - false
-        - false
-        gain: 23.04
-        hdu: 7
-        ixy:
-        - 0
-        - 0
-        linearityCoeffs:
-        - 0.02
-        - 35000
-        linearityMax: 35000
-        linearityThreshold: 0
-        linearityType: None
-        perAmpData: true
-        rawBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawDataBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        readCorner: LL
-        readNoise: 22.685333333333332
-        saturation: 35000
-    bbox:
-    - - 0
-      - 0
-    - - 2048
-      - 2048
-    detectorType: 0
-    id: 6
-    name: ccd6
-    offset:
-    - 0
-    - 0
-    pitch: 0.0
-    pixelSize:
-    - 1.0
-    - 1.0
-    refpos:
-    - 0
-    - 0
-    roll: 0.0
-    serial: '6'
-    transformDict:
-      nativeSys: Pixels
-      transforms: None
-    transposeDetector: false
-    yaw: 0.0
-  ccd7:
-    amplifiers:
-      AMP_E2V:
-        flipXY:
-        - false
-        - false
-        gain: 25.32
-        hdu: 8
-        ixy:
-        - 0
-        - 0
-        linearityCoeffs:
-        - 0.034
-        - 33000
-        linearityMax: 33000
-        linearityThreshold: 0
-        linearityType: None
-        perAmpData: true
-        rawBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawDataBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        readCorner: LL
-        readNoise: 25.162333333333333
-        saturation: 33000
-    bbox:
-    - - 0
-      - 0
-    - - 2048
-      - 2048
-    detectorType: 0
-    id: 7
-    name: ccd7
-    offset:
-    - 0
-    - 0
-    pitch: 0.0
-    pixelSize:
-    - 1.0
-    - 1.0
-    refpos:
-    - 0
-    - 0
-    roll: 0.0
-    serial: '7'
-    transformDict:
-      nativeSys: Pixels
-      transforms: None
-    transposeDetector: false
-    yaw: 0.0
-  ccd8:
-    amplifiers:
-      AMP_E2V:
-        flipXY:
-        - false
-        - false
-        gain: 27.18
-        hdu: 9
-        ixy:
-        - 0
-        - 0
-        linearityCoeffs:
-        - 0.033
-        - 35000
-        linearityMax: 35000
-        linearityThreshold: 0
-        linearityType: None
-        perAmpData: true
-        rawBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawDataBBox:
-        - - 0
-          - 0
-        - - 2048
-          - 2048
-        rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
-        readCorner: LL
-        readNoise: 18.816000000000003
-        saturation: 35000
-    bbox:
-    - - 0
-      - 0
-    - - 2048
-      - 2048
-    detectorType: 0
-    id: 8
-    name: ccd8
-    offset:
-    - 0
-    - 0
-    pitch: 0.0
-    pixelSize:
-    - 1.0
-    - 1.0
-    refpos:
-    - 0
-    - 0
-    roll: 0.0
-    serial: '8'
-    transformDict:
-      nativeSys: Pixels
-      transforms: None
-    transposeDetector: false
-    yaw: 0.0
-  ccd9:
-    amplifiers:
-      AMP_E2V:
-        flipXY:
-        - false
-        - false
-        gain: 23.82
+        - true
+        - true
+        gain: 27.790000000000003
         hdu: 10
         ixy:
         - 0
@@ -667,20 +99,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 24.935333333333332
         saturation: 35000
@@ -690,8 +122,8 @@ CCDs:
     - - 2048
       - 2048
     detectorType: 0
-    id: 9
-    name: ccd9
+    id: 10
+    name: ccd10
     offset:
     - 0
     - 0
@@ -700,22 +132,22 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -425.6039999999998
+    - 2983.0881
     roll: 0.0
-    serial: '9'
+    serial: '10'
     transformDict:
       nativeSys: Pixels
       transforms: None
     transposeDetector: false
     yaw: 0.0
-  ccd10:
+  ccd11:
     amplifiers:
       AMP_E2V:
         flipXY:
-        - false
-        - false
-        gain: 27.72
+        - true
+        - true
+        gain: 32.34
         hdu: 11
         ixy:
         - 0
@@ -738,20 +170,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 24.186333333333334
         saturation: 37000
@@ -761,8 +193,8 @@ CCDs:
     - - 2048
       - 2048
     detectorType: 0
-    id: 10
-    name: ccd10
+    id: 11
+    name: ccd11
     offset:
     - 0
     - 0
@@ -771,22 +203,22 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 2493.1697
+    - 2979.6677
     roll: 0.0
-    serial: '10'
+    serial: '11'
     transformDict:
       nativeSys: Pixels
       transforms: None
     transposeDetector: false
     yaw: 0.0
-  ccd11:
+  ccd12:
     amplifiers:
       AMP_E2V:
         flipXY:
-        - false
-        - false
-        gain: 23.700000000000003
+        - true
+        - true
+        gain: 27.650000000000002
         hdu: 12
         ixy:
         - 0
@@ -809,20 +241,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 23.318
         saturation: 34000
@@ -832,8 +264,8 @@ CCDs:
     - - 2048
       - 2048
     detectorType: 0
-    id: 11
-    name: ccd11
+    id: 12
+    name: ccd12
     offset:
     - 0
     - 0
@@ -842,22 +274,22 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 5409.077
+    - 2978.3582
     roll: 0.0
-    serial: '11'
+    serial: '12'
     transformDict:
       nativeSys: Pixels
       transforms: None
     transposeDetector: false
     yaw: 0.0
-  ccd12:
+  ccd13:
     amplifiers:
       AMP_E2V:
         flipXY:
-        - false
-        - false
-        gain: 34.019999999999996
+        - true
+        - true
+        gain: 39.69
         hdu: 13
         ixy:
         - 0
@@ -880,20 +312,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 26.480666666666668
         saturation: 33000
@@ -903,8 +335,8 @@ CCDs:
     - - 2048
       - 2048
     detectorType: 0
-    id: 12
-    name: ccd12
+    id: 13
+    name: ccd13
     offset:
     - 0
     - 0
@@ -913,22 +345,22 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -3344.87
+    - 6870.053
     roll: 0.0
-    serial: '12'
+    serial: '13'
     transformDict:
       nativeSys: Pixels
       transforms: None
     transposeDetector: false
     yaw: 0.0
-  ccd13:
+  ccd14:
     amplifiers:
       AMP_E2V:
         flipXY:
-        - false
-        - false
-        gain: 28.68
+        - true
+        - true
+        gain: 33.46
         hdu: 14
         ixy:
         - 0
@@ -951,20 +383,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 18.39966666666667
         saturation: 35000
@@ -974,8 +406,8 @@ CCDs:
     - - 2048
       - 2048
     detectorType: 0
-    id: 13
-    name: ccd13
+    id: 14
+    name: ccd14
     offset:
     - 0
     - 0
@@ -984,22 +416,22 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - -417.172
+    - 6875.306
     roll: 0.0
-    serial: '13'
+    serial: '14'
     transformDict:
       nativeSys: Pixels
       transforms: None
     transposeDetector: false
     yaw: 0.0
-  ccd14:
+  ccd15:
     amplifiers:
       AMP_E2V:
         flipXY:
-        - false
-        - false
-        gain: 23.94
+        - true
+        - true
+        gain: 27.93
         hdu: 15
         ixy:
         - 0
@@ -1022,20 +454,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 17.891000000000002
         saturation: 34000
@@ -1045,8 +477,8 @@ CCDs:
     - - 2048
       - 2048
     detectorType: 0
-    id: 14
-    name: ccd14
+    id: 15
+    name: ccd15
     offset:
     - 0
     - 0
@@ -1055,22 +487,22 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 2499.8867
+    - 6868.927
     roll: 0.0
-    serial: '14'
+    serial: '15'
     transformDict:
       nativeSys: Pixels
       transforms: None
     transposeDetector: false
     yaw: 0.0
-  ccd15:
+  ccd16:
     amplifiers:
       AMP_E2V:
         flipXY:
-        - false
-        - false
-        gain: 29.759999999999998
+        - true
+        - true
+        gain: 34.72
         hdu: 16
         ixy:
         - 0
@@ -1093,20 +525,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialOverscanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         rawSerialPrescanBBox:
-        - - 0
-          - 0
-        - - 0
-          - 0
+        - - 200
+          - 200
+        - - 200
+          - 200
         readCorner: LL
         readNoise: 19.869666666666664
         saturation: 34000
@@ -1116,8 +548,8 @@ CCDs:
     - - 2048
       - 2048
     detectorType: 0
-    id: 15
-    name: ccd15
+    id: 16
+    name: ccd16
     offset:
     - 0
     - 0
@@ -1126,17 +558,585 @@ CCDs:
     - 1.0
     - 1.0
     refpos:
-    - 0
-    - 0
+    - 5415.577
+    - 6866.762
     roll: 0.0
-    serial: '15'
+    serial: '16'
+    transformDict:
+      nativeSys: Pixels
+      transforms: None
+    transposeDetector: false
+    yaw: 0.0
+  ccd2:
+    amplifiers:
+      AMP_E2V:
+        flipXY:
+        - true
+        - true
+        gain: 29.75
+        hdu: 2
+        ixy:
+        - 0
+        - 0
+        linearityCoeffs:
+        - 0.033
+        - 32000
+        linearityMax: 32000
+        linearityThreshold: 0
+        linearityType: None
+        perAmpData: true
+        rawBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawDataBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawParallelOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialPrescanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        readCorner: LL
+        readNoise: 25.122
+        saturation: 32000
+    bbox:
+    - - 0
+      - 0
+    - - 2048
+      - 2048
+    detectorType: 0
+    id: 2
+    name: ccd2
+    offset:
+    - 0
+    - 0
+    pitch: 0.0
+    pixelSize:
+    - 1.0
+    - 1.0
+    refpos:
+    - -434.837
+    - -4797.058
+    roll: 0.0
+    serial: '2'
+    transformDict:
+      nativeSys: Pixels
+      transforms: None
+    transposeDetector: false
+    yaw: 0.0
+  ccd3:
+    amplifiers:
+      AMP_E2V:
+        flipXY:
+        - true
+        - true
+        gain: 27.650000000000002
+        hdu: 3
+        ixy:
+        - 0
+        - 0
+        linearityCoeffs:
+        - 0.038
+        - 33000
+        linearityMax: 33000
+        linearityThreshold: 0
+        linearityType: None
+        perAmpData: true
+        rawBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawDataBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawParallelOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialPrescanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        readCorner: LL
+        readNoise: 23.457000000000004
+        saturation: 33000
+    bbox:
+    - - 0
+      - 0
+    - - 2048
+      - 2048
+    detectorType: 0
+    id: 3
+    name: ccd3
+    offset:
+    - 0
+    - 0
+    pitch: 0.0
+    pixelSize:
+    - 1.0
+    - 1.0
+    refpos:
+    - 2479.6327
+    - -4801.338
+    roll: 0.0
+    serial: '3'
+    transformDict:
+      nativeSys: Pixels
+      transforms: None
+    transposeDetector: false
+    yaw: 0.0
+  ccd4:
+    amplifiers:
+      AMP_E2V:
+        flipXY:
+        - true
+        - true
+        gain: 29.12
+        hdu: 4
+        ixy:
+        - 0
+        - 0
+        linearityCoeffs:
+        - 0.035
+        - 32000
+        linearityMax: 32000
+        linearityThreshold: 0
+        linearityType: None
+        perAmpData: true
+        rawBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawDataBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawParallelOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialPrescanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        readCorner: LL
+        readNoise: 24.708333333333332
+        saturation: 32000
+    bbox:
+    - - 0
+      - 0
+    - - 2048
+      - 2048
+    detectorType: 0
+    id: 4
+    name: ccd4
+    offset:
+    - 0
+    - 0
+    pitch: 0.0
+    pixelSize:
+    - 1.0
+    - 1.0
+    refpos:
+    - 5396.992
+    - -4804.811
+    roll: 0.0
+    serial: '4'
+    transformDict:
+      nativeSys: Pixels
+      transforms: None
+    transposeDetector: false
+    yaw: 0.0
+  ccd5:
+    amplifiers:
+      AMP_E2V:
+        flipXY:
+        - true
+        - true
+        gain: 29.68
+        hdu: 5
+        ixy:
+        - 0
+        - 0
+        linearityCoeffs:
+        - 0.02
+        - 24000
+        linearityMax: 24000
+        linearityThreshold: 0
+        linearityType: None
+        perAmpData: true
+        rawBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawDataBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawParallelOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialPrescanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        readCorner: LL
+        readNoise: 25.313000000000002
+        saturation: 24000
+    bbox:
+    - - 0
+      - 0
+    - - 2048
+      - 2048
+    detectorType: 0
+    id: 5
+    name: ccd5
+    offset:
+    - 0
+    - 0
+    pitch: 0.0
+    pixelSize:
+    - 1.0
+    - 1.0
+    refpos:
+    - -3348.107
+    - -901.3359999999998
+    roll: 0.0
+    serial: '5'
+    transformDict:
+      nativeSys: Pixels
+      transforms: None
+    transposeDetector: false
+    yaw: 0.0
+  ccd6:
+    amplifiers:
+      AMP_E2V:
+        flipXY:
+        - true
+        - true
+        gain: 28.770000000000003
+        hdu: 6
+        ixy:
+        - 0
+        - 0
+        linearityCoeffs:
+        - 0.03
+        - 26000
+        linearityMax: 26000
+        linearityThreshold: 0
+        linearityType: None
+        perAmpData: true
+        rawBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawDataBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawParallelOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialPrescanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        readCorner: LL
+        readNoise: 24.441333333333333
+        saturation: 26000
+    bbox:
+    - - 0
+      - 0
+    - - 2048
+      - 2048
+    detectorType: 0
+    id: 6
+    name: ccd6
+    offset:
+    - 0
+    - 0
+    pitch: 0.0
+    pixelSize:
+    - 1.0
+    - 1.0
+    refpos:
+    - -429.56500000000005
+    - -905.2289999999998
+    roll: 0.0
+    serial: '6'
+    transformDict:
+      nativeSys: Pixels
+      transforms: None
+    transposeDetector: false
+    yaw: 0.0
+  ccd7:
+    amplifiers:
+      AMP_E2V:
+        flipXY:
+        - true
+        - true
+        gain: 26.88
+        hdu: 7
+        ixy:
+        - 0
+        - 0
+        linearityCoeffs:
+        - 0.02
+        - 35000
+        linearityMax: 35000
+        linearityThreshold: 0
+        linearityType: None
+        perAmpData: true
+        rawBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawDataBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawParallelOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialPrescanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        readCorner: LL
+        readNoise: 22.685333333333332
+        saturation: 35000
+    bbox:
+    - - 0
+      - 0
+    - - 2048
+      - 2048
+    detectorType: 0
+    id: 7
+    name: ccd7
+    offset:
+    - 0
+    - 0
+    pitch: 0.0
+    pixelSize:
+    - 1.0
+    - 1.0
+    refpos:
+    - 2487.3481
+    - -909.2820000000002
+    roll: 0.0
+    serial: '7'
+    transformDict:
+      nativeSys: Pixels
+      transforms: None
+    transposeDetector: false
+    yaw: 0.0
+  ccd8:
+    amplifiers:
+      AMP_E2V:
+        flipXY:
+        - true
+        - true
+        gain: 29.54
+        hdu: 8
+        ixy:
+        - 0
+        - 0
+        linearityCoeffs:
+        - 0.034
+        - 33000
+        linearityMax: 33000
+        linearityThreshold: 0
+        linearityType: None
+        perAmpData: true
+        rawBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawDataBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawParallelOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialPrescanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        readCorner: LL
+        readNoise: 25.162333333333333
+        saturation: 33000
+    bbox:
+    - - 0
+      - 0
+    - - 2048
+      - 2048
+    detectorType: 0
+    id: 8
+    name: ccd8
+    offset:
+    - 0
+    - 0
+    pitch: 0.0
+    pixelSize:
+    - 1.0
+    - 1.0
+    refpos:
+    - 5402.4220000000005
+    - -916.0889999999999
+    roll: 0.0
+    serial: '8'
+    transformDict:
+      nativeSys: Pixels
+      transforms: None
+    transposeDetector: false
+    yaw: 0.0
+  ccd9:
+    amplifiers:
+      AMP_E2V:
+        flipXY:
+        - true
+        - true
+        gain: 31.71
+        hdu: 9
+        ixy:
+        - 0
+        - 0
+        linearityCoeffs:
+        - 0.033
+        - 35000
+        linearityMax: 35000
+        linearityThreshold: 0
+        linearityType: None
+        perAmpData: true
+        rawBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawDataBBox:
+        - - 0
+          - 0
+        - - 2048
+          - 2048
+        rawParallelOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialOverscanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        rawSerialPrescanBBox:
+        - - 200
+          - 200
+        - - 200
+          - 200
+        readCorner: LL
+        readNoise: 18.816000000000003
+        saturation: 35000
+    bbox:
+    - - 0
+      - 0
+    - - 2048
+      - 2048
+    detectorType: 0
+    id: 9
+    name: ccd9
+    offset:
+    - 0
+    - 0
+    pitch: 0.0
+    pixelSize:
+    - 1.0
+    - 1.0
+    refpos:
+    - -3341.0510000000004
+    - 2988.3450000000003
+    roll: 0.0
+    serial: '9'
     transformDict:
       nativeSys: Pixels
       transforms: None
     transposeDetector: false
     yaw: 0.0
 name: vista
-plateScale: 1.24
+plateScale: 0.336
 transforms:
   FieldAngle:
     coeffs:

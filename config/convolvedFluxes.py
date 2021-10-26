@@ -6,4 +6,4 @@ except ImportError as exc:
     print("Cannot import lsst.meas.extensions.convolved (%s): disabling convolved flux measurements" % (exc,))
 else:
     config.plugins.names.add("ext_convolved_ConvolvedFlux")
-    #config.plugins["ext_convolved_ConvolvedFlux"].seeing.append(8.0)
+    # config.plugins["ext_convolved_ConvolvedFlux"].seeing.append(8.0)
