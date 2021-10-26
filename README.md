@@ -6,35 +6,36 @@ for Astronomy (VISTA) telescope has produced a number of wide and deep surveys i
 
 This code is a modification of the obs\_necam "Any cam" template; https://github.com/jrmullaney/obs_necam
 
-The documenttation for this is at https://lsstcamdocs.readthedocs.io/en/latest/intro.html This documentation was developed during production of the obs package for the GOTO telescope.
+The documentation for this is at https://lsstcamdocs.readthedocs.io/en/latest/intro.html This documentation was developed during production of the obs package for the GOTO telescope.
 
-The package is currently configured to work with the second generation 'Butler'. Development of a version compatible with the third generation Butler is ongoing. Note that we use the telescope name VISTA to describe the VIRCAM camera for simplicity. 
+The package is currently configured to work with both the second generation 'Butler' and the evolving third generation version. Development of a version compatible with the third generation Butler is ongoing. Note that we use the telescope name VISTA to describe the telescope and VIRCAM to describe the camera. 
 
 Folders:
 
 - [camera](camera) Files containing information that describe the properties of VISTA (dimensions, gain etc).
 - [config](config) Configuration files that tell the various stack process that access your data how to behave. The final data products will also contain automatically generated config files in case the standard here have changed or were overridden during processing.
 - [policy](policy) Files describing the file structure and type of input and output data (e.g., image, table etc).
-- [python/lsst](python/lsst) This is where all the scripts go that manipulate VISTA data
+- [python/lsst](python/lsst) This is where all the VISTA specific code and instrument classes go.
 - [ups](ups) A file telling the [eups](https://developer.lsst.io/stack/eups-tutorial.html) system what other packages need to be set up to use this obs_package.
 
 ## Installation
 
-After [installing the LSST stack]https://pipelines.lsst.io/install/newinstall.html() the obs_vista package must go in the stack folder which contains all the obs packages:
+After [installing the LSST stack](https://pipelines.lsst.io/install/newinstall.html) the obs_vista package must go in the stack folder which contains all the obs packages:
 
 
 ```Shell
-cd $STACKPATH/stack/current/$SYSTEMTYPE/   # example stack directory
+cd $RUBIN_EUPS_PATH  # Stack directory set during installation
+cd DarwinX86 # Typical mac system directory
 mkdir obs_vista
 cd obs_vista
 git clone https://github.com/lsst-uk/obs_vista.git
-mv obs_vista 20.0.0-1   #Stack version 20.0.0 used for development and obs version 1
+mv obs_vista 22.0.0-1   #Stack version 22.0.0 used for development and obs version 1
 ```
 
 This will now be a git submodule so any git commands run inside this directory will interact with the obs_vista git repo and not the lsstsw repo. You now need to declare the package to EUPS.
 
 ```Shell
-eups declare -t current obs_vista 20.0.0-1   # run once
+eups declare -t current obs_vista 22.0.0-1   # run once
 setup obs_vista                              # run in every shell
 ```
 
@@ -44,7 +45,7 @@ Running
 eups list
 ```
 
-Should show the 20.0.0-1 version of obs_vista as current and setup. Check the setup has worked by running
+Should show the 22.0.0-1 version of obs_vista as current and setup. Check the setup has worked by running
 
 ```Shell
 processCcd.py
