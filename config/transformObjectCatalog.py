@@ -6,7 +6,7 @@ from lsst.utils import getPackageDir
 # what bands are in the input.
 config.outputBands = [
     "g", "r", "i", "z", "y", 
-    "Z", "Y", "J", "H", "Ks"]
+    "Z", "Y", "J", "H", "K"]
 
 # Use the environment variable to prevent hardcoding of paths
 # into quantum graphs.
