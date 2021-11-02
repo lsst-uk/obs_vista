@@ -22,4 +22,4 @@ config.assembleCcd.doTrim=False
 
 # Setting this to false leaves the edge pixels in but masks them as edge
 # Assemble amp-level exposures into a ccd-level exposure?
-config.doAssembleCcd=True
+config.doAssembleCcd=False
