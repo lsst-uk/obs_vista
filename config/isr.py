@@ -21,5 +21,9 @@ config.doSaturationInterpolation = False
 config.assembleCcd.doTrim=False
 
 # Setting this to false leaves the edge pixels in but masks them as edge
+#Turning it off seems to break the wcs possibly because it isn't applying the flipping
 # Assemble amp-level exposures into a ccd-level exposure?
-config.doAssembleCcd=False
+#config.doAssembleCcd=False
+
+# Interpolate masked pixels?
+config.doInterpolate=False
