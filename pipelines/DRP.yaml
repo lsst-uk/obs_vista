@@ -3,26 +3,20 @@ instrument: lsst.obs.vista.VIRCAM
 imports:
   - $PIPE_TASKS_DIR/pipelines/DRP.yaml
 tasks:
-  isr: lsst.ip.isr.IsrTask
-  characterizeImage: lsst.pipe.tasks.characterizeImage.CharacterizeImageTask
-  calibrate: lsst.pipe.tasks.calibrate.CalibrateTask
-subsets:
-  processCcd:
+  multiVisitLater:
     subset:
-      - isr
-      - characterizeImage
-      - calibrate
-    description: A set of tasks to run when doing single frame processing
-  singleFrame:
-    subset:
-      - isr
-      - characterizeImage
-      - calibrate
-      - writeSourceTable
-      - transformSourceTable
-      - consolidateSourceTable
-      - consolidateVisitSummary
-      - skyCorr
+      #- makeWarp
+      #- assembleCoadd
+      #- healSparsePropertyMaps # needs visit info
+      - detection
+      - mergeDetections
+      - deblend
+      - measure # needs visit src catalogues if propagating flags
+      - mergeMeasurements
+      #- forcedPhotCcd # needs CCD exposures
+      - forcedPhotCoadd
+      - writeObjectTable
+      - transformObjectTable
+      - consolidateObjectTable
     description: >
-      Set of tasks for complete single frame processing. Analogous to
-      SingleFrameDriver.
+      Later parts of multivisit to be conducted following importation of HSC/LSST deepCoadds during VISTA VIRCAM joint processing.
