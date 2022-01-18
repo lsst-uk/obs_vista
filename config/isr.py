@@ -4,9 +4,9 @@ e.g.:
 config.doWrite = False
 '''
 
+# from lsst.obs.vista import VircamIsrTask
+# config.retarget(VircamIsrTask)
 
-from lsst.obs.vista.vircamIsrTask import VircamIsrTask
-config.retarget(VircamIsrTask)
 
 config.expectWcs = True
 # config.doWrite = True
@@ -29,7 +29,7 @@ config.assembleCcd.doTrim=False
 # Setting this to false leaves the edge pixels in but masks them as edge
 #Turning it off seems to break the wcs possibly because it isn't applying the flipping
 # Assemble amp-level exposures into a ccd-level exposure?
-#config.doAssembleCcd=False
+#config.doAssembleCcd=True
 
 # Should we set the level of all BAD patches of the chip to the chip's average value?
 config.doSetBadRegions=True

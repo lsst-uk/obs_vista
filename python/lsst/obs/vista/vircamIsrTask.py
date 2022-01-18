@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-#
-
 #imports required by task definition - this cell should contain all the Python for the task 
 #such that it can be directly copied to obs_vista/python/lsst/obs/vista/vircamIsrTask.py
 from lsst.ip.isr.isrTask import IsrTask, IsrTaskConfig, IsrTaskConnections
@@ -22,7 +19,7 @@ class VircamIsrTaskConnections(IsrTaskConnections):
     def __init__(self, *, config=None):
         super().__init__(config=config)
 
-        if config.doConfidence is not True:
+        if config.doVircamConfidence is not True:
             self.prerequisiteInputs.discard("confidence")
 
 class VircamIsrConfig(IsrTaskConfig,
@@ -34,9 +31,9 @@ class VircamIsrConfig(IsrTaskConfig,
         default=False,
     )
     
-    updateVircamGain = pexConfig.Field(
+    updateVircamBBox = pexConfig.Field(
         dtype=bool,
-        doc="Correct the gain using the VIRCAM CASU stack exposure number. If doConfidence is True this change will be overwriten.",
+        doc="Correct the BBox of the exposure to account for dithering for stack.",
         default=False,
     )
     
@@ -67,7 +64,8 @@ class VircamIsrTask(IsrTask):
         print(ccdExposure.getVariance().array.shape)
         print(ccdExposure.getImage().array[-1,-1])
         
-        self.vircamUpdateDetector(ccdExposure)
+        if self.config.updateVircamBBox:
+            self.vircamUpdateDetector(ccdExposure)
         
         output= super().run(ccdExposure, camera=camera, bias=bias, linearizer=linearizer,
             crosstalk=crosstalk, crosstalkSources=crosstalkSources,
@@ -78,14 +76,14 @@ class VircamIsrTask(IsrTask):
             isGen3=isGen3,
             #additional argument not passed to parent method
             )
-        print(output.exposure.getVariance().array.shape)
-        print(output.exposure.getImage().array[-1,-1])
-        print(ccdExposure.getImage().array[-1,-1])
         
-        print(output.exposure.getVariance().array[1000,1000])
+      
         #Make the VISTA specific variance plane
-        self.vircamUpdateVariance(output.exposure,confidence=confidence)
-        print(output.exposure.getVariance().array[1000,1000])
+        if self.config.doVircamConfidence and confidence is not None:
+            self.vircamUpdateVariance(output.exposure,confidence=confidence)
+        if self.config.doVircamConfidence and confidence is None:
+            self.log.info("VISTA: doVircamConfidence is True but no confidence map is available." )
+
         # output.outputExposure=output.exposure
         return output
 
@@ -102,41 +100,35 @@ class VircamIsrTask(IsrTask):
             The CASU confidence map
         """
        
-        if self.config.updateVircamGain:
-            self.log.info("VISTA: Variance plane reset using updated gain based on CASU stack exposure number." )
-            #get exposure number and update gain
-            expNum=exposure.getInfo().getMetadata().getAsInt('ESO DET NDIT')
-            amp=exposure.getDetector().getAmplifiers()[0]
-            gain=amp.getGain()
-            readNoise=amp.getReadNoise()
-            gain*=(expNum/6) #6 is default value set in camera. This is the only difference compared to updateVariance.
-            self.log.info("VISTA: CASU stack built from {} exposures updating gain by factor {}.".format(expNum,gain) )
-            var = exposure.getVariance()
-            var[:] = exposure.getImage()
-            var /= gain
-            var += readNoise**2
+        expNum=exposure.getInfo().getMetadata().getAsInt('NICOMB')
+        sky=exposure.getInfo().getMetadata().getAsDouble('SKYLEVEL')
+        amp=exposure.getDetector().getAmplifiers()[0]
+        gain=amp.getGain()
+        readNoise=amp.getReadNoise()
             
-        if self.config.doVircamConfidence and confidence is not None:
-            self.log.info("VISTA: Variance plane reset using CASU confidence map." )
-            #We are modifying the original variance set by lsst.ip.isr.isrFunctions.updateVariance
-            var = exposure.getVariance()
-            #cut the cropped region out of the confidence map
-            conf=confidence.image.array[:var.array.shape[0],:var.array.shape[1]]
-            #flip the confidence map to account for image flipping
-            #NOTE: Flipping must be consistent with camera.yaml and rawFormatter
-            conf=np.flipud(np.fliplr(conf))
-            #Apply CASU variance from confidence and image
-            var.array*=100/conf
-            #Now lets modify the mask using the low confidence pixels
-            mask=exposure.getMask()
-            #Mask all pixels with confidence below 20 as bad
-            mask.array[conf<20]|=mask.getPlaneBitMask('BAD')
-   
-        elif self.config.doVircamConfidence and confidence is None:
-            self.log.info("VISTA: doConfidence is True but no confidence map is given." )
-            
-        if not self.config.updateVircamGain and not self.config.doVircamConfidence:
-            self.log.info("VISTA: Variance plane not modifed by vircamIsrTask." )
+        var = exposure.getVariance()
+        img = exposure.getImage()
+        #cut the cropped region out of the confidence map
+        conf=confidence.image.array[:var.array.shape[0],:var.array.shape[1]]
+        #flip the confidence map to account for image flipping
+        #NOTE: Flipping must be consistent with camera.yaml and rawFormatter
+        conf=np.flipud(np.fliplr(conf))
+        effNum=expNum*conf/100 #effective exposure number
+        #Apply CASU variance from confidence, image, sky in stages to optimise memory use
+        var.array=(1+effNum)/effNum
+        var.array*=readNoise**2
+        var.array+=img.array/gain
+        var.array+=sky/(effNum*gain)
+        var.array/=effNum
+
+        self.log.info("VISTA: Effective exposure number reset using CASU confidence map." )
+        
+        #Now lets modify the mask using the low confidence pixels
+        mask=exposure.getMask()
+        #Mask all pixels with confidence below 20 as bad
+        mask.array[conf<20]|=mask.getPlaneBitMask('BAD')
+        self.log.info("VISTA: Pixels with confidence <20% flagged BAD.")
+
 
 
     def vircamUpdateDetector(self, ccdExposure):
@@ -153,7 +145,9 @@ class VircamIsrTask(IsrTask):
         detector=ccdExposure.getDetector()
         #update BBox to image size
         BBox = geom.Box2I(geom.Point2I(0, 0), geom.Extent2I(
-            ccdExposure.getImage().array.shape[1],ccdExposure.getImage().array.shape[0]))
+            ccdExposure.getImage().array.shape[1],
+            ccdExposure.getImage().array.shape[0]
+        ))
         detBuilder=detector.rebuild()
         detBuilder.setBBox(BBox)
         amplifier=detBuilder.getAmplifiers()[0]
@@ -164,5 +158,5 @@ class VircamIsrTask(IsrTask):
         ccdExposure.setDetector(detBuilder.finish())
 
         
-
+        
 
