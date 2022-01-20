@@ -5,6 +5,8 @@ import lsst.pex.config as pexConfig
 import lsst.pipe.base as pipeBase
 import lsst.pipe.base.connectionTypes as cT
 from lsst.utils.timer import timeMethod
+import lsst.geom as geom
+import numpy as np
 
 __all__ = ["VircamIsrConfig", "VircamIsrTask", "VircamIsrTaskConnections"]
 
@@ -13,7 +15,7 @@ class VircamIsrTaskConnections(IsrTaskConnections):
     confidence = cT.PrerequisiteInput(
         name="confidence",
         doc="Confidence map associated with input exposure to process.",
-        storageClass="Exposure",
+        storageClass="ExposureF",
         dimensions=["instrument", "exposure", "detector"],
     )
     def __init__(self, *, config=None):
@@ -61,8 +63,7 @@ class VircamIsrTask(IsrTask):
             ):
         """Execute the parent run method and apply confidence and gain if requested"""
         self.log.info("VISTA: Running vircamIsrTask." )
-        print(ccdExposure.getVariance().array.shape)
-        print(ccdExposure.getImage().array[-1,-1])
+
         
         if self.config.updateVircamBBox:
             self.vircamUpdateDetector(ccdExposure)
@@ -148,6 +149,9 @@ class VircamIsrTask(IsrTask):
             ccdExposure.getImage().array.shape[1],
             ccdExposure.getImage().array.shape[0]
         ))
+        self.log.info("VISTA: Updating detector BBox to contain full stacked image [{},{}].".format(
+            ccdExposure.getImage().array.shape[1],
+            ccdExposure.getImage().array.shape[0]) )
         detBuilder=detector.rebuild()
         detBuilder.setBBox(BBox)
         amplifier=detBuilder.getAmplifiers()[0]

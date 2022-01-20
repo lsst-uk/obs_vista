@@ -5,7 +5,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.27322404371584696
+        gain: 3.66
         hdu: 1
         ixy:
         - 0
@@ -76,7 +76,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.2518891687657431
+        gain: 3.97
         hdu: 10
         ixy:
         - 0
@@ -147,7 +147,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.21645021645021645
+        gain: 4.62
         hdu: 11
         ixy:
         - 0
@@ -218,7 +218,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.2531645569620253
+        gain: 3.95
         hdu: 12
         ixy:
         - 0
@@ -289,7 +289,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.1763668430335097
+        gain: 5.67
         hdu: 13
         ixy:
         - 0
@@ -360,7 +360,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.20920502092050208
+        gain: 4.78
         hdu: 14
         ixy:
         - 0
@@ -431,7 +431,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.2506265664160401
+        gain: 3.99
         hdu: 15
         ixy:
         - 0
@@ -502,7 +502,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.20161290322580647
+        gain: 4.96
         hdu: 16
         ixy:
         - 0
@@ -573,7 +573,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.23529411764705882
+        gain: 4.25
         hdu: 2
         ixy:
         - 0
@@ -644,7 +644,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.2531645569620253
+        gain: 3.95
         hdu: 3
         ixy:
         - 0
@@ -715,7 +715,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.24038461538461536
+        gain: 4.16
         hdu: 4
         ixy:
         - 0
@@ -786,7 +786,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.23584905660377356
+        gain: 4.24
         hdu: 5
         ixy:
         - 0
@@ -857,7 +857,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.24330900243309
+        gain: 4.11
         hdu: 6
         ixy:
         - 0
@@ -928,7 +928,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.2604166666666667
+        gain: 3.84
         hdu: 7
         ixy:
         - 0
@@ -999,7 +999,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.23696682464454977
+        gain: 4.22
         hdu: 8
         ixy:
         - 0
@@ -1070,7 +1070,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 0.22075055187637968
+        gain: 4.53
         hdu: 9
         ixy:
         - 0

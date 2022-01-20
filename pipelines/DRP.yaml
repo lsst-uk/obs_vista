@@ -3,6 +3,7 @@ instrument: lsst.obs.vista.VIRCAM
 imports:
   - $PIPE_TASKS_DIR/pipelines/DRP.yaml
 tasks:
+  isr: lsst.obs.vista.VircamIsrTask
   multiVisitLater:
     subset:
       #- makeWarp
