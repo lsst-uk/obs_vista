@@ -4,3 +4,4 @@ from .makeVircamRawVisitInfo import *
 from ._instrument import *
 from .rawFormatter import *
 from .ingest import *
+from .vircamIsrTask import *

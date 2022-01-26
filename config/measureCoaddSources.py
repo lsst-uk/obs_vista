@@ -18,7 +18,10 @@ config.connections.refCat = "ps1_pv3_3pi_20170110_vista"  # ps1_pv3_3pi_20170110
 config.match.refObjLoader.load(os.path.join(os.path.dirname(__file__), "filterMap.py"))
 
 
-#config.doPropagateFlags = False  # This being true fails due to data ids - the bits I'm using?
+# This must be switched off to use imported HSC calexps as we do not import the exposure src cats
+# Whether to match sources to CCD catalogs to propagate flags (to e.g. identify PSF stars)
+config.doPropagateFlags = False  
+
 #config.doWriteMatchesDenormalized = True
 
 # config.doReplaceWithNoise = False #Just to see if this removes 'Quadropole determinant cannot be negative error' doesn't run with it

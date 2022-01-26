@@ -81,7 +81,7 @@ config.measurement.load(os.path.join(ObsConfigDir, "hsm.py"))
 config.astrometry.sourceSelector['astrometry'].sourceFluxType = 'Ap'
 
 # Minimum allowed signal-to-noise ratio for sources used for matching (in the flux specified by sourceFluxType); <= 0 for no limit
-config.astrometry.sourceSelector['astrometry'].minSnr = 3.0
+config.astrometry.sourceSelector['astrometry'].minSnr = 5.0
 
 # If True then load reference objects and match sources but do not fit a WCS; this simply controls whether 'run' calls 'solve' or 'loadAndMatch'
 #config.astrometry.forceKnownWcs=False
@@ -93,13 +93,13 @@ config.astrometry.sourceSelector['matcher'].sourceFluxType = 'Ap'
 #config.astrometry.magnitudeOutlierRejectionNSigma=0.0
 
 # Minimum allowed signal-to-noise ratio for sources used for matching (in the flux specified by sourceFluxType); <= 0 for no limit
-config.astrometry.sourceSelector['matcher'].minSnr = 3.0
+config.astrometry.sourceSelector['matcher'].minSnr = 5.0
 
 # Exclude objects that have saturated, interpolated, or edge pixels using PixelFlags. For matchOptimisticB set this to False to recover previous matcher selector behavior.
 config.astrometry.sourceSelector['matcher'].excludePixelFlags=False
 
 # specify the minimum psfFlux for good Psf Candidates. Unit=instrument flux
-config.astrometry.sourceSelector['objectSize'].fluxMin=250.0
+config.astrometry.sourceSelector['objectSize'].fluxMin=1000.0
 
 # Minimum number of matched pairs; see also minFracMatchedPairs.
 #config.astrometry.matcher.minMatchedPairs=10

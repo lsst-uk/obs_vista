@@ -40,7 +40,7 @@ class VircamTranslator(FitsTranslator):
     _const_map = {"boresight_rotation_coord": "sky",
                   "detector_group": None,
                   "boresight_airmass": None,  # This could be calculated.
-                  "boresight_rotation_angle": Angle(0 * u.deg),
+                 # "boresight_rotation_angle": Angle(0 * u.deg),
                   "science_program": None,
                  # "temperature": 300. * u.K,
                   "pressure": 985. * u.hPa,
@@ -130,6 +130,13 @@ class VircamTranslator(FitsTranslator):
         #date = '-'.join(date)
         t = Time(date, format="isot", scale="utc")
         return t
+        
+    @cache_translation
+    def to_boresight_rotation_angle(self):
+        """"Give zero for typical pointing == -90deg"""
+        primary=fits.open(self.filename)[0]
+        posang=primary.header["HIERARCH ESO TEL POSANG"]
+        return Angle((posang + 90.)* u.deg)
 
     @cache_translation
     def to_datetime_end(self):
@@ -358,7 +365,7 @@ class VircamTranslator(FitsTranslator):
                     continue
 
                 header = hdu.header
-                #if "ESO DET CHIP NO" not in header:  # Primary does not have
-                #    continue
+                if "EXTNAME" not in header:  # Primary does not have
+                    continue
 
                 yield merge_headers([primary, header], mode="overwrite")

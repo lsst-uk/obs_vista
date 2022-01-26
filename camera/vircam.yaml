@@ -5,7 +5,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 25.62
+        gain: 3.66
         hdu: 1
         ixy:
         - 0
@@ -28,20 +28,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 24.268
         saturation: 33000
@@ -76,7 +76,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 27.790000000000003
+        gain: 3.97
         hdu: 10
         ixy:
         - 0
@@ -99,20 +99,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 24.935333333333332
         saturation: 35000
@@ -147,7 +147,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 32.34
+        gain: 4.62
         hdu: 11
         ixy:
         - 0
@@ -170,20 +170,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 24.186333333333334
         saturation: 37000
@@ -218,7 +218,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 27.650000000000002
+        gain: 3.95
         hdu: 12
         ixy:
         - 0
@@ -241,20 +241,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 23.318
         saturation: 34000
@@ -289,7 +289,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 39.69
+        gain: 5.67
         hdu: 13
         ixy:
         - 0
@@ -312,20 +312,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 26.480666666666668
         saturation: 33000
@@ -360,7 +360,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 33.46
+        gain: 4.78
         hdu: 14
         ixy:
         - 0
@@ -383,20 +383,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 18.39966666666667
         saturation: 35000
@@ -431,7 +431,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 27.93
+        gain: 3.99
         hdu: 15
         ixy:
         - 0
@@ -454,20 +454,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 17.891000000000002
         saturation: 34000
@@ -502,7 +502,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 34.72
+        gain: 4.96
         hdu: 16
         ixy:
         - 0
@@ -525,20 +525,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 19.869666666666664
         saturation: 34000
@@ -573,7 +573,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 29.75
+        gain: 4.25
         hdu: 2
         ixy:
         - 0
@@ -596,20 +596,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 25.122
         saturation: 32000
@@ -644,7 +644,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 27.650000000000002
+        gain: 3.95
         hdu: 3
         ixy:
         - 0
@@ -667,20 +667,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 23.457000000000004
         saturation: 33000
@@ -715,7 +715,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 29.12
+        gain: 4.16
         hdu: 4
         ixy:
         - 0
@@ -738,20 +738,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 24.708333333333332
         saturation: 32000
@@ -786,7 +786,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 29.68
+        gain: 4.24
         hdu: 5
         ixy:
         - 0
@@ -809,20 +809,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 25.313000000000002
         saturation: 24000
@@ -857,7 +857,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 28.770000000000003
+        gain: 4.11
         hdu: 6
         ixy:
         - 0
@@ -880,20 +880,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 24.441333333333333
         saturation: 26000
@@ -928,7 +928,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 26.88
+        gain: 3.84
         hdu: 7
         ixy:
         - 0
@@ -951,20 +951,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 22.685333333333332
         saturation: 35000
@@ -999,7 +999,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 29.54
+        gain: 4.22
         hdu: 8
         ixy:
         - 0
@@ -1022,20 +1022,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 25.162333333333333
         saturation: 33000
@@ -1070,7 +1070,7 @@ CCDs:
         flipXY:
         - true
         - true
-        gain: 31.71
+        gain: 4.53
         hdu: 9
         ixy:
         - 0
@@ -1093,20 +1093,20 @@ CCDs:
         - - 2048
           - 2048
         rawParallelOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialOverscanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         rawSerialPrescanBBox:
-        - - 200
-          - 200
-        - - 200
-          - 200
+        - - 0
+          - 0
+        - - 0
+          - 0
         readCorner: LL
         readNoise: 18.816000000000003
         saturation: 35000

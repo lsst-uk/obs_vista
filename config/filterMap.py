@@ -11,11 +11,11 @@ for source, target in [
     ('VIRCAM-Y', 'y2'),
     ('VIRCAM-J', 'j'),
     ('VIRCAM-H', 'h'),
-    ('VIRCAM-Ks', 'g'),
+    ('VIRCAM-Ks', 'ks'),
     ('Z', 'z2'),
     ('Y', 'y2'),
     ('J', 'j'),
     ('H', 'h'),
-    ('K','g'),
+    ('K','ks'),
 ]:
     config.filterMap[source] = target
