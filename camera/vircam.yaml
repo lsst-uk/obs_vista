@@ -43,7 +43,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 24.268
+        readNoise: 6.630601092896175
         saturation: 33000
     bbox:
     - - 0
@@ -114,7 +114,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 24.935333333333332
+        readNoise: 6.280940386230058
         saturation: 35000
     bbox:
     - - 0
@@ -185,7 +185,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 24.186333333333334
+        readNoise: 5.235137085137085
         saturation: 37000
     bbox:
     - - 0
@@ -256,7 +256,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 23.318
+        readNoise: 5.9032911392405065
         saturation: 34000
     bbox:
     - - 0
@@ -327,7 +327,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 26.480666666666668
+        readNoise: 4.670311581422693
         saturation: 33000
     bbox:
     - - 0
@@ -398,7 +398,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 18.39966666666667
+        readNoise: 3.849302649930265
         saturation: 35000
     bbox:
     - - 0
@@ -469,7 +469,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 17.891000000000002
+        readNoise: 4.483959899749373
         saturation: 34000
     bbox:
     - - 0
@@ -540,7 +540,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 19.869666666666664
+        readNoise: 4.005981182795698
         saturation: 34000
     bbox:
     - - 0
@@ -611,7 +611,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 25.122
+        readNoise: 5.9110588235294115
         saturation: 32000
     bbox:
     - - 0
@@ -682,7 +682,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 23.457000000000004
+        readNoise: 5.938481012658229
         saturation: 33000
     bbox:
     - - 0
@@ -753,7 +753,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 24.708333333333332
+        readNoise: 5.939503205128204
         saturation: 32000
     bbox:
     - - 0
@@ -824,7 +824,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 25.313000000000002
+        readNoise: 5.970047169811321
         saturation: 24000
     bbox:
     - - 0
@@ -895,7 +895,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 24.441333333333333
+        readNoise: 5.9467964314679636
         saturation: 26000
     bbox:
     - - 0
@@ -966,7 +966,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 22.685333333333332
+        readNoise: 5.907638888888889
         saturation: 35000
     bbox:
     - - 0
@@ -1037,7 +1037,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 25.162333333333333
+        readNoise: 5.96263823064771
         saturation: 33000
     bbox:
     - - 0
@@ -1108,7 +1108,7 @@ CCDs:
         - - 0
           - 0
         readCorner: LL
-        readNoise: 18.816000000000003
+        readNoise: 4.153642384105961
         saturation: 35000
     bbox:
     - - 0

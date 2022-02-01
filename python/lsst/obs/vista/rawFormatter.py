@@ -188,7 +188,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
         filename = self.fileDescriptor.location.path
         try:
             index = detector_to_hdu[detectorId]
-            print('detectorId {} type'.format(detectorId),type(detectorId))
+            #print('detectorId {} type'.format(detectorId),type(detectorId))
             metadata = lsst.afw.fits.readMetadata(filename, index)
             if metadata['ESO DET CHIP NO'] != detectorId:
                 # the detector->HDU mapping is different in this file: try scanning
@@ -202,11 +202,19 @@ class VircamRawFormatter(FitsRawFormatterBase):
             return self._scanHdus(filename, detectorId)
 
     def readMetadata(self):
+        #Currently hacking to merge in required primary keys
+        filename = self.fileDescriptor.location.path
         index, metadata = self._determineHDU(self.dataId['detector'])
-        #print(metadata)
+        #print("1",metadata)
+        primaryMetadata=lsst.afw.fits.readMetadata(filename, 0)
+        for k in ["ESO TEL POSANG","ESO INS THERMAL AMB MEAN","ESO TEL ALT","ESO TEL AZ"]:
+            metadata.setFloat(
+                k,
+                primaryMetadata.get(k))
         astro_metadata_translator.fix_header(metadata,translator_class=VircamTranslator)
         #VircamTranslator.fix_header(metadata, self.dataId['instrument'], self.dataId['exposure'])#
-        #print(metadata)
+        #print("2",metadata)
+        
         return metadata
         
     def _createSkyWcsFromMetadata(self):

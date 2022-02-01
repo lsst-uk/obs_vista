@@ -134,8 +134,9 @@ class VircamTranslator(FitsTranslator):
     @cache_translation
     def to_boresight_rotation_angle(self):
         """"Give zero for typical pointing == -90deg"""
-        primary=fits.open(self.filename)[0]
-        posang=primary.header["HIERARCH ESO TEL POSANG"]
+        #primary=fits.open(self.filename)[0]
+        #posang=primary.header["HIERARCH ESO TEL POSANG"]
+        posang=self._header["ESO TEL POSANG"]
         return Angle((posang + 90.)* u.deg)
 
     @cache_translation
