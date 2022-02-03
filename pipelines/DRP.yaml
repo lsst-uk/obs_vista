@@ -4,12 +4,20 @@ imports:
   - $PIPE_TASKS_DIR/pipelines/DRP.yaml
 tasks:
   isr: lsst.obs.vista.VircamIsrTask
+  coaddDetect:
+    subset:
+      - makeWarp
+      - assembleCoadd
+      - healSparsePropertyMaps
+      - detection
+    description: >
+      A set of tasks to run when coadding images.
   multiVisitLater:
     subset:
       #- makeWarp
       #- assembleCoadd
       #- healSparsePropertyMaps # needs visit info
-      - detection
+      #- detection #use public HSC detections and run separately on VIRCAM
       - mergeDetections
       - deblend
       - measure # needs visit src catalogues if propagating flags
