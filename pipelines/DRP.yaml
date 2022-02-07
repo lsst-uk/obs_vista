@@ -3,7 +3,21 @@ instrument: lsst.obs.vista.VIRCAM
 imports:
   - $PIPE_TASKS_DIR/pipelines/DRP.yaml
 tasks:
-  isr: lsst.obs.vista.VircamIsrTask
+  vircamIsr: lsst.obs.vista.VircamIsrTask
+  vircamSingleFrame:
+    subset:
+      - vircamIsr
+      - characterizeImage
+      - calibrate
+      - writeSourceTable
+      - transformSourceTable
+      - consolidateSourceTable
+      - consolidateVisitSummary
+      - makeCcdVisitTable
+      - makeVisitTable
+    description: >
+      Set of tasks for complete single frame processing. Analogous to
+      SingleFrameDriver.
   coaddDetect:
     subset:
       - makeWarp
