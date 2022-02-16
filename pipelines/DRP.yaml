@@ -3,10 +3,10 @@ instrument: lsst.obs.vista.VIRCAM
 imports:
   - $PIPE_TASKS_DIR/pipelines/DRP.yaml
 tasks:
-  vircamIsr: lsst.obs.vista.VircamIsrTask
-  vircamSingleFrame:
+  isr: lsst.obs.vista.VircamIsrTask
+  singleFrame:
     subset:
-      - vircamIsr
+      - isr
       - characterizeImage
       - calibrate
       - writeSourceTable
@@ -17,7 +17,7 @@ tasks:
       - makeVisitTable
     description: >
       Set of tasks for complete single frame processing. Analogous to
-      SingleFrameDriver.
+      SingleFrameDriver. isr swapped with vircamIsr to include confidence maps.
   coaddDetect:
     subset:
       - makeWarp
@@ -25,7 +25,7 @@ tasks:
       - healSparsePropertyMaps
       - detection
     description: >
-      A set of tasks to run when coadding images.
+      A set of tasks to run when coadding images. Adding detection to typical run.
   multiVisitLater:
     subset:
       #- makeWarp
