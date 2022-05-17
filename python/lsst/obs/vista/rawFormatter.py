@@ -14,6 +14,7 @@ from lsst.afw.math import flipImage
 from lsst.geom import Point2D
 
 import astro_metadata_translator
+from astro_metadata_translator import fix_header, merge_headers
 
 import logging
 log = logging.getLogger("fitsRawFormatter")
@@ -201,21 +202,48 @@ class VircamRawFormatter(FitsRawFormatterBase):
             # if the file doesn't contain all the HDUs of "normal" files, try scanning
             return self._scanHdus(filename, detectorId)
 
-    def readMetadata(self):
-        #Currently hacking to merge in required primary keys
-        filename = self.fileDescriptor.location.path
-        index, metadata = self._determineHDU(self.dataId['detector'])
-        #print("1",metadata)
-        primaryMetadata=lsst.afw.fits.readMetadata(filename, 0)
-        for k in ["ESO TEL POSANG","ESO INS THERMAL AMB MEAN","ESO TEL ALT","ESO TEL AZ"]:
-            metadata.setFloat(
-                k,
-                primaryMetadata.get(k))
-        astro_metadata_translator.fix_header(metadata,translator_class=VircamTranslator)
-        #VircamTranslator.fix_header(metadata, self.dataId['instrument'], self.dataId['exposure'])#
-        #print("2",metadata)
+#     def readMetadata(self):
+#         #Currently hacking to merge in required primary keys
+#         filename = self.fileDescriptor.location.path
+#         index, metadata = self._determineHDU(self.dataId['detector'])
+#         #print("1",metadata)
+#         primaryMetadata=lsst.afw.fits.readMetadata(filename, 0)
+#         for k in ["ESO TEL POSANG","ESO INS THERMAL AMB MEAN","ESO TEL ALT","ESO TEL AZ"]:
+#             metadata.setFloat(
+#                 k,
+#                 primaryMetadata.get(k))
+#         astro_metadata_translator.fix_header(metadata,translator_class=VircamTranslator)
+#         #VircamTranslator.fix_header(metadata, self.dataId['instrument'], self.dataId['exposure'])#
+#         #print("2",metadata)
+#         
+#         return metadata
         
-        return metadata
+#Code above replaced by below from obs_lsst to use latest api
+    def readMetadata(self):
+        """Read all header metadata directly into a PropertyList.
+        Specialist version since some of our data does not
+        set INHERIT=T so we have to merge the headers manually.
+        Returns
+        -------
+        metadata : `~lsst.daf.base.PropertyList`
+            Header metadata.
+        """
+        file = self.fileDescriptor.location.path
+        phdu = lsst.afw.fits.readMetadata(file, 0)
+        index, md = self._determineHDU(self.dataId['detector'])
+        if "INHERIT" in phdu:
+            # Trust the inheritance flag
+            return super().readMetadata()
+
+        # Merge ourselves
+        md = merge_headers([phdu, md],
+                           mode="overwrite")
+        #fix_header(md)
+        astro_metadata_translator.fix_header(md,translator_class=VircamTranslator)
+        print('md:',md)
+        return md
+        
+        
         
     def _createSkyWcsFromMetadata(self):
         # We need to know which direction the chip is "flipped" in order to

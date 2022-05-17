@@ -5,6 +5,7 @@ the reference catalogue and colour terms for its use.
 import os.path
 from lsst.meas.astrom import MatchOptimisticBConfig
 from lsst.meas.astrom import MatchPessimisticBConfig
+from lsst.meas.algorithms import ColorLimit
 
 ObsConfigDir = os.path.dirname(__file__)
 
@@ -128,6 +129,10 @@ for i in [
 ]:
     config.measurement.plugins[i].doMeasure = False
     
+#VISTA colours
+#colors = config.photoCal.match.referenceSelection.colorLimits
+#colors["j-ks"] = ColorLimit(primary="j_flux", secondary="ks_flux", maximum=1.0)
+
 config.photoCal.applyColorTerms = True
 config.photoCal.photoCatName = ref_cat
 config.photoCal.match.matchRadius = 1.0
