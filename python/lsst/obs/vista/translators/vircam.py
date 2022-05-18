@@ -56,6 +56,7 @@ class VircamTranslator(FitsTranslator):
         #"exposure_id": "ESO DET EXP NO",
         #"visit_id": "ESO DET EXP NO",
         #"temperature":("ESO INS THERMAL AMB MEAN", dict(unit=u.K)),
+        #"boresight_airmass": ""
         "observation_id": "ESO DET EXP NO",
         #"detector_exposure_id": "ESO DET EXP NO",
         "detector_num": "ESO DET CHIP NO",
@@ -138,6 +139,10 @@ class VircamTranslator(FitsTranslator):
         #posang=primary.header["HIERARCH ESO TEL POSANG"]
         posang=self._header["ESO TEL POSANG"]
         return Angle((posang + 90.)* u.deg) #+90?
+        
+#     @cache_translation
+#     def to_boresight_airmass(self):
+#         return self._header["ESO OBS AIRM "] # requested maximum - not available for stack
 
     @cache_translation
     def to_datetime_end(self):
