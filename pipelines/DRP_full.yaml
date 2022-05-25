@@ -29,9 +29,9 @@ tasks:
   detection: lsst.pipe.tasks.multiBand.DetectCoaddSourcesTask
   mergeDetections: lsst.pipe.tasks.mergeDetections.MergeDetectionsTask
   #Multiple band SCARLETT deblender
-  #deblend: lsst.pipe.tasks.deblendCoaddSourcesPipeline.DeblendCoaddSourcesMultiTask
-  #Single band SDSS deblender
-  deblend: lsst.pipe.tasks.deblendCoaddSourcesPipeline.DeblendCoaddSourcesSingleTask
+  deblend: lsst.pipe.tasks.deblendCoaddSourcesPipeline.DeblendCoaddSourcesMultiTask
+  #Single band SDSS deblender - currently broken yielding source id error
+  #deblend: lsst.pipe.tasks.deblendCoaddSourcesPipeline.DeblendCoaddSourcesSingleTask
   measure: lsst.pipe.tasks.multiBand.MeasureMergedCoaddSourcesTask
   mergeMeasurements: lsst.pipe.tasks.mergeMeasurements.MergeMeasurementsTask
   writeObjectTable: lsst.pipe.tasks.postprocess.WriteObjectTableTask

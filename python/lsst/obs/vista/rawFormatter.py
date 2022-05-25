@@ -240,7 +240,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
                            mode="overwrite")
         #fix_header(md)
         astro_metadata_translator.fix_header(md,translator_class=VircamTranslator)
-        print('md:',md)
+        #print('md:',md)
         return md
         
         

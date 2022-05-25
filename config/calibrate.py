@@ -18,6 +18,8 @@ for refObjLoader in (config.astromRefObjLoader,
     refObjLoader.load(os.path.join(ObsConfigDir, "filterMap.py"))
     # This is the Gen2 configuration option.
     refObjLoader.ref_dataset_name = ref_cat
+    # Use the filterMap instead of the "any" filter. Broke after w_2022_21 without this
+    refObjLoader.anyFilterMapsToThis = None
     
 # for matchConfig in (config.astrometry,
 #                     ):
@@ -119,7 +121,7 @@ for i in [
         # 'base_SdssShape', #base_SdssShape is needed for PSF determination.
         # 'base_ScaledApertureFlux',
         # 'base_CircularApertureFlux',
-        'base_Blendedness',
+        #'base_Blendedness',
         # 'base_LocalBackground',
         # 'base_Jacobian',
         # 'base_FPPosition',
