@@ -26,14 +26,14 @@ config.doSaturation=True
 
 # trim out non-data regions?
 config.assembleCcd.doTrim=False
-config.doAssembleCcd=True
+
 
 config.doAssembleIsrExposures = True
 
 # Setting this to false leaves the edge pixels in but masks them as edge
 #Turning it off seems to break the wcs possibly because it isn't applying the flipping
 # Assemble amp-level exposures into a ccd-level exposure?
-
+config.doAssembleCcd=True
 
 # Should we set the level of all BAD patches of the chip to the chip's average value?
 config.doSetBadRegions=True

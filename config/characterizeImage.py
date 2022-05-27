@@ -55,7 +55,7 @@ config.measurePsf.starSelector['objectSize'].signalToNoiseMin = 5.0  # 20.0
 # Maximum width to include in histogram
 config.measurePsf.starSelector['objectSize'].widthMax = 20.0  # 10.0
 # From obs_subaru:
-config.measurePsf.starSelector["objectSize"].widthMin = 0.0
+config.measurePsf.starSelector["objectSize"].widthMin = 0.9
 # Standard deviation of width allowed to be interpreted as good stars
 config.measurePsf.starSelector['objectSize'].widthStdAllowed = 5.0  # 0.15
 # Keep objects within this many sigma of cluster 0's median

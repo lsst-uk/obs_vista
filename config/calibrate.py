@@ -5,6 +5,7 @@ the reference catalogue and colour terms for its use.
 import os.path
 from lsst.meas.astrom import MatchOptimisticBConfig
 from lsst.meas.astrom import MatchPessimisticBConfig
+from lsst.meas.algorithms import ColorLimit
 
 ObsConfigDir = os.path.dirname(__file__)
 
@@ -17,6 +18,8 @@ for refObjLoader in (config.astromRefObjLoader,
     refObjLoader.load(os.path.join(ObsConfigDir, "filterMap.py"))
     # This is the Gen2 configuration option.
     refObjLoader.ref_dataset_name = ref_cat
+    # Use the filterMap instead of the "any" filter. Broke after w_2022_21 without this
+    refObjLoader.anyFilterMapsToThis = None
     
 # for matchConfig in (config.astrometry,
 #                     ):
@@ -118,7 +121,7 @@ for i in [
         # 'base_SdssShape', #base_SdssShape is needed for PSF determination.
         # 'base_ScaledApertureFlux',
         # 'base_CircularApertureFlux',
-        'base_Blendedness',
+        #'base_Blendedness',
         # 'base_LocalBackground',
         # 'base_Jacobian',
         # 'base_FPPosition',
@@ -128,6 +131,10 @@ for i in [
 ]:
     config.measurement.plugins[i].doMeasure = False
     
+#VISTA colours
+#colors = config.photoCal.match.referenceSelection.colorLimits
+#colors["j-ks"] = ColorLimit(primary="j_flux", secondary="ks_flux", maximum=1.0)
+
 config.photoCal.applyColorTerms = True
 config.photoCal.photoCatName = ref_cat
 config.photoCal.match.matchRadius = 1.0

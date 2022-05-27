@@ -1,5 +1,5 @@
 # obs_vista
-VISTA (VIRCAM) specific configuration and tasks for the LSST Data Management Stack. The VISTA infrared camera (VIRCAM) instrument on the ESO Visible and Infrared Survey Telescope
+VISTA (VIRCAM) specific configuration and tasks for the LSST Science Pipelines. The VISTA infrared camera (VIRCAM) instrument on the ESO Visible and Infrared Survey Telescope
 for Astronomy (VISTA) has produced a number of wide and deep surveys in the southern sky which are well matched with Vera C. Rubin Observatory Legacy Survey of Space and Time (LSST) fields. This package describes the camera and data products, allowing the LSST Science Pipelines to import and manipulate the data. It will allow both processing of VISTA imaging with the pipelines independently as well as the production of joint VISTA/Rubin imaging and catalogue products.
 
 ## Overview

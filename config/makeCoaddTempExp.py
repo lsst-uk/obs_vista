@@ -1,5 +1,3 @@
-config.doApplyExternalPhotoCalib = False  # This is also done in the HS example. Why?
-config.doApplyExternalSkyWcs = False
-config.doApplySkyCorr = False
-# 'EDGE' removed to avoid cropping stacks
-config.badMaskPlanes=['BAD', 'DETECTED', 'DETECTED_NEGATIVE', 'NO_DATA']
+import os.path
+# makeWarp Gen3 will supersede makeCoaddTempExp.
+config.load(os.path.join(os.path.dirname(__file__), "makeWarp.py"))
