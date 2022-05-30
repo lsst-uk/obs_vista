@@ -123,6 +123,10 @@ subsets:
       - transformSourceTable
       - consolidateSourceTable
       - consolidateVisitSummary
+      #These three from the HSC pipeline?
+      #- skyCorr   
+      #- isolatedStarAssociation
+      #- finalizeCharacterization
       - makeCcdVisitTable
       - makeVisitTable
     description: >
