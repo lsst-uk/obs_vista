@@ -29,11 +29,15 @@ config.refObjLoader.ref_dataset_name = "ps1_pv3_3pi_20170110_vista"
 # example failure: dataId={'dateObs': '2012-11-22', 'visit': 658653, 'filter': 'VISTA-Ks', 'hdu': 9, 'ccdnum': 8, 'ccd': 8}
 # RuntimeError: Unable to measure aperture correction for required algorithm 'base_GaussianFlux': only 1 sources, but require at least 2.
 # config.calibrate.measurement.undeblended['base_GaussianFlux'].doMeasure=True
-config.measureApCorr.allowFailure = [
-    'base_GaussianFlux',
-    'base_PsfFlux',
-    'base_Blendedness'
-]  # ??
+# config.measureApCorr.allowFailure = [
+#     'base_GaussianFlux',
+#     'base_PsfFlux',
+#     'base_Blendedness'
+# ]  # ??
+# Convolved fluxes can fail for small target seeing if the observation seeing is larger
+if "ext_convolved_ConvolvedFlux" in config.measurement.plugins:
+    names = config.measurement.plugins["ext_convolved_ConvolvedFlux"].getAllResultNames()
+    config.measureApCorr.allowFailure += names
 
 # Activate calibration of measurements: required for aperture corrections
 config.load(os.path.join(ObsConfigDir, "cmodel.py"))

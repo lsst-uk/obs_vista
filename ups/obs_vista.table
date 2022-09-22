@@ -1,8 +1,8 @@
-setupRequired(pipe_tasks)
-setupRequired(pipe_drivers)
+#setupRequired(pipe_tasks)
+#setupRequired(pipe_drivers)
 setupRequired(meas_modelfit)
-setupRequired(meas_extensions_psfex)
-setupRequired(meas_extensions_shapeHSM)
+#setupRequired(meas_extensions_psfex)
+#setupRequired(meas_extensions_shapeHSM)
 
 
 envPrepend(LD_LIBRARY_PATH, ${PRODUCT_DIR}/lib)

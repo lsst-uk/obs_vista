@@ -1,3 +1,4 @@
+config.name = "hscPdr2"
 config.skyMap.name = "rings"
 config.skyMap["rings"].numRings = 120
 config.skyMap["rings"].projection = "TAN"

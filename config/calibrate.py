@@ -17,7 +17,7 @@ for refObjLoader in (config.astromRefObjLoader,
                      ):
     refObjLoader.load(os.path.join(ObsConfigDir, "filterMap.py"))
     # This is the Gen2 configuration option.
-    refObjLoader.ref_dataset_name = ref_cat
+    #refObjLoader.ref_dataset_name = ref_cat #deprecated
     # Use the filterMap instead of the "any" filter. Broke after w_2022_21 without this
     refObjLoader.anyFilterMapsToThis = None
     
