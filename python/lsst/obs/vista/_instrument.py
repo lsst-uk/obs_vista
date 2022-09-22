@@ -11,7 +11,7 @@ import os
 
 from lsst.afw.cameraGeom import makeCameraFromPath, CameraConfig
 from lsst.obs.base import Instrument, yamlCamera
-from lsst.obs.base.gen2to3 import TranslatorFactory, PhysicalFilterToBandKeyHandler, BandToPhysicalFilterKeyHandler
+#from lsst.obs.base.gen2to3 import TranslatorFactory, PhysicalFilterToBandKeyHandler, BandToPhysicalFilterKeyHandler
 
 from lsst.obs.vista.vircamFilters import VIRCAM_FILTER_DEFINITIONS
 #from lsst.daf.butler.core.utils import getFullTypeName
@@ -155,16 +155,17 @@ class VIRCAM(Instrument):
 #         factory.addRule(PhysicalFilterToBandKeyHandler(self.filterDefinitions),
 #                         instrument=self.getName(), gen2keys=("filter", "tract"), consume=("filter",))
 #         return factory
-    def makeDataIdTranslatorFactory(self) -> TranslatorFactory:
-        # Docstring inherited from lsst.obs.base.Instrument.
-        factory = TranslatorFactory()
-        factory.addGenericInstrumentRules(self.getName(), calibFilterType="band",
-                                          detectorKey="ccdnum")
-        # DECam calibRegistry entries are bands, but we need physical_filter
-        # in the gen3 registry.
-        factory.addRule(BandToPhysicalFilterKeyHandler(self.filterDefinitions),
-                        instrument=self.getName(),
-                        gen2keys=("filter",),
-                        consume=("filter",),
-                        datasetTypeName="cpFlat")
-        return factory
+
+#     def makeDataIdTranslatorFactory(self) -> TranslatorFactory:
+#         # Docstring inherited from lsst.obs.base.Instrument.
+#         factory = TranslatorFactory()
+#         factory.addGenericInstrumentRules(self.getName(), calibFilterType="band",
+#                                           detectorKey="ccdnum")
+#         # DECam calibRegistry entries are bands, but we need physical_filter
+#         # in the gen3 registry.
+#         factory.addRule(BandToPhysicalFilterKeyHandler(self.filterDefinitions),
+#                         instrument=self.getName(),
+#                         gen2keys=("filter",),
+#                         consume=("filter",),
+#                         datasetTypeName="cpFlat")
+#         return factory
