@@ -23,6 +23,13 @@ class VircamIsrTaskConnections(IsrTaskConnections):
 
         if config.doVircamConfidence is not True:
             self.prerequisiteInputs.discard("confidence")
+            
+#   Jim Bosch said that this will allow tasks missing confidence to fail without breaking
+# 	def adjustQuantum(self, inputs, outputs, label, data_id):
+# 		_, refs = inputs["confidence"]
+# 		if not refs:
+# 			raise NoWorkFound(f"No confidence datasets found for {data_id}.")
+# 		return super().adjustQuantum(inputs, outputs, label, data_id)
 
 class VircamIsrConfig(IsrTaskConfig,
         #pipelineConnections=IsrTaskConnections):
