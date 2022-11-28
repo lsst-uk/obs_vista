@@ -107,8 +107,9 @@ class VircamRawFormatter(FitsRawFormatterBase):
             msg = "VIRCAM camera geom not used. Defaulting to metadata-based SkyWcs."
             log.warning(msg)
             if skyWcs is None:
-                raise InitialSkyWcsError("Failed to create both metadata and boresight-based SkyWcs."
-                                         "See warnings in log messages for details.")
+                raise InitialSkyWcsError(
+                    "Failed to create both metadata and boresight-based SkyWcs."
+                    "See warnings in log messages for details.")
             return skyWcs
         else:
             return self.makeRawSkyWcsFromBoresight(visitInfo.getBoresightRaDec(),
@@ -131,7 +132,8 @@ class VircamRawFormatter(FitsRawFormatterBase):
 #         skyWcs : `~lsst.afw.geom.SkyWcs`
 #             Reversible mapping from pixel coordinates to sky coordinates.
 #         """
-#         #return createInitialSkyWcsFromBoresight(boresight, orientation, detector, flipX=cls.wcsFlipX)
+#         #return createInitialSkyWcsFromBoresight(boresight, orientation, detector, 
+#             flipX=cls.wcsFlipX)
 #         return self._createSkyWcsFromMetadata()
 
     def _scanHdus(self, filename, detectorId):
