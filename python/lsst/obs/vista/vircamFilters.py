@@ -4,6 +4,7 @@ from lsst.obs.base import FilterDefinition, FilterDefinitionCollection
 # from HELP/SVO:
 # https://github.com/H-E-L-P/herschelhelp_python/blob/master/database_builder/filters/
 VIRCAM_FILTER_DEFINITIONS = FilterDefinitionCollection(
+
     FilterDefinition(band="Clear", physical_filter="NONE", #lambdaEff=0,
                      alias=["Clear", "NONE", "None", "Unrecognised", "UNRECOGNISED",
                             "Unrecognized", "UNRECOGNIZED", "NOTSET"]),
@@ -61,4 +62,5 @@ VIRCAM_FILTER_DEFINITIONS = FilterDefinitionCollection(
                      band="y",
                      #lambdaEff=990, 
                      alias={'W-S-ZR'}),
+
 )

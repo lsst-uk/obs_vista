@@ -12,6 +12,7 @@ ObsConfigDir = os.path.dirname(__file__)
 # Reference catalogs
 # The following was copied from obs_subaru and manages conflicts between gen2 and gen3
 ref_cat = "ps1_pv3_3pi_20170110_vista"  
+
 # Use PS1/VISTA for both astrometry and photometry.
 config.connections.astromRefCat = ref_cat
 config.astromRefObjLoader.load(os.path.join(ObsConfigDir, "filterMap.py"))

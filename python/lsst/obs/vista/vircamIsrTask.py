@@ -23,6 +23,13 @@ class VircamIsrTaskConnections(IsrTaskConnections):
 
         if config.doVircamConfidence is not True:
             self.prerequisiteInputs.discard("confidence")
+            
+#   Jim Bosch said that this will allow tasks missing confidence to fail without breaking
+# 	def adjustQuantum(self, inputs, outputs, label, data_id):
+# 		_, refs = inputs["confidence"]
+# 		if not refs:
+# 			raise NoWorkFound(f"No confidence datasets found for {data_id}.")
+# 		return super().adjustQuantum(inputs, outputs, label, data_id)
 
 class VircamIsrConfig(IsrTaskConfig,
         #pipelineConnections=IsrTaskConnections):
@@ -58,7 +65,7 @@ class VircamIsrTask(IsrTask):
             fringes=pipeBase.Struct(fringes=None), opticsTransmission=None, filterTransmission=None,
             sensorTransmission=None, atmosphereTransmission=None,
             detectorNum=None, strayLightData=None, illumMaskedImage=None,
-            isGen3=False,
+            #isGen3=False,
             confidence=None #additional argument passed to overwritten method
             ):
         """Execute the parent run method and apply confidence and gain if requested"""
@@ -74,8 +81,6 @@ class VircamIsrTask(IsrTask):
             fringes=fringes, opticsTransmission=opticsTransmission, filterTransmission=filterTransmission,
             sensorTransmission=sensorTransmission, atmosphereTransmission=atmosphereTransmission,
             detectorNum=detectorNum, strayLightData=strayLightData, illumMaskedImage=illumMaskedImage,
-            #isGen3=isGen3,
-            #additional argument not passed to parent method
             )
         
       

@@ -138,7 +138,7 @@ class VircamTranslator(FitsTranslator):
         #primary=fits.open(self.filename)[0]
         #posang=primary.header["HIERARCH ESO TEL POSANG"]
         posang=self._header["ESO TEL POSANG"]
-        return Angle((posang + 90.)* u.deg) #+90?
+        return Angle(-(posang + 90.)* u.deg) #+90?
         
 #     @cache_translation
 #     def to_boresight_airmass(self):
