@@ -1,8 +1,16 @@
+setupRequired(obs_base)
 setupRequired(pipe_tasks)
-setupRequired(pipe_drivers)
-setupRequired(meas_modelfit)
-setupRequired(meas_extensions_psfex)
-setupRequired(meas_extensions_shapeHSM)
+setupRequired(meas_astrom)
+setupRequired(sconsUtils)
+setupRequired(astshim)
+setupRequired(astro_metadata_translator)
+setupRequired(geom)
+
+setupOptional(daf_butler)
+setupOptional(meas_modelfit)
+setupOptional(meas_extensions_psfex)
+setupOptional(meas_extensions_shapeHSM)
+setupOptional(meas_extensions_gaap)
 
 
 envPrepend(LD_LIBRARY_PATH, ${PRODUCT_DIR}/lib)
