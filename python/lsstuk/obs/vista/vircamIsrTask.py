@@ -81,8 +81,6 @@ class VircamIsrTask(IsrTask):
             fringes=fringes, opticsTransmission=opticsTransmission, filterTransmission=filterTransmission,
             sensorTransmission=sensorTransmission, atmosphereTransmission=atmosphereTransmission,
             detectorNum=detectorNum, strayLightData=strayLightData, illumMaskedImage=illumMaskedImage,
-            #isGen3=isGen3, #deprecated
-            #additional argument not passed to parent method
             )
         
       

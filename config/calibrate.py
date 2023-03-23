@@ -12,33 +12,15 @@ ObsConfigDir = os.path.dirname(__file__)
 # Reference catalogs
 # The following was copied from obs_subaru and manages conflicts between gen2 and gen3
 ref_cat = "ps1_pv3_3pi_20170110_vista"  
-for refObjLoader in (config.astromRefObjLoader,
-                     config.photoRefObjLoader,
-                     ):
-    refObjLoader.load(os.path.join(ObsConfigDir, "filterMap.py"))
-    # This is the Gen2 configuration option.
-    #refObjLoader.ref_dataset_name = ref_cat #deprecated
-    # Use the filterMap instead of the "any" filter. Broke after w_2022_21 without this
-    refObjLoader.anyFilterMapsToThis = None
-    
-# for matchConfig in (config.astrometry,
-#                     ):
-# #     matchConfig.sourceFluxType = 'Psf'
-# #     matchConfig.sourceSelector.active.sourceFluxType = 'Psf'
-# #     matchConfig.matcher.maxRotationDeg = 1.145916
-#     matchConfig.matcher.maxOffsetPix = 5
-#     if isinstance(matchConfig.matcher, MatchOptimisticBConfig):
-#         matchConfig.matcher.allowedNonperpDeg = 0.2
-#         matchConfig.matcher.maxMatchDistArcSec = 2.0
-#         matchConfig.sourceSelector.active.excludePixelFlags = False
-#     if isinstance(matchConfig.matcher, MatchPessimisticBConfig):
-#         matchConfig.matcher.allowedNonperpDeg = 0.2
-#         matchConfig.matcher.maxMatchDistArcSec = 2.0
-#         matchConfig.sourceSelector.active.excludePixelFlags = False
 
-# These are the Gen3 configuration options for reference catalog name.
-config.connections.photoRefCat = ref_cat
+# Use PS1/VISTA for both astrometry and photometry.
 config.connections.astromRefCat = ref_cat
+config.astromRefObjLoader.load(os.path.join(ObsConfigDir, "filterMap.py"))
+# Use the filterMap instead of the "any" filter (as is used for Gaia.
+config.astromRefObjLoader.anyFilterMapsToThis = None
+
+config.connections.photoRefCat = ref_cat
+config.photoRefObjLoader.load(os.path.join(ObsConfigDir, "filterMap.py"))
 
 # number of iterations of fitter (which fits X and Y separately, and so benefits from a few iterations
 # See Slack: https://lsstc.slack.com/archives/C2B6X08LS/p1586468459084600
