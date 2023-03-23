@@ -11,16 +11,12 @@ import os
 
 from lsst.afw.cameraGeom import makeCameraFromPath, CameraConfig
 from lsst.obs.base import Instrument, yamlCamera
-#from lsst.obs.base.gen2to3 import TranslatorFactory, PhysicalFilterToBandKeyHandler, BandToPhysicalFilterKeyHandler
-
-from lsst.obs.vista.vircamFilters import VIRCAM_FILTER_DEFINITIONS
-#from lsst.daf.butler.core.utils import getFullTypeName
 from lsst.utils.introspection import get_full_type_name
 from lsst.utils import getPackageDir
-# Comment-out the following line if you put .translators/necam.py in the
-# astro_metadata_translator repository:
-from .translators import VircamTranslator
 
+#Local imports
+from .translators import VircamTranslator
+from .vircamFilters import VIRCAM_FILTER_DEFINITIONS
 
 class VIRCAM(Instrument):
     filterDefinitions = VIRCAM_FILTER_DEFINITIONS

@@ -1,12 +1,12 @@
 description: VIRCAM experimental pipeline based on LSSTCam-imSim
-instrument: lsst.obs.vista.VIRCAM
+instrument: lsstuk.obs.vista.VIRCAM
 imports:
   - $DRP_PIPE_DIR/ingredients/DRP-minimal-calibration.yaml
   - $ANALYSIS_TOOLS_DIR/pipelines/coaddDiffMatchedQualityExtended.yaml
   - $ANALYSIS_TOOLS_DIR/pipelines/coaddQualityCore.yaml
   - $FARO_DIR/pipelines/metrics_pipeline.yaml
 tasks:
-  isr: lsst.obs.vista.VircamIsrTask
+  isr: lsstuk.obs.vista.VircamIsrTask
   calibrate: lsst.pipe.tasks.calibrate.CalibrateTask
   measure:
     class: lsst.pipe.tasks.multiBand.MeasureMergedCoaddSourcesTask
