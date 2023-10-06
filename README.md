@@ -67,9 +67,6 @@ https://github.com/lsst-uk/lsst-ir-fusion/blob/master/dmu4/dmu4_Example/test_pat
 
 To run this you will need access to the VIDEO test data. This will be made available shortly.
 
-### Generation 2 Butler
-
-We are maintaining generation 2 functionality so that the first prototype runs remain accessible. This functionality should be deprecated around the start of 2022 following which we will delete all the generation 2 prototype data. If in doubt use the generation 3 Butler.
 
 
 ## The Camera
