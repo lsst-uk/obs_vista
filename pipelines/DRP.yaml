@@ -2,10 +2,10 @@ description: >
   Base Pipeline that describes the Data Release Production process.
   Never run this pipeline or any of its subsets directly; always use an
   obs_* package pipeline that imports it instead.
-instrument: lsst.obs.vista.VIRCAM
+instrument: lsstuk.obs.vista.VIRCAM
 tasks:
   #isr: lsst.ip.isr.IsrTask
-  isr: lsst.obs.vista.VircamIsrTask
+  isr: lsstuk.obs.vista.VircamIsrTask
   characterizeImage: lsst.pipe.tasks.characterizeImage.CharacterizeImageTask
   calibrate: lsst.pipe.tasks.calibrate.CalibrateTask
   writeSourceTable: lsst.pipe.tasks.postprocess.WriteSourceTableTask
