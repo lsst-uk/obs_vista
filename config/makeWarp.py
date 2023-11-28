@@ -27,4 +27,4 @@ config.select.maxScaledSizeScatter=1.0 #default 0.009
 # config.coaddPsf.warpingKernelName = 'lanczos5'
 
 #Added after required by makeWarp
-config.doApplyFinalizedPsf=False
+#config.doApplyFinalizedPsf=False

@@ -11,6 +11,21 @@ tasks:
       connections.refCat: "ps1_pv3_3pi_20170110_vista"
 
 subsets:
+  singleFrame:
+    subset:
+      - vircamIsr
+      - characterizeImage
+      - calibrate
+      - writeSourceTable
+      - transformSourceTable
+      - consolidateSourceTable
+      - consolidateVisitSummary
+      - makeCcdVisitTable
+      - makeVisitTable
+      - updateVisitSummary
+    description: >
+      Set of tasks for complete single frame processing. Analogous to
+      SingleFrameDriver.
   step1:
     subset:
       - vircamIsr

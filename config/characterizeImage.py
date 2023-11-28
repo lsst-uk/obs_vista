@@ -48,6 +48,10 @@ config.measurement.load(os.path.join(ObsConfigDir, "hsm.py"))
 if "ext_shapeHSM_HsmShapeRegauss" in config.measurement.plugins:
     # no deblending has been done
     config.measurement.plugins["ext_shapeHSM_HsmShapeRegauss"].deblendNChild = ""
+    
+
+
+
 
 
 # Reduce contraints to try to get more psf candidates
