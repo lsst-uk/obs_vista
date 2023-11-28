@@ -28,3 +28,11 @@ config.select.maxScaledSizeScatter=1.0 #default 0.009
 
 #Added after required by makeWarp
 #config.doApplyFinalizedPsf=False
+
+config.makePsfMatched = True
+
+
+config.modelPsf.defaultFwhm = 7.7
+config.warpAndPsfMatch.psfMatch.kernel['AL'].alardSigGauss = [1.0, 2.0, 4.5]
+config.warpAndPsfMatch.warp.warpingKernelName = 'lanczos5'
+config.coaddPsf.warpingKernelName = 'lanczos5'
