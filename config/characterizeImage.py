@@ -1,14 +1,70 @@
 '''
-Override the default characterise config parameters by putting them in here.
-e.g.:
-config.doWrite = False
+VIRCAM-specific overrides for CharacterizeImageTask
 '''
-import os
+
+import os.path
+
 ObsConfigDir = os.path.dirname(__file__)
+
+# PSF determination
+# These configs match obs_subaru, to facilitate 1:1 comparisons between
+# VIRCAM and HSC.
+config.measurePsf.reserve.fraction = 0.2
+
+# Detection overrides to keep results the same post DM-39796
+config.detection.doTempLocalBackground = False
+config.detection.thresholdType = "stdev"
+# Reduce contraints to try to get more psf candidates
+config.measurePsf.starSelector['objectSize'].doFluxLimit = True
+# flux value/mag relation depends on exposure time for given band and stack vs exposure
+config.measurePsf.starSelector['objectSize'].fluxMin = 1000.0  # 12500.0 #1000. fine for stacks
+#config.measurePsf.starSelector["objectSize"].doSignalToNoiseLimit = False
+# specify the minimum signal-to-noise for good Psf Candidates
+config.measurePsf.starSelector['objectSize'].signalToNoiseMin = 5.0  # 20.0
+# Maximum width to include in histogram
+config.measurePsf.starSelector['objectSize'].widthMax = 20.0  # 10.0
+# From obs_subaru:
+#config.measurePsf.starSelector["objectSize"].widthMin = 0.9
+# Standard deviation of width allowed to be interpreted as good stars
+config.measurePsf.starSelector['objectSize'].widthStdAllowed = 5.0  # 0.15
+# Keep objects within this many sigma of cluster 0's median
+config.measurePsf.starSelector['objectSize'].nSigmaClip = 5.0  # 2.0
+config.measurePsf.starSelector['astrometry'].minSnr = 5.0  # 10.0
+config.measurePsf.starSelector['matcher'].minSnr = 5.0  # 40.0
+config.measurePsf.starSelector['matcher'].excludePixelFlags = False
+
+
+
+# Activate calibration of measurements: required for aperture corrections
+config.load(os.path.join(ObsConfigDir, "cmodel.py"))
+config.measurement.load(os.path.join(ObsConfigDir, "apertures.py"))
+config.measurement.load(os.path.join(ObsConfigDir, "kron.py"))
+config.measurement.load(os.path.join(ObsConfigDir, "convolvedFluxes.py"))
+config.measurement.load(os.path.join(ObsConfigDir, "hsm.py"))
+if "ext_shapeHSM_HsmShapeRegauss" in config.measurement.plugins:
+    # no deblending has been done
+    config.measurement.plugins["ext_shapeHSM_HsmShapeRegauss"].deblendNChild = ""
+
+config.measurement.plugins.names |= ["base_Jacobian", "base_FPPosition"]
+config.measurement.plugins["base_Jacobian"].pixelScale = 0.168
+
+# Convolved fluxes can fail for small target seeing if the observation seeing
+# is larger
+if "ext_convolved_ConvolvedFlux" in config.measurement.plugins:
+    names = config.measurement.plugins["ext_convolved_ConvolvedFlux"].getAllResultNames()
+    config.measureApCorr.allowFailure += names
+
+if "ext_gaap_GaapFlux" in config.measurement.plugins:
+    names = config.measurement.plugins["ext_gaap_GaapFlux"].getAllGaapResultNames()
+    config.measureApCorr.allowFailure += names
+
+
+
+
 # Too many CR pixels error
 # Fix by upping this from 10000
 # Why is it so high? 2k * 2k = 4 m total pixels. 100*100 bad pixels in a ccd?
-#Good PSF peaks are being flagged as CR
+# Good PSF peaks are being flagged as CR
 config.repair.doCosmicRay = False
 config.repair.cosmicray.nCrPixelMax = 10000000
 # CRs must be > this many sky-sig above sky
@@ -34,54 +90,7 @@ config.repair.cosmicray.nCrPixelMax = 10000000
 #     'base_PsfFlux',
 #     'base_Blendedness'
 # ]  # ??
-# Convolved fluxes can fail for small target seeing if the observation seeing is larger
-if "ext_convolved_ConvolvedFlux" in config.measurement.plugins:
-    names = config.measurement.plugins["ext_convolved_ConvolvedFlux"].getAllResultNames()
-    config.measureApCorr.allowFailure += names
 
-# Activate calibration of measurements: required for aperture corrections
-config.load(os.path.join(ObsConfigDir, "cmodel.py"))
-config.measurement.load(os.path.join(ObsConfigDir, "apertures.py"))
-config.measurement.load(os.path.join(ObsConfigDir, "kron.py"))
-config.measurement.load(os.path.join(ObsConfigDir, "convolvedFluxes.py"))
-config.measurement.load(os.path.join(ObsConfigDir, "hsm.py"))
-if "ext_shapeHSM_HsmShapeRegauss" in config.measurement.plugins:
-    # no deblending has been done
-    config.measurement.plugins["ext_shapeHSM_HsmShapeRegauss"].deblendNChild = ""
-    
-
-
-
-
-
-# Reduce contraints to try to get more psf candidates
-config.measurePsf.starSelector['objectSize'].doFluxLimit = True
-# flux value/mag relation depends on exposure time for given band and stack vs exposure
-config.measurePsf.starSelector['objectSize'].fluxMin = 100.0  # 12500.0 #1000. fine for stacks
-# specify the minimum signal-to-noise for good Psf Candidates
-config.measurePsf.starSelector['objectSize'].signalToNoiseMin = 5.0  # 20.0
-# Maximum width to include in histogram
-config.measurePsf.starSelector['objectSize'].widthMax = 20.0  # 10.0
-# From obs_subaru:
-config.measurePsf.starSelector["objectSize"].widthMin = 0.9
-# Standard deviation of width allowed to be interpreted as good stars
-config.measurePsf.starSelector['objectSize'].widthStdAllowed = 5.0  # 0.15
-# Keep objects within this many sigma of cluster 0's median
-config.measurePsf.starSelector['objectSize'].nSigmaClip = 5.0  # 2.0
-# List of flags which cause a source to be rejected as bad
-config.measurePsf.starSelector['objectSize'].badFlags = [
-    'base_PixelFlags_flag_edge',
-    'base_PixelFlags_flag_interpolatedCenter',
-    'base_PixelFlags_flag_saturatedCenter',
-    'base_PixelFlags_flag_crCenter',
-    'base_PixelFlags_flag_bad',
-    'base_PixelFlags_flag_interpolated'
-]
-
-
-config.measurePsf.starSelector['astrometry'].minSnr = 5.0  # 10.0
-config.measurePsf.starSelector['matcher'].minSnr = 5.0  # 40.0
-config.measurePsf.starSelector['matcher'].excludePixelFlags = False
 
 # Trial and error from obs goto:
 #config.detection.minPixels = 20
