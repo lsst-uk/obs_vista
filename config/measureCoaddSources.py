@@ -7,22 +7,23 @@ config.measurement.load(os.path.join(os.path.dirname(__file__), "hsm.py"))
 config.load(os.path.join(os.path.dirname(__file__), "cmodel.py"))
 
 # Try to get measurement running before setting up reference catalogues
-#config.doMatchSources = True
+# config.doMatchSources = True
 
-# config.match.refObjLoader=None
-# Set reference catalog for Gen2. "ps1_pv3_3pi_vist2020"
-#config.match.refObjLoader.ref_dataset_name = "ps1_pv3_3pi_20170110_vista"  # ps1_pv3_3pi_20170110
-# Set reference catalog for Gen3.
-config.connections.refCat = "ps1_pv3_3pi_20170110_vista"  # ps1_pv3_3pi_20170110
+
+config.connections.refCat = "ps1_pv3_3pi_20170110_vista"
 
 config.match.refObjLoader.load(os.path.join(os.path.dirname(__file__), "filterMap.py"))
 
-
-# This must be switched off to use imported HSC calexps as we do not import the exposure src cats
-# Whether to match sources to CCD catalogs to propagate flags (to e.g. identify PSF stars)
-config.doPropagateFlags = False  
-
 #config.doWriteMatchesDenormalized = True
+
+
+config.measurement.plugins.names |= ["base_InputCount"]
+
+
+# This must be switched off to use imported HSC calexps as we do not
+# import the exposure src cats Whether to match sources to CCD
+# catalogs to propagate flags (to e.g. identify PSF stars)
+config.doPropagateFlags = False
 
 # config.doReplaceWithNoise = False #Just to see if this removes 'Quadropole determinant cannot be negative error' doesn't run with it
 
