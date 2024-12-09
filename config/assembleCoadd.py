@@ -6,6 +6,8 @@ config.doMaskBrightObjects = True
 config.removeMaskPlanes.append("CROSSTALK")
 config.doNImage = True
 config.badMaskPlanes += ["SUSPECT"]
+
+# Set to True when we get transmission curves
 config.doAttachTransmissionCurve = True
 # Saturation trails are usually oriented east-west, so along rows
 config.interpImage.transpose = True
