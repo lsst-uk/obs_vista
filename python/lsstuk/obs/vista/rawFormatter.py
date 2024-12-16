@@ -52,32 +52,32 @@ detector_to_hdu = {
 
 class VircamRawFormatter(FitsRawFormatterBase):
     """Gen 3 Butler Formatters for VIRCAM raw data.
-    
+
     This is built on examples from obs_decam, obs_subaru, and obs_necam
-    
+
     """
 
-    
+
     translatorClass = VircamTranslator
     filterDefinitions = VIRCAM_FILTER_DEFINITIONS
-    
+
     #This is set in base class as False
     wcsFlipX = True
-    
+
     FLIP_LR = False
     FLIP_TB = False
 
     def getDetector(self, id):
         return VIRCAM().getCamera()[id]
-        
+
     def makeWcs(self, visitInfo, detector):
         """Create a SkyWcs from information about the exposure.
         Overide the default which uses visit info
         Return the metadata-based SkyWcs (always created, so that
         the relevant metadata keywords are stripped).
-        
+
         Is geometry based WCS superior?
-        
+
         Parameters
         ----------
         visitInfo : `~lsst.afw.image.VisitInfo`
@@ -115,7 +115,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
             return self.makeRawSkyWcsFromBoresight(visitInfo.getBoresightRaDec(),
                                                visitInfo.getBoresightRotAngle(),
                                                detector)
-                                               
+
 #     @classmethod
 #     def makeRawSkyWcsFromBoresight(cls, boresight, orientation, detector):
 #         """Class method to make a raw sky WCS from boresight and detector.
@@ -132,7 +132,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
 #         skyWcs : `~lsst.afw.geom.SkyWcs`
 #             Reversible mapping from pixel coordinates to sky coordinates.
 #         """
-#         #return createInitialSkyWcsFromBoresight(boresight, orientation, detector, 
+#         #return createInitialSkyWcsFromBoresight(boresight, orientation, detector,
 #             flipX=cls.wcsFlipX)
 #         return self._createSkyWcsFromMetadata()
 
@@ -188,7 +188,7 @@ class VircamRawFormatter(FitsRawFormatterBase):
         ValueError
             Raised if detectorId is not found in any of the file HDUs
         """
-        filename = self.fileDescriptor.location.path
+        filename = self._reader_path
         try:
             index = detector_to_hdu[detectorId]
             #print('detectorId {} type'.format(detectorId),type(detectorId))
@@ -217,9 +217,9 @@ class VircamRawFormatter(FitsRawFormatterBase):
 #         astro_metadata_translator.fix_header(metadata,translator_class=VircamTranslator)
 #         #VircamTranslator.fix_header(metadata, self.dataId['instrument'], self.dataId['exposure'])#
 #         #print("2",metadata)
-#         
+#
 #         return metadata
-        
+
 #Code above replaced by below from obs_lsst to use latest api
     def readMetadata(self):
         """Read all header metadata directly into a PropertyList.
@@ -230,9 +230,9 @@ class VircamRawFormatter(FitsRawFormatterBase):
         metadata : `~lsst.daf.base.PropertyList`
             Header metadata.
         """
-        file = self.fileDescriptor.location.path
+        file = self.file_descriptor.location.path
         phdu = lsst.afw.fits.readMetadata(file, 0)
-        index, md = self._determineHDU(self.dataId['detector'])
+        index, md = self._determineHDU(self.data_id['detector'])
         if "INHERIT" in phdu:
             # Trust the inheritance flag
             return super().readMetadata()
@@ -244,9 +244,9 @@ class VircamRawFormatter(FitsRawFormatterBase):
         astro_metadata_translator.fix_header(md,translator_class=VircamTranslator)
         #print('md:',md)
         return md
-        
-        
-        
+
+
+
     def _createSkyWcsFromMetadata(self):
         # We need to know which direction the chip is "flipped" in order to
         # make a sensible WCS from the header metadata.
@@ -266,6 +266,6 @@ class VircamRawFormatter(FitsRawFormatterBase):
 #         return flipImage(image, self.FLIP_LR, self.FLIP_TB)
 
     def readImage(self):
-        index, metadata = self._determineHDU(self.dataId['detector'])
-        image = lsst.afw.image.ImageF(self.fileDescriptor.location.path, index)
+        index, metadata = self._determineHDU(self.data_id['detector'])
+        image = lsst.afw.image.ImageF(self._reader_path, index)
         return flipImage(image, self.FLIP_LR, self.FLIP_TB)
