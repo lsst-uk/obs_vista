@@ -53,7 +53,7 @@ class VIRCAM(Instrument):
                 "instrument",
                 {
                     "name": self.getName(),
-                    "detector_max": 16,
+                    "detector_max": 17,
                     "visit_max": obsMax,
                     "exposure_max": obsMax,
                     #"class_name": getFullTypeName(self),
