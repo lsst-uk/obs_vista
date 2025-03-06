@@ -31,3 +31,8 @@ config.doPropagateFlags = False
 # config.measurement.plugins.names=['base_GaussianFlux', 'base_LocalPhotoCalib', 'base_Variance',
 # 'base_Blendedness',
 # 'base_SdssShape', 'base_LocalWcs', 'base_SdssCentroid', 'base_PsfFlux', 'base_CircularApertureFlux', 'base_SkyCoord', 'base_NaiveCentroid', 'base_InputCount', 'base_PixelFlags', 'base_LocalBackground']#config.sfm.doBlendedness=False #config.measurement.undeblended['base_Blendedness'].doOld=False #? stop negative determinant error?
+
+# Remove 'STREAK' from the list of mask planes because of error:
+# Invalid mask plane name: STREAK {0}
+config.measurement.plugins["base_PixelFlags"].masksFpAnywhere.remove("STREAK")
+config.measurement.plugins["base_PixelFlags"].masksFpCenter.remove("STREAK")
