@@ -21,7 +21,7 @@ subsets:
       - makeCcdVisitTable
       - makeVisitTable
       - updateVisitSummary
-    description: >
+    description: |
       Set of tasks for complete single frame processing. Analogous to
       SingleFrameDriver.
   step1:
@@ -31,10 +31,11 @@ subsets:
       - transformSourceTable
     description: |
       Per-detector tasks that can be run together to start the DRP pipeline.
-      These may or may not be run with 'tract' or 'patch' as part of the data
-      ID expression. This specific pipeline contains no tasks that require full
-      visits. Running with 'tract' (and 'patch') constraints will select
-      partial visits that overlap that region.
+
+      These should never be run with 'tract' or 'patch' as part of the data ID
+      expression if any later steps will also be run, because downstream steps
+      require full visits and 'tract' and 'patch' constraints will always
+      select partial visits that overlap that region.
       In data release processing, operators should stop to address unexpected
       failures before continuing on to step2.
   step2:
@@ -52,7 +53,7 @@ subsets:
       that must be run with a skymap data query constraint only (an instrument
       constraint is fine, but generally unneccessary).  For example, running
       with 'tract' (and 'patch') constraints will select partial visits that
-      overlap that region.  A skymap constraint is necessary to prevent
+      overlap that region. A skymap constraint is necessary to prevent
       isolatedStarAssociation from producing results for all skymaps in the
       data repository.
       Visit-level tasks include consolidateSourceTable, consolidateVisitSummary,
@@ -76,8 +77,6 @@ subsets:
       - healSparsePropertyMaps
       - selectGoodSeeingVisits
       - templateGen
-      #- matchObjectToTruth
-      #- compareObjectToTruth
     description: |
       Tasks that can be run together, but only after the 'step1' and 'step2'
       subsets.
@@ -97,19 +96,6 @@ subsets:
       - selectDeepCoaddVisits
       - assembleCoadd
       - detection
-      #- mergeDetections
-      #- deblend
-      #- measure
-      #- mergeMeasurements
-      #- forcedPhotCoadd
-      #- transformObjectTable
-      #- writeObjectTable
-      #- consolidateObjectTable
-      - healSparsePropertyMaps
-      #- selectGoodSeeingVisits
-      #- templateGen
-      #- matchObjectToTruth
-      #- compareObjectToTruth
     description: |
       Tasks that can be run together, but only after the 'step1' and 'step2'
       subsets.
@@ -125,23 +111,15 @@ subsets:
       functionality.  It may be removed in the future.
   step3b:
     subset:
-      #- makeWarp
-     # - assembleCoadd
-      #- detection
       - mergeDetections
       - deblend
       - vircamMeasure
       - mergeMeasurements
       - forcedPhotCoadd
-      - transformObjectTable
       - writeObjectTable
+      - transformObjectTable
       - consolidateObjectTable
-      #- healSparsePropertyMaps
-      #The following steps require single epoch visits which are not ingested for HSC
-      #- selectGoodSeeingVisits
-      #- templateGen
-      #- matchObjectToTruth
-      #- compareObjectToTruth
+      - healSparsePropertyMaps
     description: |
       Tasks that can be run together, but only after the 'step1' and 'step2'
       subsets.
@@ -155,3 +133,9 @@ subsets:
       additional changes.
       This subset is considered a workaround for missing middleware and task
       functionality.  It may be removed in the future.
+  step3c:
+    subset:
+      - selectGoodSeeingVisits
+      - templateGen
+    description: |
+      These steps require single epoch visits which are not ingested for HSC.
