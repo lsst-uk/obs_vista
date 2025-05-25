@@ -34,5 +34,5 @@ config.doPropagateFlags = False
 
 # Remove 'STREAK' from the list of mask planes because of error:
 # Invalid mask plane name: STREAK {0}
-config.measurement.plugins["base_PixelFlags"].masksFpAnywhere.remove("STREAK")
-config.measurement.plugins["base_PixelFlags"].masksFpCenter.remove("STREAK")
+#config.measurement.plugins["base_PixelFlags"].masksFpAnywhere.remove("STREAK")
+#config.measurement.plugins["base_PixelFlags"].masksFpCenter.remove("STREAK")
