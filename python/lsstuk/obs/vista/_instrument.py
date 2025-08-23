@@ -20,14 +20,44 @@ from .vircamFilters import VIRCAM_FILTER_DEFINITIONS
 
 class VIRCAM(Instrument):
     filterDefinitions = VIRCAM_FILTER_DEFINITIONS
-    #policyName = "vircam"
-
-    # obsDataPackage = "obs_vista_data"  # What is this?
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
         packageDir = getPackageDir("obs_vista")
-        self.configPaths = [os.path.join(packageDir, "config")]
+
+        # Look for an environment variable to decide which config profile to use
+        profile = os.environ.get("OBS_VISTA_PROFILE", None)
+        if profile is None:
+            raise RuntimeError("You must set OBS_VISTA_PROFILE to choose a config profile "
+                "(e.g. HSC, comCam, lsstCam)."
+            )
+
+        # Normalize input (case-insensitive) and map to canonical directory names
+        profile_map = {
+            "hsc": "HSC",
+            "comcam": "comCam",
+            "lsstcam": "lsstCam",
+        }
+
+
+        profile_key = profile.lower()
+        if profile_key not in profile_map:
+            raise RuntimeError(
+                f"Unknown OBS_VISTA_PROFILE='{profile}'. "
+                f"Allowed values: {list(profile_map.keys())}"
+            )
+
+        configDir = os.path.join(packageDir, "config", profile_map[profile_key])
+
+        if not os.path.isdir(configDir):
+            raise RuntimeError(
+                f"Requested obs_vista profile '{profile}' but no config directory found at {configDir}"
+            )
+
+        # Register the selected config directory
+        self.configPaths = [configDir]
+
 
     @classmethod
     def getName(cls):
@@ -84,5 +114,3 @@ class VIRCAM(Instrument):
 
         from .rawFormatter import VircamRawFormatter
         return VircamRawFormatter
-
-
