@@ -1,0 +1,143 @@
+description: VIRCAM experimental pipeline based on LSSTCam-imSim
+instrument: lsstuk.obs.vista.VIRCAM
+imports:
+  - $DRP_PIPE_DIR/pipelines/_ingredients/DRP-minimal-calibration.yaml
+
+tasks:
+  vircamIsr: lsstuk.obs.vista.VircamIsrTask
+  vircamMeasure:
+    class: lsst.pipe.tasks.multiBand.MeasureMergedCoaddSourcesTask
+    config:
+      connections.refCat: "the_monster_20250219_vista"
+
+subsets:
+  singleFrame:
+    subset:
+      - vircamIsr
+      - calibrateImage
+      - transformSourceTable
+      - consolidateSourceTable
+      - consolidateVisitSummary
+      - makeCcdVisitTable
+      - makeVisitTable
+      - updateVisitSummary
+    description: |
+      Set of tasks for complete single frame processing. Analogous to
+      SingleFrameDriver.
+  step1:
+    subset:
+      - vircamIsr
+      - calibrateImage
+      - transformSourceTable
+    description: |
+      Per-detector tasks that can be run together to start the DRP pipeline.
+
+      These should never be run with 'tract' or 'patch' as part of the data ID
+      expression if any later steps will also be run, because downstream steps
+      require full visits and 'tract' and 'patch' constraints will always
+      select partial visits that overlap that region.
+      In data release processing, operators should stop to address unexpected
+      failures before continuing on to step2.
+  step2:
+    subset:
+      - consolidateSourceTable
+      - consolidateVisitSummary
+      - isolatedStarAssociation
+      - finalizeCharacterization
+      - makeCcdVisitTable
+      - makeVisitTable
+      - updateVisitSummary
+    description: |
+      Tasks that can be run together, but only after the 'step1'.
+      This is a mix of visit-level, tract-level, and collection-level tasks
+      that must be run with a skymap data query constraint only (an instrument
+      constraint is fine, but generally unneccessary).  For example, running
+      with 'tract' (and 'patch') constraints will select partial visits that
+      overlap that region. A skymap constraint is necessary to prevent
+      isolatedStarAssociation from producing results for all skymaps in the
+      data repository.
+      Visit-level tasks include consolidateSourceTable, consolidateVisitSummary,
+      finalizeCharacterization, updateVisitSummary.
+      Tract-level tasks include: isolatedStarAssociation
+      Full collection-level tasks include: makeCcdVisitTable, makeVisitTable
+  step3:
+    subset:
+      - makeDirectWarp
+      - makePsfMatchedWarp
+      - selectDeepCoaddVisits
+      - assembleCoadd
+      - detection
+      - mergeDetections
+      - deblend
+      - vircamMeasure
+      - mergeMeasurements
+      - forcedPhotCoadd
+      - transformObjectTable
+      - writeObjectTable
+      - consolidateObjectTable
+      - healSparsePropertyMaps
+      - selectGoodSeeingVisits
+      - templateGen
+    description: |
+      Tasks that can be run together, but only after the 'step1' and 'step2'
+      subsets.
+      These should be run with explicit 'tract' constraints essentially all the
+      time, because otherwise quanta will be created for jobs with only partial
+      visit coverage.
+      It is expected that many forcedPhotCcd quanta will "normally" fail when
+      running this subset, but this isn't a problem right now because there are
+      no tasks downstream of it.  If other tasks regularly fail or we add tasks
+      downstream of forcedPhotCcd, these subsets or the tasks will need
+      additional changes.
+      This subset is considered a workaround for missing middleware and task
+      functionality.  It may be removed in the future.
+  step3a:
+    subset:
+      - makeDirectWarp
+      - makePsfMatchedWarp
+      - selectDeepCoaddVisits
+      - assembleCoadd
+      - detection
+    description: |
+      Tasks that can be run together, but only after the 'step1' and 'step2'
+      subsets.
+      These should be run with explicit 'tract' constraints essentially all the
+      time, because otherwise quanta will be created for jobs with only partial
+      visit coverage.
+      It is expected that many forcedPhotCcd quanta will "normally" fail when
+      running this subset, but this isn't a problem right now because there are
+      no tasks downstream of it.  If other tasks regularly fail or we add tasks
+      downstream of forcedPhotCcd, these subsets or the tasks will need
+      additional changes.
+      This subset is considered a workaround for missing middleware and task
+      functionality.  It may be removed in the future.
+  step3b:
+    subset:
+      - mergeDetections
+      - deblend
+      - vircamMeasure
+      - mergeMeasurements
+      - forcedPhotCoadd
+      - writeObjectTable
+      - transformObjectTable
+      - consolidateObjectTable
+      - healSparsePropertyMaps
+    description: |
+      Tasks that can be run together, but only after the 'step1' and 'step2'
+      subsets.
+      These should be run with explicit 'tract' constraints essentially all the
+      time, because otherwise quanta will be created for jobs with only partial
+      visit coverage.
+      It is expected that many forcedPhotCcd quanta will "normally" fail when
+      running this subset, but this isn't a problem right now because there are
+      no tasks downstream of it.  If other tasks regularly fail or we add tasks
+      downstream of forcedPhotCcd, these subsets or the tasks will need
+      additional changes.
+      This subset is considered a workaround for missing middleware and task
+      functionality.  It may be removed in the future.
+  step3c:
+    subset:
+      - selectGoodSeeingVisits
+      - templateGen
+    description: |
+      These steps require single epoch visits which are not ingested for ComCam.
