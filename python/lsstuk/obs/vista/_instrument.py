@@ -30,13 +30,13 @@ class VIRCAM(Instrument):
         profile = os.environ.get("OBS_VISTA_PROFILE", None)
         if profile is None:
             raise RuntimeError("You must set OBS_VISTA_PROFILE to choose a config profile "
-                "(e.g. HSC, comCam, lsstCam)."
+                "(e.g. HSC, ComCam, lsstCam)."
             )
 
         # Normalize input (case-insensitive) and map to canonical directory names
         profile_map = {
             "hsc": "HSC",
-            "comcam": "comCam",
+            "comcam": "ComCam",
             "lsstcam": "lsstCam",
         }
 

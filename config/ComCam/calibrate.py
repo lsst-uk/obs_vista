@@ -133,7 +133,6 @@ config.measurement.load(os.path.join(ObsConfigDir, "apertures.py"))
 config.measurement.load(os.path.join(ObsConfigDir, "kron.py"))
 config.measurement.load(os.path.join(ObsConfigDir, "hsm.py"))
 
-#From obs subaru following error
 config.measurement.plugins.names |= ["base_Jacobian", "base_FPPosition"]
 config.measurement.plugins["base_Jacobian"].pixelScale = 0.2
 
