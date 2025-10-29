@@ -72,12 +72,12 @@ subsets:
       - vircamMeasure
       - mergeMeasurements
       - forcedPhotCoadd
-      - transformObjectTable
-      - writeObjectTable
-      - consolidateObjectTable
-      - healSparsePropertyMaps
-      - selectGoodSeeingVisits
-      - templateGen
+      #- transformObjectTable
+      #- writeObjectTable
+      #- consolidateObjectTable
+      #- healSparsePropertyMaps
+      #- selectGoodSeeingVisits
+      #- templateGen
     description: |
       Tasks that can be run together, but only after the 'step1' and 'step2'
       subsets.
@@ -118,10 +118,10 @@ subsets:
       - vircamMeasure
       - mergeMeasurements
       - forcedPhotCoadd
-      - writeObjectTable
-      - transformObjectTable
-      - consolidateObjectTable
-      - healSparsePropertyMaps
+      #- writeObjectTable
+      #- transformObjectTable
+      #- consolidateObjectTable
+      #- healSparsePropertyMaps
     description: |
       Tasks that can be run together, but only after the 'step1' and 'step2'
       subsets.
@@ -135,9 +135,3 @@ subsets:
       additional changes.
       This subset is considered a workaround for missing middleware and task
       functionality.  It may be removed in the future.
-  step3c:
-    subset:
-      - selectGoodSeeingVisits
-      - templateGen
-    description: |
-      These steps require single epoch visits which are not ingested for ComCam.
