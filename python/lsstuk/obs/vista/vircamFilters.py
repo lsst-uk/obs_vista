@@ -63,4 +63,24 @@ VIRCAM_FILTER_DEFINITIONS = FilterDefinitionCollection(
                      #lambdaEff=990, 
                      alias={'W-S-ZR'}),
 
+
+    # --- External filters: ComCam ---
+    FilterDefinition(physical_filter="EXT-G",
+                    band="g",
+                    alias={"ComCam-g"}),
+    FilterDefinition(physical_filter="EXT-R",
+                    band="r",
+                    alias={"ComCam-r"}),
+    FilterDefinition(physical_filter="EXT-I",
+                    band="i",
+                    alias={"ComCam-i"}),
+    FilterDefinition(physical_filter="EXT-Z",
+                    band="z",
+                    alias={"ComCam-z"}),
+    FilterDefinition(physical_filter="EXT-Y",
+                    band="y",
+                    alias={"ComCam-y"}),
+    FilterDefinition(physical_filter="EXT-U",
+                    band="u",
+                    alias={"ComCam-u"}),
 )
