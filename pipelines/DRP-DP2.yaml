@@ -1,14 +1,67 @@
-description: VIRCAM experimental pipeline based on LSSTCam-imSim
+description: VIRCAM DP2 pipeline based on Rubin Data Release Production
 instrument: lsstuk.obs.vista.VIRCAM
 imports:
   - $DRP_PIPE_DIR/pipelines/_ingredients/DRP-minimal-calibration.yaml
 
 tasks:
   vircamIsr: lsstuk.obs.vista.VircamIsrTask
+
+  # Use DP2-style dataset names for the coaddition branch.
+  makeDirectWarp:
+    class: lsst.drp.tasks.make_direct_warp.MakeDirectWarpTask
+    config:
+      connections.warp: direct_warp
+      connections.masked_fraction_warp: direct_warp_masked_fraction
+  makePsfMatchedWarp:
+    class: lsst.drp.tasks.make_psf_matched_warp.MakePsfMatchedWarpTask
+    config:
+      connections.direct_warp: direct_warp
+      connections.psf_matched_warp: psf_matched_warp
+
+  selectDeepCoaddVisits:
+    class: lsst.pipe.tasks.selectImages.BestSeeingSelectVisitsTask
+    config:
+      connections.goodVisits: deep_coadd_visit_selection
+
+  assembleCoadd:
+    class: lsst.drp.tasks.assemble_coadd.CompareWarpAssembleCoaddTask
+    config:
+      connections.inputWarps: direct_warp
+      connections.psfMatchedWarps: psf_matched_warp
+      connections.selectedVisits: deep_coadd_visit_selection
+      connections.coaddExposure: deep_coadd_predetection
+      connections.nImage: deep_coadd_n_image
+      connections.inputMap: deep_coadd_input_map
+
+  assembleCellCoadd:
+    class: lsst.drp.tasks.assemble_cell_coadd.AssembleCellCoaddTask
+    config:
+      connections.inputWarps: direct_warp
+      connections.maskedFractionWarps: direct_warp_masked_fraction
+      connections.multipleCellCoadd: deep_coadd_cell_predetection
+
+  detectCoaddPeaks:
+    class: lsst.pipe.tasks.multiBand.DetectCoaddSourcesTask
+    config:
+      useCellCoadds: true
+      connections.exposure: deep_coadd_predetection
+      connections.exposure_cells: deep_coadd_cell_predetection
+
   vircamMeasure:
     class: lsst.pipe.tasks.multiBand.MeasureMergedCoaddSourcesTask
     config:
       connections.refCat: "the_monster_20250219_vista"
+
+  # Convert the validated MultipleCellCoadd to the final CellCoadd product.
+  # Detection outputs retain their legacy names until Step 3c is validated.
+  rewriteCellCoadd:
+    class: lsst.pipe.tasks.rewrite_images.RewriteCellCoaddTask
+    config:
+      do_alternate_background_fit: false
+      connections.legacy_cell_coadd: deep_coadd_cell_predetection
+      connections.object_background: deepCoadd_calexp_background
+      connections.object_mask: deepCoadd_calexp.mask
+      connections.future_cell_coadd: deep_coadd_cell
 
 subsets:
   singleFrame:
@@ -68,8 +121,11 @@ subsets:
       - makePsfMatchedWarp
       - selectDeepCoaddVisits
       - assembleCoadd
-      - detection
+      - assembleCellCoadd
+      - detectCoaddPeaks
+      - rewriteCellCoadd
       - mergeDetections
+      - deconvolve
       - deblend
       - vircamMeasure
       - mergeMeasurements
@@ -93,44 +149,31 @@ subsets:
       additional changes.
       This subset is considered a workaround for missing middleware and task
       functionality.  It may be removed in the future.
+
   step3a:
     subset:
       - makeDirectWarp
       - makePsfMatchedWarp
     description: |
-      Tasks that can be run together, but only after the 'step1' and 'step2'
-      subsets.
-      These should be run with explicit 'tract' constraints essentially all the
-      time, because otherwise quanta will be created for jobs with only partial
-      visit coverage.
-      It is expected that many forcedPhotCcd quanta will "normally" fail when
-      running this subset, but this isn't a problem right now because there are
-      no tasks downstream of it.  If other tasks regularly fail or we add tasks
-      downstream of forcedPhotCcd, these subsets or the tasks will need
-      additional changes.
-      This subset is considered a workaround for missing middleware and task
-      functionality.  It may be removed in the future.
+      Create VIRCAM direct and PSF-matched warps for DP2-style
+      coaddition
+
   step3b:
     subset:
       - selectDeepCoaddVisits
       - assembleCoadd
-      - detection
+      - assembleCellCoadd
+      - detectCoaddPeaks
+      - rewriteCellCoadd
     description: |
-      Tasks that can be run together, but only after the 'step1' and 'step2'
-      subsets.
-      These should be run with explicit 'tract' constraints essentially all the
-      time, because otherwise quanta will be created for jobs with only partial
-      visit coverage.
-      It is expected that many forcedPhotCcd quanta will "normally" fail when
-      running this subset, but this isn't a problem right now because there are
-      no tasks downstream of it.  If other tasks regularly fail or we add tasks
-      downstream of forcedPhotCcd, these subsets or the tasks will need
-      additional changes.
-      This subset is considered a workaround for missing middleware and task
-      functionality.  It may be removed in the future.
+      Create the legacy and cell-based predetection coadds, run
+      cell-based source detection, and convert the post-detection
+      MultipleCellCoadd into the final DP2-style CellCoadd product.
+
   step3c:
     subset:
       - mergeDetections
+      - deconvolve
       - deblend
       - vircamMeasure
       - mergeMeasurements

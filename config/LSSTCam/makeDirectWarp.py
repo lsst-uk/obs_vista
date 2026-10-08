@@ -16,3 +16,5 @@ config.select.maxPsfTraceRadiusDelta = 4.4
 config.select.maxPsfApFluxDelta = 1.6
 config.select.maxPsfApCorrSigmaScaledDelta = 0.13
 #config.doApplyFlatBackgroundRatio = True
+
+config.numberOfNoiseRealizations = 1
