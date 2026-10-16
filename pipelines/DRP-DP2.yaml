@@ -6,7 +6,6 @@ imports:
 tasks:
   vircamIsr: lsstuk.obs.vista.VircamIsrTask
 
-  # Use DP2-style dataset names for the coaddition branch.
   makeDirectWarp:
     class: lsst.drp.tasks.make_direct_warp.MakeDirectWarpTask
     config:
@@ -44,24 +43,92 @@ tasks:
     class: lsst.pipe.tasks.multiBand.DetectCoaddSourcesTask
     config:
       useCellCoadds: true
+      connections.detectionSchema: object_detection_schema
       connections.exposure: deep_coadd_predetection
       connections.exposure_cells: deep_coadd_cell_predetection
+      connections.outputBackgrounds: deep_coadd_background
+      connections.outputSources: object_detection
+      connections.outputExposure: deep_coadd
 
-  vircamMeasure:
-    class: lsst.pipe.tasks.multiBand.MeasureMergedCoaddSourcesTask
-    config:
-      connections.refCat: "the_monster_20250219_vista"
-
-  # Convert the validated MultipleCellCoadd to the final CellCoadd product.
-  # Detection outputs retain their legacy names until Step 3c is validated.
   rewriteCellCoadd:
     class: lsst.pipe.tasks.rewrite_images.RewriteCellCoaddTask
     config:
       do_alternate_background_fit: false
       connections.legacy_cell_coadd: deep_coadd_cell_predetection
-      connections.object_background: deepCoadd_calexp_background
-      connections.object_mask: deepCoadd_calexp.mask
+      connections.object_background: deep_coadd_background
+      connections.object_mask: deep_coadd.mask
       connections.future_cell_coadd: deep_coadd_cell
+
+  mergeDetections:
+    class: lsst.pipe.tasks.mergeDetections.MergeDetectionsTask
+    config:
+      connections.schema: object_detection_schema
+      connections.catalogs: object_detection
+      connections.outputSchema: object_detection_merged_schema
+      connections.outputPeakSchema: object_detection_peak_schema
+      connections.outputCatalog: object_detection_merged
+
+  deconvolve:
+    class: lsst.meas.extensions.scarlet.deconvolveExposureTask.DeconvolveExposureTask
+    config:
+      useCellCoadds: true
+      connections.coadd: deep_coadd
+      connections.coadd_cell: deep_coadd_cell_predetection
+      connections.background: deep_coadd_background
+      connections.catalog: object_detection_merged
+      connections.deconvolved: deconvolved_deep_coadd
+
+  deblend:
+    class: lsst.pipe.tasks.deblendCoaddSourcesPipeline.DeblendCoaddSourcesMultiTask
+    config:
+      useCellCoadds: true
+      connections.inputSchema: object_detection_merged_schema
+      connections.peakSchema: object_detection_peak_schema
+      connections.mergedDetections: object_detection_merged
+      connections.coadds: deep_coadd
+      connections.coadds_cell: deep_coadd_cell_predetection
+      connections.backgrounds: deep_coadd_background
+      connections.deconvolvedCoadds: deconvolved_deep_coadd
+      connections.outputSchema: object_deblend_schema
+      connections.deblendedCatalog: object_deblend
+      connections.scarletModelData: object_scarlet_models
+
+  vircamMeasure:
+    class: lsst.pipe.tasks.multiBand.MeasureMergedCoaddSourcesTask
+    config:
+      useCellCoadds: true
+      connections.inputSchema: object_deblend_schema
+      connections.scarletCatalog: object_deblend
+      connections.scarletModels: object_scarlet_models
+      connections.exposure: deep_coadd
+      connections.exposure_cells: deep_coadd_cell_predetection
+      connections.background: deep_coadd_background
+      connections.outputSchema: object_unforced_measurement_schema
+      connections.outputSources: object_unforced_measurement
+      connections.refCat: "the_monster_20250219_vista"
+
+  mergeMeasurements:
+    class: lsst.pipe.tasks.mergeMeasurements.MergeMeasurementsTask
+    config:
+      connections.inputSchema: object_unforced_measurement_schema
+      connections.catalogs: object_unforced_measurement
+      connections.outputSchema: object_ref_measurement_schema
+      connections.mergedCatalog: object_ref_measurement
+
+  forcedPhotCoadd:
+    class: lsst.drp.tasks.forcedPhotCoadd.ForcedPhotCoaddTask
+    config:
+      useCellCoadds: true
+      connections.inputSchema: object_ref_measurement_schema
+      connections.exposure: deep_coadd
+      connections.exposure_cell: deep_coadd_cell_predetection
+      connections.background: deep_coadd_background
+      connections.refCat: object_ref_measurement
+      connections.refCatInBand: object_unforced_measurement
+      connections.scarletModels: object_scarlet_models
+      connections.refWcs: deep_coadd.wcs
+      connections.measCat: object_forced_measurement
+
 
 subsets:
   singleFrame:
@@ -75,22 +142,22 @@ subsets:
       - makeVisitTable
       - updateVisitSummary
     description: |
-      Set of tasks for complete single frame processing. Analogous to
-      SingleFrameDriver.
+      Complete VIRCAM single-frame and visit-level processing, from ISR and
+      detector calibration through source-table consolidation and visit-summary
+      generation.
+
   step1:
     subset:
       - vircamIsr
       - calibrateImage
       - transformSourceTable
     description: |
-      Per-detector tasks that can be run together to start the DRP pipeline.
+      Run detector-level VIRCAM processing: instrumental signature removal,
+      image calibration, and transformation of detector source catalogs.
+      This step should be run on complete visits rather than with tract or patch
+      constraints, since later processing requires all detectors contributing
+      to each visit.
 
-      These should never be run with 'tract' or 'patch' as part of the data ID
-      expression if any later steps will also be run, because downstream steps
-      require full visits and 'tract' and 'patch' constraints will always
-      select partial visits that overlap that region.
-      In data release processing, operators should stop to address unexpected
-      failures before continuing on to step2.
   step2:
     subset:
       - consolidateSourceTable
@@ -102,19 +169,13 @@ subsets:
       - makeVisitTable
       - updateVisitSummary
     description: |
-      Tasks that can be run together, but only after the 'step1'.
-      This is a mix of visit-level, tract-level, and collection-level tasks
-      that must be run with a skymap data query constraint only (an instrument
-      constraint is fine, but generally unneccessary).  For example, running
-      with 'tract' (and 'patch') constraints will select partial visits that
-      overlap that region. A skymap constraint is necessary to prevent
-      isolatedStarAssociation from producing results for all skymaps in the
-      data repository.
-      Visit-level tasks include consolidateSourceTable, consolidateVisitSummary,
-      finalizeCharacterizationDetector, consolidateFinalizeCharacterization, 
-      updateVisitSummary.
-      Tract-level tasks include: isolatedStarAssociation
-      Full collection-level tasks include: makeCcdVisitTable, makeVisitTable
+      Build the visit- and tract-level products required for coaddition,
+      including consolidated source tables, visit summaries, isolated-star
+      associations, finalized characterization products, and visit metadata.
+      This step should be run after step1 with the appropriate skymap
+      constraint and without restricting processing to an incomplete subset
+      of detectors within a visit.
+
   step3:
     subset:
       - makeDirectWarp
@@ -130,33 +191,23 @@ subsets:
       - vircamMeasure
       - mergeMeasurements
       - forcedPhotCoadd
-      #- transformObjectTable
-      #- writeObjectTable
-      #- consolidateObjectTable
-      #- healSparsePropertyMaps
-      #- selectGoodSeeingVisits
-      #- templateGen
     description: |
-      Tasks that can be run together, but only after the 'step1' and 'step2'
-      subsets.
-      These should be run with explicit 'tract' constraints essentially all the
-      time, because otherwise quanta will be created for jobs with only partial
-      visit coverage.
-      It is expected that many forcedPhotCcd quanta will "normally" fail when
-      running this subset, but this isn't a problem right now because there are
-      no tasks downstream of it.  If other tasks regularly fail or we add tasks
-      downstream of forcedPhotCcd, these subsets or the tasks will need
-      additional changes.
-      This subset is considered a workaround for missing middleware and task
-      functionality.  It may be removed in the future.
+      Run the complete VIRCAM coadd and multiband-processing workflow for a
+      selected tract or patch. This includes warp generation, DP2-style
+      ExposureF and CellCoadd construction, source detection, CellCoadd
+      rewriting, multiband detection merging, Scarlet deblending, source
+      measurement, and forced coadd photometry.
+      For development and production runs, the workflow is normally split into
+      step3a, step3b, and step3c.
 
   step3a:
     subset:
       - makeDirectWarp
       - makePsfMatchedWarp
     description: |
-      Create VIRCAM direct and PSF-matched warps for DP2-style
-      coaddition
+      Create direct and PSF-matched VIRCAM warps for DP2-style coaddition,
+      including the masked-fraction and noise-realization products required by
+      the CellCoadd workflow.
 
   step3b:
     subset:
@@ -166,9 +217,10 @@ subsets:
       - detectCoaddPeaks
       - rewriteCellCoadd
     description: |
-      Create the legacy and cell-based predetection coadds, run
-      cell-based source detection, and convert the post-detection
-      MultipleCellCoadd into the final DP2-style CellCoadd product.
+      Select input visits and construct the DP2-style predetection coadds in
+      both ExposureF and MultipleCellCoadd representations. Run cell-based
+      source detection, produce the object background and detection catalog,
+      and rewrite the post-detection product into the final CellCoadd.
 
   step3c:
     subset:
@@ -178,20 +230,11 @@ subsets:
       - vircamMeasure
       - mergeMeasurements
       - forcedPhotCoadd
-      #- writeObjectTable
-      #- transformObjectTable
-      #- consolidateObjectTable
-      #- healSparsePropertyMaps
     description: |
-      Tasks that can be run together, but only after the 'step1' and 'step2'
-      subsets.
-      These should be run with explicit 'tract' constraints essentially all the
-      time, because otherwise quanta will be created for jobs with only partial
-      visit coverage.
-      It is expected that many forcedPhotCcd quanta will "normally" fail when
-      running this subset, but this isn't a problem right now because there are
-      no tasks downstream of it.  If other tasks regularly fail or we add tasks
-      downstream of forcedPhotCcd, these subsets or the tasks will need
-      additional changes.
-      This subset is considered a workaround for missing middleware and task
-      functionality.  It may be removed in the future.
+      Run multiband processing on the detected coadds. Merge detections across
+      bands, deconvolve the coadds, perform Scarlet deblending, measure sources
+      in each band, select the reference measurements, and perform forced coadd
+      photometry.
+      In CellCoadd mode, the image-based tasks use
+      deep_coadd_cell_predetection together with deep_coadd and
+      deep_coadd_background.
