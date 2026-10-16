@@ -1,0 +1,28 @@
+description: >
+  LSSTCam helper pipeline for reconstructing DP2 optical detection products
+  required by the LSST-VISTA fusion workflow from public CellCoadds.
+
+instrument: lsst.obs.lsst.LsstCam
+
+tasks:
+  detectCoaddPeaks:
+    class: lsst.pipe.tasks.multiBand.DetectCoaddSourcesTask
+    config:
+      useCellCoadds: true
+
+      connections.detectionSchema: object_detection_schema
+      connections.exposure: deep_coadd_predetection
+      connections.exposure_cells: deep_coadd_cell_predetection
+      connections.outputBackgrounds: deep_coadd_background
+      connections.outputSources: object_detection
+      connections.outputExposure: deep_coadd
+
+      idGenerator.release_id: 5
+
+      detection.skyObjects.nSources: 400
+      detection.doTempWideBackground: true
+      detection.tempWideBackground.binSize: 128
+      detection.tempWideBackground.useApprox: false
+      detection.reEstimateBackground: true
+      detection.background.binSize: 128
+      detection.background.useApprox: false
