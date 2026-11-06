@@ -6,6 +6,14 @@ imports:
 tasks:
   vircamIsr: lsstuk.obs.vista.VircamIsrTask
 
+  calibrateImage:
+    class: lsst.pipe.tasks.calibrateImage.CalibrateImageTask
+    config:
+      connections.exposure: calexp_unscaled
+
+  scaleVarianceCalexp:
+    class: lsstuk.obs.vista.ScaleVarianceCalexpTask
+
   makeDirectWarp:
     class: lsst.drp.tasks.make_direct_warp.MakeDirectWarpTask
     config:
@@ -135,6 +143,7 @@ subsets:
     subset:
       - vircamIsr
       - calibrateImage
+      - scaleVarianceCalexp
       - transformSourceTable
       - consolidateSourceTable
       - consolidateVisitSummary
@@ -150,6 +159,7 @@ subsets:
     subset:
       - vircamIsr
       - calibrateImage
+      - scaleVarianceCalexp
       - transformSourceTable
     description: |
       Run detector-level VIRCAM processing: instrumental signature removal,
