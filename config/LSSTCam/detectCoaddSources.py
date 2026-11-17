@@ -1,5 +1,5 @@
 # Do not empirically rescale the coadd variance.
-config.doScaleVariance = False
+config.doScaleVariance = True
 
 # Limit dynamic-detection adjustments.
 config.detection.minThresholdScaleFactor = 0.5
